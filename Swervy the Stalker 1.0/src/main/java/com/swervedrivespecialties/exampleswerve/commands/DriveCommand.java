@@ -28,8 +28,8 @@ public class DriveCommand extends Command {
         rotation = Utilities.deadband(rotation);
         // Square the rotation stick
         rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
-
-        DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, true);
+        
+        DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe).div(3), rotation/3, true);
     }
 
     @Override
