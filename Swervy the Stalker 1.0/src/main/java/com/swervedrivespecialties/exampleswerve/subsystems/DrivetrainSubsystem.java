@@ -29,6 +29,8 @@ public class DrivetrainSubsystem extends Subsystem {
     private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(144.4);
     private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(115.9);
 
+    private static final double ROTATION_P=1/(2*Math.PI);
+
     private static DrivetrainSubsystem instance;
 
     private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
@@ -115,7 +117,9 @@ public class DrivetrainSubsystem extends Subsystem {
         rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
         ChassisSpeeds speeds;
         if (fieldOriented) {
-            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
+                double err=gyroscope.getAngle().toRadians()-rotation;
+                double power=-err*ROTATION_P;
+            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), power,
                     Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees()));
         } else {
             speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
