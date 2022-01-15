@@ -1,7 +1,6 @@
-package frc.robot;
+package com.swervedrivespecialties.exampleswerve;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import com.swervedrivespecialties.exampleswerve.Robot;
 
 public final class Main {
     public static void main(String... args) {
