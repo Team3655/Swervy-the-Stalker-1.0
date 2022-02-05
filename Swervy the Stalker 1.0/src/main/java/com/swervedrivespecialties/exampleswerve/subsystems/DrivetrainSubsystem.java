@@ -1,18 +1,18 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frcteam2910.common.drivers.Gyroscope;
 import org.frcteam2910.common.drivers.SwerveModule;
@@ -21,15 +21,15 @@ import org.frcteam2910.common.robot.drivers.Mk2SwerveModuleBuilder;
 import org.frcteam2910.common.robot.drivers.NavX;
 
 public class DrivetrainSubsystem extends Subsystem {
-    private static final double TRACKWIDTH = 12.375;
-    private static final double WHEELBASE = 12.375;
+    private static final double TRACKWIDTH = 21.5;
+    private static final double WHEELBASE = 21.5;
 
-    private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(0.0);
-    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(0.0);
-    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(0.0);
-    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(0.0);
+    private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(238.9);
+    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.5);
+    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(255.6);
+    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(154.4);
 
-    private static final double ROTATION_P=1/(2*Math.PI);
+    //private static final double ROTATION_P=1/(2*Math.PI);
 
     private static DrivetrainSubsystem instance;
 
@@ -73,7 +73,7 @@ public class DrivetrainSubsystem extends Subsystem {
             new Translation2d(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0)
     );
 
-    private final Gyroscope gyroscope = new NavX(SPI.Port.kMXP);
+    private final Gyroscope gyroscope = new NavX(SerialPort.Port.kUSB);
 
     public DrivetrainSubsystem() {
         gyroscope.calibrate();
@@ -117,9 +117,7 @@ public class DrivetrainSubsystem extends Subsystem {
         rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
         ChassisSpeeds speeds;
         if (fieldOriented) {
-                double err=gyroscope.getAngle().toRadians()-rotation;
-                double power=-err*ROTATION_P;
-            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), power,
+            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
                     Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees()));
         } else {
             speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);

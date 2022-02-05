@@ -1,5 +1,8 @@
 package com.swervedrivespecialties.exampleswerve;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -12,6 +15,10 @@ public class Robot extends TimedRobot {
     public static OI getOi() {
         return oi;
     }
+
+   // public static CANSparkMax armMotor = new CANSparkMax(11, MotorType.kBrushless);
+
+    
 
     @Override
     public void robotInit() {

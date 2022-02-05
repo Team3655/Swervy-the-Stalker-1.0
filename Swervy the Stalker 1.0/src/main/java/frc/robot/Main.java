@@ -1,4 +1,6 @@
-package com.swervedrivespecialties.exampleswerve;
+package frc.robot;
+
+import com.swervedrivespecialties.exampleswerve.Robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
 
