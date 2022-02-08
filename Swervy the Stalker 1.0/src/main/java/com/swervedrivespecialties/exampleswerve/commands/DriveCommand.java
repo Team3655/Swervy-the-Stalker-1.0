@@ -5,7 +5,6 @@ import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.math.geometry.Translation2d;
 import org.frcteam2910.common.robot.Utilities;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveCommand extends Command {
 

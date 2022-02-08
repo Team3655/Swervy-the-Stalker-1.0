@@ -1,9 +1,8 @@
 package com.swervedrivespecialties.exampleswerve;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -11,20 +10,23 @@ public class Robot extends TimedRobot {
     private static OI oi;
 
     private static DrivetrainSubsystem drivetrain;
+    private static PneumaticSubsystem pneumatic;
+    private static ArmSubsystem arm;
 
     public static OI getOi() {
         return oi;
     }
-
-   // public static CANSparkMax armMotor = new CANSparkMax(11, MotorType.kBrushless);
-
-    
+   
 
     @Override
     public void robotInit() {
         oi = new OI();
         drivetrain = DrivetrainSubsystem.getInstance();
+        pneumatic = PneumaticSubsystem.getInstance();
+        arm = ArmSubsystem.getInstance();
+        //ArmSubsystem.getInstance().Arm_SwervyInit();
     }
+
 
     @Override
     public void robotPeriodic() {
