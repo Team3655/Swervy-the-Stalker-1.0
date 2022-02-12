@@ -1,8 +1,10 @@
 package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.InstantCommand;
@@ -25,6 +27,7 @@ public class OI {
         //    new InstantCommand(() -> ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).toggleEnabled())
         //); 
 
+        //Pneumatic Subsystems
         new JoystickButton(secondaryJoystick, 4).whenPressed(
                 new InstantCommand(() -> PneumaticSubsystem.getInstance().closeGrip1Solenoid())
         ); 
@@ -37,10 +40,20 @@ public class OI {
         new JoystickButton(secondaryJoystick, 3).whenPressed(
             new InstantCommand(() -> PneumaticSubsystem.getInstance().openGrip2Solenoid())
         ); 
+        //Intake Subsystems
+        new JoystickButton(secondaryJoystick, 5).whenPressed(
+            new InstantCommand(() -> IntakeSubsystems.getInstance().itakeFWD())
+        );
+        new JoystickButton(secondaryJoystick, 6).whenPressed(
+            new InstantCommand(() -> IntakeSubsystems.getInstance().itakeBWD())
+        );
+        
+
         // Meed to add toggle control of Air compressor
-        //new JoystickButton(secondaryJoystick, 8).whenPressed(
-        //    new InstantCommand(() -> pcm.)
-        //); 
+      /* new JoystickButton(secondaryJoystick, 8).whenPressed(
+            new InstantCommand(() -> Compressor())
+        ); */
+    
     }
 
     public Joystick getPrimaryJoystick() {
