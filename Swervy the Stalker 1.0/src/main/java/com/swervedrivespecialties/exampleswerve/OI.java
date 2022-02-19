@@ -3,6 +3,7 @@ package com.swervedrivespecialties.exampleswerve;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -23,9 +24,9 @@ public class OI {
                 new InstantCommand(() -> DrivetrainSubsystem.getInstance().resetGyroscope())
         );
         //Toggle between Arm and Base
-        //new JoystickButton(primaryJoystick, 1).whenPressed(
-        //    new InstantCommand(() -> ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).toggleEnabled())
-        //); 
+         //   new JoystickButton(primaryJoystick, 1).whenPressed(
+         //   new InstantCommand(() -> ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).toggleEnabled())
+       // ); 
 
         //Pneumatic Subsystems
         new JoystickButton(secondaryJoystick, 4).whenPressed(
@@ -42,12 +43,27 @@ public class OI {
         ); 
         //Intake Subsystems
         new JoystickButton(secondaryJoystick, 5).whenPressed(
-            new InstantCommand(() -> IntakeSubsystems.getInstance().itakeFWD())
-        );
-        new JoystickButton(secondaryJoystick, 6).whenPressed(
             new InstantCommand(() -> IntakeSubsystems.getInstance().itakeBWD())
         );
-        
+        new JoystickButton(secondaryJoystick, 6).whenPressed(
+            new InstantCommand(() -> IntakeSubsystems.getInstance().itakeFWD())
+        );
+        new JoystickButton(secondaryJoystick, 10).whenPressed(
+            new InstantCommand(() -> IntakeSubsystems.getInstance().itakeOff())
+        );
+        //Shoot Subsystem
+        new JoystickButton(secondaryJoystick, 11).whenPressed(
+            new InstantCommand(() -> ShootSubsystem.getInstance().indexOn())
+        );
+        new JoystickButton(secondaryJoystick, 12).whenPressed(
+            new InstantCommand(() -> ShootSubsystem.getInstance().indexOff())
+        ); 
+        new JoystickButton(secondaryJoystick, 11).whenPressed(
+            new InstantCommand(() -> ShootSubsystem.getInstance().shootOn())
+        );
+        new JoystickButton(secondaryJoystick, 12).whenPressed(
+            new InstantCommand(() -> ShootSubsystem.getInstance().shootOff())
+        );
 
         // Meed to add toggle control of Air compressor
       /* new JoystickButton(secondaryJoystick, 8).whenPressed(

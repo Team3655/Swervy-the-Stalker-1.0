@@ -21,15 +21,15 @@ import org.frcteam2910.common.robot.drivers.Mk2SwerveModuleBuilder;
 import org.frcteam2910.common.robot.drivers.NavX;
 
 public class DrivetrainSubsystem extends Subsystem {
-    private static final double TRACKWIDTH = 21.5;
-    private static final double WHEELBASE = 21.5;
+    private static final double TRACKWIDTH = 22;
+    private static final double WHEELBASE = 22;
 
-    private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(238.9);
-    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.5);
-    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(255.6);
-    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(154.4);
+    private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(262.75);
+    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(300.31);
+    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(203.75);
+    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(14);
 
-    //private static final double ROTATION_P=1/(2*Math.PI);
+    private static final double ROTATION_P=1/(2*Math.PI);
 
     private static DrivetrainSubsystem instance;
 
@@ -77,7 +77,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
     public DrivetrainSubsystem() {
         gyroscope.calibrate();
-        gyroscope.setInverted(true); // You might not need to invert the gyro
+        gyroscope.setInverted(false); // You might not need to invert the gyro
 
         frontLeftModule.setName("Front Left");
         frontRightModule.setName("Front Right");

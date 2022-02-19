@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
-public class PneumaticSubsystem extends Subsystem {
+public class PneumaticSubsystem {
   private final PneumaticsControlModule pcm = new PneumaticsControlModule();
   private final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
   private final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
@@ -38,7 +38,7 @@ public class PneumaticSubsystem extends Subsystem {
     
     
 
-  @Override
+  
   public void periodic() {
       // This method will be called once per scheduler run
       //Solenoid Toggle
@@ -80,11 +80,7 @@ public class PneumaticSubsystem extends Subsystem {
 
       //  boolean enabled = compressor.enabled();
           
-  protected void initDefaultCommand() {
-  
-    
-
-    }
+ 
 
   }
 

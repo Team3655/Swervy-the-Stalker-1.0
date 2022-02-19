@@ -27,11 +27,11 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-       // drivetrain = DrivetrainSubsystem.getInstance();
+        drivetrain = DrivetrainSubsystem.getInstance();
         pneumatic = PneumaticSubsystem.getInstance();
         arm = ArmSubsystem.getInstance();
         
-        //ArmSubsystem.getInstance().Arm_SwervyInit();
+        ArmSubsystem.getInstance().Arm_SwervyInit();
     }
 
 
