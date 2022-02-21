@@ -23,14 +23,14 @@ public class ShootSubsystem {
    PIDController pidBtm = new PIDController(.1, 2, 0);
   
   public void periodic() {
-    pidTop.setSetpoint(0.5);
-    pidBtm.setSetpoint(0.5);
+    pidTop.setSetpoint(-0.8);
+    pidBtm.setSetpoint(0.8);
     shootBtmMotor.set(pidBtm.calculate(shootBtmMotor.getEncoder().getVelocity()));
     shootTopMotor.set(pidTop.calculate(shootTopMotor.getEncoder().getVelocity())); 
   }
 
     public void indexOn(){
-        indexMotor.set(-0.3);
+        indexMotor.set(0.6);
     }
 
     public void indexOff(){
@@ -40,8 +40,9 @@ public class ShootSubsystem {
 //--Shooting Motors need to be in velocity (PID) 
 
     public void shootOn(){
-        shootBtmMotor.set(0.1);
-        shootTopMotor.set(0.1);
+      shootTopMotor.set(-1);
+      shootBtmMotor.set(1);
+        
     }
     public void shootOff(){
       shootBtmMotor.set(0);

@@ -8,18 +8,21 @@ import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
 public class PneumaticSubsystem {
-  private final PneumaticsControlModule pcm = new PneumaticsControlModule();
+  private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
   private final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
   private final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
-  private static Compressor compressor=new Compressor(10, PneumaticsModuleType.CTREPCM);
+  private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
+  private static Compressor compressor=new Compressor(RobotMap.ID_PCM, PneumaticsModuleType.CTREPCM);
 
   private static PneumaticSubsystem instance;
 
+  private Joystick  primaryJoystick = new Joystick(0);
   private Joystick  secondaryJoystick = new Joystick(1);
 
   public PneumaticSubsystem() {
@@ -52,6 +55,10 @@ public class PneumaticSubsystem {
         System.out.println(grip1Solenoid.get());
       }
 
+      if (primaryJoystick.getRawButtonPressed(5)){
+        intakeSolenoid.toggle();
+      }
+
       if(secondaryJoystick.getRawButtonPressed(5)){
           if(compressor.enabled()){
             compressor.disable();
@@ -78,9 +85,16 @@ public class PneumaticSubsystem {
     grip2Solenoid.set(Value.kReverse);
   }
 
+  public void extendSolenoid() {
+    intakeSolenoid.set(true);
+  }
+
+  public void retractSolenoid() {
+    intakeSolenoid.set(false);
+  }
       //  boolean enabled = compressor.enabled();
           
  
 
-  }
+}
 

@@ -4,8 +4,6 @@ import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
-
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.InstantCommand;
@@ -41,27 +39,34 @@ public class OI {
         new JoystickButton(secondaryJoystick, 3).whenPressed(
             new InstantCommand(() -> PneumaticSubsystem.getInstance().openGrip2Solenoid())
         ); 
+        //new JoystickButton(primaryJoystick, 4).whenPressed(
+        //    new InstantCommand(() -> PneumaticSubsystem.getInstance().extendSolenoid())
+        //); 
+        //new JoystickButton(primaryJoystick, 5).whenPressed(
+        //    new InstantCommand(() -> PneumaticSubsystem.getInstance().retractSolenoid())
+        //); 
+        
         //Intake Subsystems
-        new JoystickButton(secondaryJoystick, 5).whenPressed(
+        new JoystickButton(primaryJoystick, 5).whenPressed(
             new InstantCommand(() -> IntakeSubsystems.getInstance().itakeBWD())
         );
-        new JoystickButton(secondaryJoystick, 6).whenPressed(
+        new JoystickButton(primaryJoystick, 6).whenPressed(
             new InstantCommand(() -> IntakeSubsystems.getInstance().itakeFWD())
         );
-        new JoystickButton(secondaryJoystick, 10).whenPressed(
+        new JoystickButton(primaryJoystick, 4).whenPressed(
             new InstantCommand(() -> IntakeSubsystems.getInstance().itakeOff())
         );
         //Shoot Subsystem
-        new JoystickButton(secondaryJoystick, 11).whenPressed(
+        new JoystickButton(secondaryJoystick, 5).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().indexOn())
         );
-        new JoystickButton(secondaryJoystick, 12).whenPressed(
+        new JoystickButton(secondaryJoystick, 6).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().indexOff())
         ); 
-        new JoystickButton(secondaryJoystick, 11).whenPressed(
+        new JoystickButton(secondaryJoystick, 5).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().shootOn())
         );
-        new JoystickButton(secondaryJoystick, 12).whenPressed(
+        new JoystickButton(secondaryJoystick, 6).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().shootOff())
         );
 
