@@ -25,6 +25,8 @@ public class PneumaticSubsystem {
   private Joystick  primaryJoystick = new Joystick(0);
   private Joystick  secondaryJoystick = new Joystick(1);
 
+  private static boolean iTakeStatus = false;
+
   public PneumaticSubsystem() {
     //System.out.println(grip1Solenoid.get());
     grip1Solenoid.set(Value.kForward);
@@ -43,7 +45,7 @@ public class PneumaticSubsystem {
 
   
   public void periodic() {
-      // This method will be called once per scheduler run
+      //This method will be called once per scheduler run
       //Solenoid Toggle
       if (secondaryJoystick.getRawButtonPressed(1)){
         grip1Solenoid.toggle();
@@ -55,8 +57,9 @@ public class PneumaticSubsystem {
         System.out.println(grip1Solenoid.get());
       }
 
-      if (primaryJoystick.getRawButtonPressed(5)){
+      if (secondaryJoystick.getRawButtonPressed(4)){
         intakeSolenoid.toggle();
+        iTakeStatus = !iTakeStatus; 
       }
 
       if(secondaryJoystick.getRawButtonPressed(5)){
@@ -68,33 +71,11 @@ public class PneumaticSubsystem {
       }
     }
   
-
-  public void closeGrip1Solenoid() {
-    grip1Solenoid.set(Value.kForward);
-  }
-
-  public void openGrip1Solenoid() {
-    grip1Solenoid.set(Value.kReverse);
-  }
-
-  public void closeGrip2Solenoid() {
-    grip2Solenoid.set(Value.kForward);
-  }
-
-  public void openGrip2Solenoid() {
-    grip2Solenoid.set(Value.kReverse);
-  }
-
-  public void extendSolenoid() {
-    intakeSolenoid.set(true);
-  }
-
-  public void retractSolenoid() {
-    intakeSolenoid.set(false);
-  }
       //  boolean enabled = compressor.enabled();
           
- 
+    public static boolean getItakeStatus() {
+      return iTakeStatus;
+    }
 
 }
 

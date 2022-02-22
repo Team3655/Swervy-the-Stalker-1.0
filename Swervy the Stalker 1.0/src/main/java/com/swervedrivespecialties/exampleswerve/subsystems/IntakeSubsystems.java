@@ -12,33 +12,55 @@ public class IntakeSubsystems{
   public IntakeSubsystems() {}
 
   private static IntakeSubsystems instance;
-  private Joystick  secondaryJoystick = new Joystick(1);
+  private Joystick primaryJoystick = new Joystick(0);
 
-  private CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE, MotorType.kBrushless);
+  private CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE, MotorType.kBrushless); 
+  boolean iTakeOff = true;
 
   public void periodic() {
-    double intake = -Robot.getOi().getPrimaryJoystick().getRawAxis(2);
-    intake = Utilities.deadband(intake);
+
+    // variable intake
+    double intake = primaryJoystick.getRawAxis(2);
     // Square the forward stick
     intake = Math.copySign(Math.pow(intake, 2.0), intake);
-    intakeMotor.set(-intake);
 
-    double outtake = -Robot.getOi().getPrimaryJoystick().getRawAxis(3);
+    double outtake = primaryJoystick.getRawAxis(3);
     outtake = Utilities.deadband(outtake);
     // Square the forward stick
     outtake = Math.copySign(Math.pow(outtake, 2.0), outtake);
-    intakeMotor.set(outtake);
+
+    if (iTakeOff) {
+        intakeMotor.set((outtake + (-intake))/1.25);
+    }
+
+
+    // fixed speed intake 
+    if (primaryJoystick.getRawButtonReleased(4)) {
+        iTakeOff();
+    }
+
+    if (primaryJoystick.getRawButtonReleased(5)) {
+        iTakeFWD();
+    }
+
+    if (primaryJoystick.getRawButtonReleased(6)) {
+        iTakeBWD();
+    }
+
 }   
 
-    public void itakeFWD(){
+    public void iTakeFWD(){
+        iTakeOff = false;
         intakeMotor.set(-0.5);
     }
 
-    public void itakeBWD(){
+    public void iTakeBWD(){
+        iTakeOff = false;
         intakeMotor.set(0.5);
     }
 
-    public void itakeOff(){
+    public void iTakeOff(){
+        iTakeOff = true;
         intakeMotor.set(0);
     }
 
