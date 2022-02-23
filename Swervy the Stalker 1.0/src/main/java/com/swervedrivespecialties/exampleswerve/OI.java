@@ -44,7 +44,7 @@ public class OI {
             new InstantCommand(() -> ShootSubsystem.getInstance().sLiftUp())
         ); */
         new JoystickButton(secondaryJoystick, 1).whenPressed(
-            new InstantCommand(() -> ShootSubsystem.getInstance().sLiftDown())
+            new InstantCommand(() -> ShootSubsystem.getInstance().sLiftMove())
         );
 
         new JoystickButton(secondaryJoystick, 5).whenPressed(
@@ -53,12 +53,14 @@ public class OI {
         new JoystickButton(secondaryJoystick, 6).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().indexOff())
         ); 
+
+        /*
         new JoystickButton(secondaryJoystick, 5).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().shootOn())
         );
         new JoystickButton(secondaryJoystick, 6).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().shootOff())
-        );
+        ); */
 
         // Meed to add toggle control of Air compressor
       /* new JoystickButton(secondaryJoystick, 8).whenPressed(

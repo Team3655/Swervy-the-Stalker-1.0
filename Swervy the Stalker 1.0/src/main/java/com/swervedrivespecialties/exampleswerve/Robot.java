@@ -3,6 +3,7 @@ package com.swervedrivespecialties.exampleswerve;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -16,6 +17,7 @@ public class Robot extends TimedRobot {
     private static PneumaticSubsystem pneumatic;
     //private static ArmSubsystem arm;
     private static IntakeSubsystems itake;
+    private static ShootSubsystem shoot;
 
 
     public static OI getOi() {
@@ -30,6 +32,7 @@ public class Robot extends TimedRobot {
         drivetrain = DrivetrainSubsystem.getInstance();
         pneumatic = PneumaticSubsystem.getInstance();
         itake = IntakeSubsystems.getInstance();
+        shoot = ShootSubsystem.getInstance();
         //arm = ArmSubsystem.getInstance();
         //ArmSubsystem.getInstance().Arm_SwervyInit();
     }
@@ -42,6 +45,7 @@ public class Robot extends TimedRobot {
             itake.periodic();
         }
         pneumatic.periodic();
+        shoot.periodic();
     }
 
 

@@ -31,37 +31,36 @@ public class ShootSubsystem {
    private SparkMaxPIDController EPid;
 
   public void periodic() {
-    pidTop.setSetpoint(-0.8);
+   /* pidTop.setSetpoint(-0.8);
     pidBtm.setSetpoint(0.8);
     shootBtmMotor.set(pidBtm.calculate(shootBtmMotor.getEncoder().getVelocity()));
-    shootTopMotor.set(pidTop.calculate(shootTopMotor.getEncoder().getVelocity())); 
+    shootTopMotor.set(pidTop.calculate(shootTopMotor.getEncoder().getVelocity())); */
   }
 
-  public void Elevator(CANSparkMax sLift){
+  /*public double Elevator(CANSparkMax sLift){
     this.sLift=sLift;
     EPid=this.sLift.getPIDController();
     EPid.setP(1);
     EPid.setI(0);
     EPid.setD(0);
-    EPid.setFF(0);
     EPid.setOutputRange(-0.3, 0.3);
-  }
-  private void setPos(double sLift){
+    return EPid();
+  }*/
+
+ /* private void setPos(double sLift){
     if (sLift<-13){
         sLift=-13;
     } else if (sLift>0){
         sLift=0;
     }
     EPid.setReference(sLift, ControlType.kPosition);
-  }
-  private double getPos(){
-    return sLift.getEncoder().getPosition();
-  }
+  } */
+ 
 
   //Elevator
-    public void sLiftDown(){
+    public void sLiftMove(){
       while (secondaryJoystick.getRawButton(1)) {
-        sLift.set(getPos());
+        sLift.set(-0.3);
       } 
       sLift.set(0);
     }
