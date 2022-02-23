@@ -39,6 +39,14 @@ public class OI {
 
 
         //Shoot Subsystem
+
+      /*  new JoystickButton(secondaryJoystick, 2).whenPressed(
+            new InstantCommand(() -> ShootSubsystem.getInstance().sLiftUp())
+        ); */
+        new JoystickButton(secondaryJoystick, 1).whenPressed(
+            new InstantCommand(() -> ShootSubsystem.getInstance().sLiftDown())
+        );
+
         new JoystickButton(secondaryJoystick, 5).whenPressed(
             new InstantCommand(() -> ShootSubsystem.getInstance().indexOn())
         );
