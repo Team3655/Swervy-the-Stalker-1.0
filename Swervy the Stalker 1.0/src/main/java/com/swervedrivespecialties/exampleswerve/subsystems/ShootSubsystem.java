@@ -9,11 +9,13 @@ import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
+import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 
-public class ShootSubsystem extends TimedRobot {
+public class ShootSubsystem {
 
   private static ShootSubsystem instance;
   private Joystick  secondaryJoystick = new Joystick(1);
+  private static IntakeSubsystems itake;
 
   private CANSparkMax sLift = new CANSparkMax(RobotMap.ELEVATION, MotorType.kBrushless);
   private RelativeEncoder sLifte;
@@ -27,6 +29,9 @@ public class ShootSubsystem extends TimedRobot {
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
 
   public ShootSubsystem() {
+
+    itake = IntakeSubsystems.getInstance();
+
     // sLift init
     sLift.restoreFactoryDefaults();
     sLifte = sLift.getEncoder();
@@ -37,14 +42,14 @@ public class ShootSubsystem extends TimedRobot {
     topEncoder = sLift.getEncoder();
     btmEncoder = sLift.getEncoder();
 
-    kP = 0.000003; 
+    kP = 0.0000015; 
     kI = 0;
     kD = 0; 
     kIz = 0; 
     kFF = 0.000165; 
     kMaxOutput = 1; 
     kMinOutput = -1;
-    maxRPM = 4000;
+    maxRPM = 5200;
 
     topPidController.setP(kP);
     topPidController.setI(kI);
@@ -81,6 +86,7 @@ public class ShootSubsystem extends TimedRobot {
     // index periodic 
     if (secondaryJoystick.getRawButton(6)) {
       indexOn();
+      itake.iTakeFWD(.05);
     } else {
       indexOff();
     }

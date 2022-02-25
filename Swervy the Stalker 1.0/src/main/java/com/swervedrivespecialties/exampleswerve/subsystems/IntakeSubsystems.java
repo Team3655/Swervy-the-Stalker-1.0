@@ -26,37 +26,19 @@ public class IntakeSubsystems{
     outtake = Utilities.deadband(outtake);
     // Square the forward stick
     outtake = Math.copySign(Math.pow(outtake, 2.0), outtake);
-    
+
     intakeMotor.set((outtake - intake)/1.25);
+  }   
 
-
-    // fixed speed intake 
-    while (primaryJoystick.getRawButtonPressed(4)) {
-        iTakeOff();
+    public void iTakeFWD(double s){
+        intakeMotor.set(-s);
     }
 
-    while (primaryJoystick.getRawButtonPressed(6)) {
-        iTakeFWD();
-    }
-
-    while (primaryJoystick.getRawButtonPressed(5)) {
-        iTakeBWD();
-    }
-
-}   
-
-    public void iTakeFWD(){
-        iTakeOff = false;
-        intakeMotor.set(-0.5);
-    }
-
-    public void iTakeBWD(){
-        iTakeOff = false;
-        intakeMotor.set(0.5);
+    public void iTakeBWD(double s){
+        intakeMotor.set(s);
     }
 
     public void iTakeOff(){
-        iTakeOff = true;
         intakeMotor.set(0);
     }
 
