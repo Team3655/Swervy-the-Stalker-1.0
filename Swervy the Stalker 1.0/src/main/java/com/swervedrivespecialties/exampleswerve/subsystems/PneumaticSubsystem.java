@@ -1,7 +1,6 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import com.swervedrivespecialties.exampleswerve.OI;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
@@ -11,7 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PneumaticSubsystem {
   private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
@@ -26,11 +25,12 @@ public class PneumaticSubsystem {
   private Joystick  secondaryJoystick = new Joystick(1);
 
   private static boolean iTakeStatus = false;
+  private static boolean compressorEnabled = false;
 
   public PneumaticSubsystem() {
     //System.out.println(grip1Solenoid.get());
     grip1Solenoid.set(Value.kForward);
-    
+    compressor.disable();
   }
    
   public static PneumaticSubsystem getInstance() {
@@ -40,8 +40,6 @@ public class PneumaticSubsystem {
 
     return instance;   
     }
-    
-    
 
   
   public void periodic() {
@@ -62,16 +60,19 @@ public class PneumaticSubsystem {
         iTakeStatus = !iTakeStatus; 
       }
 
-      if(secondaryJoystick.getRawButtonPressed(5)){
-          if(compressor.enabled()){
-            compressor.disable();
-          } else {
-            compressor.enableDigital();
-          }
+
+      if(secondaryJoystick.getRawButtonPressed(8)){ 
+        compressorEnabled = !compressorEnabled;
+        if(compressorEnabled){
+          compressor.enableDigital();
+        } else {
+          compressor.disable();
+        }
       }
+
+      SmartDashboard.putBoolean("Comp Enabled", compressorEnabled);
+
     }
-  
-      //  boolean enabled = compressor.enabled();
           
     public static boolean getItakeStatus() {
       return iTakeStatus;

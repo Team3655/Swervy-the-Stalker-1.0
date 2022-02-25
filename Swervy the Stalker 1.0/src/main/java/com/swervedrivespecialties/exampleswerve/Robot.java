@@ -5,8 +5,6 @@ import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
-
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -15,16 +13,13 @@ public class Robot extends TimedRobot {
 
     private static DrivetrainSubsystem drivetrain;
     private static PneumaticSubsystem pneumatic;
-    //private static ArmSubsystem arm;
+    private static ArmSubsystem arm;
     private static IntakeSubsystems itake;
     private static ShootSubsystem shoot;
-
 
     public static OI getOi() {
         return oi;
     }
-   
-   
 
     @Override
     public void robotInit() {
@@ -33,10 +28,9 @@ public class Robot extends TimedRobot {
         pneumatic = PneumaticSubsystem.getInstance();
         itake = IntakeSubsystems.getInstance();
         shoot = ShootSubsystem.getInstance();
-        //arm = ArmSubsystem.getInstance();
-        //ArmSubsystem.getInstance().Arm_SwervyInit();
+        arm = ArmSubsystem.getInstance();
+        ArmSubsystem.getInstance().Arm_SwervyInit();
     }
-
 
     @Override
     public void robotPeriodic() {
@@ -46,8 +40,8 @@ public class Robot extends TimedRobot {
         }
         pneumatic.periodic();
         shoot.periodic();
+        arm.periodic();
     }
-
 
     public static void intake() {
     }

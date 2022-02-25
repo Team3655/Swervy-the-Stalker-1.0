@@ -25,7 +25,7 @@ public class DrivetrainSubsystem extends Subsystem {
     private static final double WHEELBASE = 22;
 
     private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(253.5);
-    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(340.9);
+    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(328.8);
     private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(203.4);
     private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(13.0);
 
@@ -77,7 +77,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
     public DrivetrainSubsystem() {
         gyroscope.calibrate();
-        gyroscope.setInverted(false); // You might not need to invert the gyro
+        gyroscope.setInverted(true); // You might not need to invert the gyro
 
         frontLeftModule.setName("Front Left");
         frontRightModule.setName("Front Right");
@@ -89,6 +89,7 @@ public class DrivetrainSubsystem extends Subsystem {
         if (instance == null) {
             instance = new DrivetrainSubsystem();
         }
+
 
         return instance;
     }
