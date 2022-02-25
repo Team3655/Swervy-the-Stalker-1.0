@@ -18,11 +18,11 @@ public class IntakeSubsystems{
   public void periodic() {
 
     // variable intake
-    double intake = secondaryJoystick.getRawAxis(2);
+    double intake = primaryJoystick.getRawAxis(2);
     // Square the forward stick
     intake = Math.copySign(Math.pow(intake, 2.0), intake);
 
-    double outtake = secondaryJoystick.getRawAxis(3);
+    double outtake = primaryJoystick.getRawAxis(3);
     outtake = Utilities.deadband(outtake);
     // Square the forward stick
     outtake = Math.copySign(Math.pow(outtake, 2.0), outtake);
@@ -31,15 +31,15 @@ public class IntakeSubsystems{
 
 
     // fixed speed intake 
-    if (primaryJoystick.getRawButtonReleased(4)) {
+    while (primaryJoystick.getRawButtonPressed(4)) {
         iTakeOff();
     }
 
-    if (primaryJoystick.getRawButtonReleased(6)) {
+    while (primaryJoystick.getRawButtonPressed(6)) {
         iTakeFWD();
     }
 
-    if (primaryJoystick.getRawButtonReleased(5)) {
+    while (primaryJoystick.getRawButtonPressed(5)) {
         iTakeBWD();
     }
 
