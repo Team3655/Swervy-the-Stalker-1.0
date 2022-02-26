@@ -13,7 +13,7 @@ public class OI {
     
     
     public OI() {
-        // Back button zeroes the drivetrain
+        // Back button zeroes the drivetrain gyro
         new JoystickButton(primaryJoystick, 7).whenPressed(
                 new InstantCommand(() -> DrivetrainSubsystem.getInstance().resetGyroscope()));  
     }

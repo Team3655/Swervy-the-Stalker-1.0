@@ -132,7 +132,7 @@ public class ShootSubsystem {
     public void indexOff(){
         indexMotor.set(0.0);
     }
-//--Shooting Motors need to be in velocity (PID) 
+    //Shooting
     public void shootOn(){
       shootTopMotor.set(-1);
       shootBtmMotor.set(1);

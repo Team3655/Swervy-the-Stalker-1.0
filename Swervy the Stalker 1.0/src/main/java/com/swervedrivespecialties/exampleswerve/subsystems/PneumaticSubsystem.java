@@ -23,7 +23,7 @@ public class PneumaticSubsystem {
 
   private Joystick  primaryJoystick = new Joystick(0);
   private Joystick  secondaryJoystick = new Joystick(1);
-
+  
   private static boolean iTakeStatus = false;
   private static boolean compressorEnabled = false;
 
@@ -40,7 +40,6 @@ public class PneumaticSubsystem {
 
     return instance;   
     }
-
   
   public void periodic() {
       //This method will be called once per scheduler run

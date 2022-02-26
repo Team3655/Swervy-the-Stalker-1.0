@@ -34,6 +34,7 @@ public class ArmSubsystem extends Subsystem {
     Joystick  primaryJoystick = new Joystick(0);
     Joystick  secondaryJoystick = new Joystick(1);
 
+    //Arm PID
     kP = 0.000006; 
     kI = 0;
     kD = 0; 
@@ -59,6 +60,7 @@ public class ArmSubsystem extends Subsystem {
     }
 
     public void periodic() {
+    //ARM PERIODIC
        double setPoint = (Robot.getOi().getSecondaryJoystick().getRawAxis(2)-Robot.getOi().getSecondaryJoystick().getRawAxis(3))*maxRPM;
        leftPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
        rightPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
