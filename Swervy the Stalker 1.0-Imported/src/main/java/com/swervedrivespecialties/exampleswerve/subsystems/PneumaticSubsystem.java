@@ -19,7 +19,7 @@ public class PneumaticSubsystem {
   public final DoubleSolenoid grip3Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
   public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);
 
-  private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
+ // private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
   private static Compressor compressor=new Compressor(RobotMap.ID_PCM, PneumaticsModuleType.CTREPCM);
 
   private static PneumaticSubsystem instance;
@@ -51,31 +51,32 @@ public class PneumaticSubsystem {
   
   public void periodic() {
       //This method will be called once per scheduler run
-      //Solenoid Toggle
-    boolean Grip1Open = (grip1Solenoid.get() == Value.kReverse);
-    boolean Grip2Open = (grip2Solenoid.get() == Value.kReverse);
-    boolean Grip3Open = (grip3Solenoid.get() == Value.kReverse);
-    boolean Grip4Open = (grip4Solenoid.get() == Value.kReverse);
-
-      SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
-      SmartDashboard.putBoolean("Grip2Solenoid State", Grip2Open);
-      SmartDashboard.putBoolean("Grip3Solenoid State", Grip3Open);
-      SmartDashboard.putBoolean("Grip4Solenoid State", Grip4Open);
+      //Solenoid Toggle/
 
       if (secondaryJoystick.getRawButtonPressed(1)){
         grip1Solenoid.toggle();
-        System.out.println(grip1Solenoid.get());
+       // System.out.println(grip1Solenoid.get());
           }
 
       if (secondaryJoystick.getRawButtonPressed(2)){
         grip2Solenoid.toggle();
-        System.out.println(grip1Solenoid.get());
+        //System.out.println(grip2Solenoid.get());
       }
 
+      if (secondaryJoystick.getRawButtonPressed(3)){
+        grip3Solenoid.toggle();
+        //System.out.println(grip3Solenoid.get());
+      }
+      
       if (secondaryJoystick.getRawButtonPressed(4)){
+        grip4Solenoid.toggle();
+        //System.out.println(grip4Solenoid.get());
+      }
+
+     /* if (secondaryJoystick.getRawButtonPressed(4)){
         intakeSolenoid.toggle();
         iTakeStatus = !iTakeStatus; 
-      }
+      } */
 
 
       if(secondaryJoystick.getRawButtonPressed(8)){ 

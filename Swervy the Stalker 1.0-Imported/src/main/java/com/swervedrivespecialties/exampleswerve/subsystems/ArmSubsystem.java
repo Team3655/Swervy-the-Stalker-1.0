@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.swervedrivespecialties.exampleswerve.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
-import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
+//import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 
 
 public class ArmSubsystem extends Subsystem {
@@ -71,11 +73,28 @@ public class ArmSubsystem extends Subsystem {
        double setPoint = (Robot.getOi().getSecondaryJoystick().getRawAxis(2)-Robot.getOi().getSecondaryJoystick().getRawAxis(3))*maxRPM;
        leftEncoderPos = leftEncoder.getPosition();
        rightEncoderPos = rightEncoder.getPosition();
-       boolean Grip1Open = getSubsystem().PneumaticSubsystem().grip1Solenoid.get();
-       boolean Grip2Open = (grip2Solenoid.get() == Value.kReverse);
-        boolean Grip3Open = (grip3Solenoid.get() == Value.kReverse);
-        boolean Grip4Open = (grip4Solenoid.get() == Value.kReverse);
+       boolean Grip1Open = PneumaticSubsystem.getInstance().grip1Solenoid.get() == Value.kReverse;
+       boolean Grip2Open = PneumaticSubsystem.getInstance().grip2Solenoid.get() == Value.kReverse;
+       boolean Grip3Open = PneumaticSubsystem.getInstance().grip3Solenoid.get() == Value.kReverse;
+       boolean Grip4Open = PneumaticSubsystem.getInstance().grip4Solenoid.get() == Value.kReverse;
 
+       SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
+       SmartDashboard.putBoolean("Grip2Solenoid State", Grip2Open);
+       SmartDashboard.putBoolean("Grip3Solenoid State", Grip3Open);
+       SmartDashboard.putBoolean("Grip4Solenoid State", Grip4Open);
+
+       if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 34 && leftEncoderPos <= 66) || (rightEncoderPos <= -34 && rightEncoderPos >= -66))){
+        setPoint = 0;
+        } 
+
+        if((Grip1Open == false || Grip3Open == false) && ((leftEncoderPos >= 134 && leftEncoderPos <= 166) || (rightEncoderPos <= -134 && rightEncoderPos >= -166))){
+            setPoint = 0;
+            } 
+        
+            if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 234 && leftEncoderPos <= 266) || (rightEncoderPos <= -234 && rightEncoderPos >= -266))){
+                setPoint = 0;
+                } 
+        
 
        if((setPoint > 0) && ((leftEncoderPos >= 255) || (rightEncoderPos <= -255))){
         setPoint = 0;
