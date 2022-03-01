@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PneumaticSubsystem {
-  private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
+  /*private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
   public final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
   public final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
   public final DoubleSolenoid grip3Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
-  public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);
+  public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);*/
 
  // private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
   private static Compressor compressor=new Compressor(RobotMap.ID_PCM, PneumaticsModuleType.CTREPCM);
@@ -34,10 +34,6 @@ public class PneumaticSubsystem {
 
   public void PneumaticSubsystem() {
     //System.out.println(grip1Solenoid.get());
-    grip1Solenoid.set(Value.kReverse);
-    grip2Solenoid.set(Value.kReverse);
-    grip3Solenoid.set(Value.kReverse);
-    grip4Solenoid.set(Value.kReverse);
     compressor.disable();
   }
    
@@ -53,25 +49,17 @@ public class PneumaticSubsystem {
       //This method will be called once per scheduler run
       //Solenoid Toggle/
 
-      if (secondaryJoystick.getRawButtonPressed(1)){
-        grip1Solenoid.toggle();
-       // System.out.println(grip1Solenoid.get());
-          }
-
-      if (secondaryJoystick.getRawButtonPressed(2)){
-        grip2Solenoid.toggle();
-        //System.out.println(grip2Solenoid.get());
-      }
-
-      if (secondaryJoystick.getRawButtonPressed(3)){
-        grip3Solenoid.toggle();
-        //System.out.println(grip3Solenoid.get());
-      }
       
-      if (secondaryJoystick.getRawButtonPressed(4)){
-        grip4Solenoid.toggle();
+
+      //if (secondaryJoystick.getRawButtonPressed(3)){
+      //  grip3Solenoid.toggle();
+        //System.out.println(grip3Solenoid.get());
+      //}
+      
+      //if (secondaryJoystick.getRawButtonPressed(4)){
+      //  grip4Solenoid.toggle();
         //System.out.println(grip4Solenoid.get());
-      }
+      //}
 
      /* if (secondaryJoystick.getRawButtonPressed(4)){
         intakeSolenoid.toggle();
