@@ -75,7 +75,7 @@ public class ShootSubsystem {
 
     // sLift periodic 
     while (secondaryJoystick.getRawButton(1)) {
-      sLift.set(.3);
+      sLift.set(sLifte);
     }
 
     while (secondaryJoystick.getRawButton(2)) {
@@ -132,7 +132,7 @@ public class ShootSubsystem {
     public void indexOff(){
         indexMotor.set(0.0);
     }
-    //Shooting
+    //Shooting Motors
     public void shootOn(){
       shootTopMotor.set(-1);
       shootBtmMotor.set(1);
