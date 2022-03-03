@@ -56,15 +56,13 @@ public class ArmSubsystem extends Subsystem {
 
     leftArm.restoreFactoryDefaults();
     rightArm.restoreFactoryDefaults();
-    leftArm.setSmartCurrentLimit(20);
-    rightArm.setSmartCurrentLimit(20);
 
     leftEncoder = leftArm.getEncoder();
     rightEncoder = rightArm.getEncoder();
 
 
     //Arm PID
-    kP = 0.00003; 
+    kP = 0.000006; 
     kI = 0;
     kD = 0; 
     kIz = 0; 
@@ -106,8 +104,11 @@ public class ArmSubsystem extends Subsystem {
         if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 34 && leftEncoderPos <= 66) || (rightEncoderPos <= -34 && rightEncoderPos >= -66))){
             setPoint = 0;
 
+        } else if (secondaryJoystick.getRawButtonPressed(1)) {
+            grip1Solenoid.toggle();
+             grip3Solenoid.toggle();
+             // System.out.println(grip1Solenoid.get());
         }
-
 
         if((Grip1Open == false || Grip3Open == false) && ((leftEncoderPos >= 134 && leftEncoderPos <= 166) || (rightEncoderPos <= -134 && rightEncoderPos >= -166))){
             setPoint = 0;
@@ -130,13 +131,8 @@ public class ArmSubsystem extends Subsystem {
 
 
         
-        if (secondaryJoystick.getRawButtonPressed(1) && !((leftEncoderPos >= 140 && leftEncoderPos <= 155))) {
-            grip1Solenoid.toggle();
-            grip3Solenoid.toggle();
-            // System.out.println(grip1Solenoid.get());
-        }
 
-        if (secondaryJoystick.getRawButtonPressed(2) && !((leftEncoderPos >= 40 && leftEncoderPos <= 55))) {
+        if (secondaryJoystick.getRawButtonPressed(2)) {
             grip2Solenoid.toggle();
             grip4Solenoid.toggle();
             //System.out.println(grip2Solenoid.get());

@@ -83,11 +83,12 @@ public class ShootSubsystem {
     SmartDashboard.putNumber("Elevator Position", sLifte.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", sLifte.getVelocity());
     if((secondaryJoystick.getRawButton(1))){
-       sLift.set(0.3);
-       sLiftPos = sLifte.getPosition();
-      }else{
-        sLiftPos = sLifte.getPosition();
+        sLift.set(0.3);
+      }else if (secondaryJoystick.getRawButton(2)){
+        sLift.set(-0.3);
       }
+
+      sLiftPos = sLifte.getPosition();
       
     /*if((secondaryJoystick.getRawButton(2))){
          sLift.set(-0.3);

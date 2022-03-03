@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PneumaticSubsystem {
-  /*private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
-  public final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
-  public final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
-  public final DoubleSolenoid grip3Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
-  public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);*/
+  private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
+  //public final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
+  //public final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
+  //public final DoubleSolenoid grip3Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
+  //public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);
 
- // private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
-  private static Compressor compressor=new Compressor(RobotMap.ID_PCM, PneumaticsModuleType.CTREPCM);
+  //private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
+  private static Compressor compressor = new Compressor(RobotMap.ID_PCM, PneumaticsModuleType.CTREPCM);
 
   private static PneumaticSubsystem instance;
 
@@ -35,11 +35,12 @@ public class PneumaticSubsystem {
   public void PneumaticSubsystem() {
     //System.out.println(grip1Solenoid.get());
     compressor.disable();
+    //intakeSolenoid.toggle();
   }
    
   public static PneumaticSubsystem getInstance() {
     if (instance == null) {
-        instance = new PneumaticSubsystem();
+      instance = new PneumaticSubsystem();
     }
 
     return instance;   
@@ -47,7 +48,7 @@ public class PneumaticSubsystem {
   
   public void periodic() {
       //This method will be called once per scheduler run
-      //Solenoid Toggle/
+      //Solenoid Toggle
 
       
 
@@ -61,10 +62,10 @@ public class PneumaticSubsystem {
         //System.out.println(grip4Solenoid.get());
       //}
 
-     /* if (secondaryJoystick.getRawButtonPressed(4)){
+      /*if (secondaryJoystick.getRawButtonPressed(4)){
         intakeSolenoid.toggle();
         iTakeStatus = !iTakeStatus; 
-      } */
+      }*/
 
 
       if(secondaryJoystick.getRawButtonPressed(8)){ 
