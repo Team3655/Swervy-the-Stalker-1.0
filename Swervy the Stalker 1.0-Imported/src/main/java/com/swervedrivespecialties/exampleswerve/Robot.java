@@ -37,6 +37,9 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
+        /*if (PneumaticSubsystem.getItakeStatus()) {
+            itake.periodic();
+        }*/
         itake.periodic();
         pneumatic.periodic();
         shoot.periodic();

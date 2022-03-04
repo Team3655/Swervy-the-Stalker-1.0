@@ -82,24 +82,30 @@ public class ShootSubsystem {
     sLift.set(0);
     SmartDashboard.putNumber("Elevator Position", sLifte.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", sLifte.getVelocity());
+  
+    //Makes ELevator move w/ limits. [KEEP EVERYTHING!!!]
     if((secondaryJoystick.getRawButton(1))){
-        sLift.set(0.3);
-      }else if (secondaryJoystick.getRawButton(2)){
-        sLift.set(-0.3);
+       sLift.set(0.3);
+       sLiftPos = sLifte.getPosition();
+      }else{
+        sLiftPos = sLifte.getPosition();
       }
-
-      sLiftPos = sLifte.getPosition();
       
-    /*if((secondaryJoystick.getRawButton(2))){
+    if((secondaryJoystick.getRawButton(2))){
          sLift.set(-0.3);
          sLiftPos = sLifte.getPosition();
        }else{
         sLiftPos = sLifte.getPosition();
-       }*/
+       } 
     
-       if((secondaryJoystick.getRawButton(2) && sLiftPos <= -26)){
-         sLift.set(0);
+      if((secondaryJoystick.getRawButton(2) && sLiftPos <= -26)){
+       sLift.set(0);
       }
+      
+      if((secondaryJoystick.getRawButton(1) && sLiftPos >= 20)){
+        sLift.set(0);
+     }
+
 
     // index periodic 
     if (secondaryJoystick.getRawButton(6)) {

@@ -33,7 +33,7 @@ public class RobotMap {
     public static final int ID_OPENGRIP4SOL = 6;
     public static final int ID_CLOSEGRIP4SOL = 7;*/
 
-    public static final int ID_EXTENDINTAKE = 8;
+    public static final int ID_EXTENDINTAKE = 7;
     public static final int ID_PCM = 10;
 
     //INTAKE_&_INDEXER

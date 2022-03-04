@@ -140,7 +140,7 @@ public class ArmSubsystem extends Subsystem {
         
    
        leftPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-       rightPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+       rightPidController.setReference(-leftEncoder.getVelocity(), CANSparkMax.ControlType.kVelocity);
        SmartDashboard.putNumber("Setpoint", setPoint);
         
        SmartDashboard.putNumber("Left P", leftEncoder.getPosition());
