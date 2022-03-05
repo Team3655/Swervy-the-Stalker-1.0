@@ -2,7 +2,7 @@ package org.frcteam2910.common.robot;
 
 public class Utilities {
 	public static double deadband(double input) {
-		return deadband(input, 0.025);  //original 0.025
+		return deadband(input, 0.05);  //original 0.025
 	}
 
 	public static double deadband(double input, double buffer) {
