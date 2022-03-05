@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
@@ -18,7 +19,9 @@ public class ShootSubsystem {
   private static IntakeSubsystems itake;
 
   private CANSparkMax sLift = new CANSparkMax(RobotMap.ELEVATION, MotorType.kBrushless);
-  private RelativeEncoder sLifte;
+  private RelativeEncoder sLifte = sLift.getEncoder();
+  private double sLiftPos = sLifte.getPosition();
+
   private CANSparkMax indexMotor = new CANSparkMax(RobotMap.INDEXER, MotorType.kBrushless);
   private CANSparkMax shootBtmMotor = new CANSparkMax(RobotMap.SHOOTER_BOTTOM, MotorType.kBrushless);
   private CANSparkMax shootTopMotor = new CANSparkMax(RobotMap.SHOOTER_TOP, MotorType.kBrushless);
@@ -34,7 +37,6 @@ public class ShootSubsystem {
 
     // sLift init
     sLift.restoreFactoryDefaults();
-    sLifte = sLift.getEncoder();
 
     // shoot init
     shootTopMotor.restoreFactoryDefaults();
@@ -73,32 +75,51 @@ public class ShootSubsystem {
 
   public void periodic() {
 
-    // sLift periodic 
-    while (secondaryJoystick.getRawButton(1)) {
-      sLift.set(.3);
-    }
+    // sLift periodic
+    sLift.getEncoder(); 
+    sLifte.getPosition();
+    sLiftPos = sLifte.getPosition();
 
-    while (secondaryJoystick.getRawButton(2)) {
-      sLift.set(-.3);
-    }
+    sLift.set(0);
+    SmartDashboard.putNumber("Elevator Position", sLifte.getPosition());
+    SmartDashboard.putNumber("Encoder Velocity", sLifte.getVelocity());
+  
+    //Makes ELevator move w/ limits. [KEEP EVERYTHING!!!]
+    if((secondaryJoystick.getRawButton(1))){
+       sLift.set(0.3);
+       sLiftPos = sLifte.getPosition();
+      }else{
+        sLiftPos = sLifte.getPosition();
+      }
+      
+    if((secondaryJoystick.getRawButton(2))){
+         sLift.set(-0.3);
+         sLiftPos = sLifte.getPosition();
+       }else{
+        sLiftPos = sLifte.getPosition();
+       } 
+    
+      if((secondaryJoystick.getRawButton(2) && sLiftPos <= -28)){
+       sLift.set(0);
+      }
+      
+      if((secondaryJoystick.getRawButton(1) && sLiftPos >= 20)){
+        sLift.set(0);
+     }
 
 
     // index periodic 
     if (secondaryJoystick.getRawButton(6)) {
       indexOn();
-      itake.iTakeFWD(.05);
+      itake.iTakeFWD(.1);
     } else {
       indexOff();
     }
 
-    sLift.set(0);
-    SmartDashboard.putNumber("Encoder Position", sLifte.getPosition());
-    SmartDashboard.putNumber("Encoder Velocity", sLifte.getVelocity());
-
     // shoot periodic 
-    int speed = 0;
-    if (secondaryJoystick.getRawButton(5)) {
-      speed = -1;
+    double speed = 0;
+    while (secondaryJoystick.getRawButton(5)) {
+      speed = ((Robot)Robot.getInstance()).getTuningValue("shootSpeed");
     }
 
     double setPoint = speed*maxRPM;
@@ -108,22 +129,8 @@ public class ShootSubsystem {
         
     SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
     SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
+
   }
-
-  //Elevator
-    public void sLiftUp(){
-      while (secondaryJoystick.getRawButton(2)) {
-        sLift.set(-0.3);
-      } 
-      sLift.set(0);
-    }
-
-    public void sLiftDown(){
-      while (secondaryJoystick.getRawButton(1)) {
-        sLift.set(0.3);
-      } 
-      sLift.set(0);
-    }
 
     public void indexOn(){
         indexMotor.set(0.6);
