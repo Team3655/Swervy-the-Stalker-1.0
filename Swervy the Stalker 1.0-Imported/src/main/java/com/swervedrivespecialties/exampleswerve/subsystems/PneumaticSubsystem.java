@@ -29,7 +29,6 @@ public class PneumaticSubsystem {
 
 
   public void PneumaticSubsystem() {
-    //System.out.println(grip1Solenoid.get());
     compressor.disable();
   }
    

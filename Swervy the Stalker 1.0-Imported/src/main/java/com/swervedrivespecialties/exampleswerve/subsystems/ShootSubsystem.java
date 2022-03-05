@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
@@ -98,7 +99,7 @@ public class ShootSubsystem {
         sLiftPos = sLifte.getPosition();
        } 
     
-      if((secondaryJoystick.getRawButton(2) && sLiftPos <= -26)){
+      if((secondaryJoystick.getRawButton(2) && sLiftPos <= -28)){
        sLift.set(0);
       }
       
@@ -110,15 +111,15 @@ public class ShootSubsystem {
     // index periodic 
     if (secondaryJoystick.getRawButton(6)) {
       indexOn();
-      itake.iTakeFWD(.05);
+      itake.iTakeFWD(.1);
     } else {
       indexOff();
     }
 
     // shoot periodic 
-    int speed = 0;
-    if (secondaryJoystick.getRawButton(5)) {
-      speed = -1;
+    double speed = 0;
+    while (secondaryJoystick.getRawButton(5)) {
+      speed = ((Robot)Robot.getInstance()).getTuningValue("shootSpeed");
     }
 
     double setPoint = speed*maxRPM;

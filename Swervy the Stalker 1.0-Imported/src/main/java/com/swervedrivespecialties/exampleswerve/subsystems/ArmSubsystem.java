@@ -121,7 +121,7 @@ public class ArmSubsystem extends Subsystem {
         } 
         
 */
-        /*if((setPoint > 0) && ((leftEncoderPos >= 255) || (rightEncoderPos <= -255))){
+        /*if((setPoint > 0) && ((leftEncoderPos >= 235) || (rightEncoderPos <= -235))){
             setPoint = 0;
         } */
 

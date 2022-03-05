@@ -17,12 +17,12 @@ public class DriveCommand extends Command {
 
     @Override
     protected void execute() {
-        double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*0.55;
+        double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*0.80;
         forward = Utilities.deadband(forward);
         // Square the forward stick
         forward = Math.copySign(Math.pow(forward, 2.0), forward);
 
-        double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*0.55;
+        double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*0.80;
         strafe = Utilities.deadband(strafe);
         // Square the strafe stick
         strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);
