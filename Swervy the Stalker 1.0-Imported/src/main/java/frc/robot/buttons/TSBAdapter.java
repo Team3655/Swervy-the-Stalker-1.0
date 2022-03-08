@@ -15,8 +15,8 @@ public class TSBAdapter extends ButtonHandler{
     private ControlMode elevatorControlMode;
     private ControlMode armControlMode;
     private Mode mode;
-    //private String[] tuningValues=((Robot)Robot.getInstance()).getKeys();
-    private int currentPropertyNo;
+    private String[] tuningValues;
+    private int currentPropertyNo=0;
     private String currentTuningValue;
     private String inputCache;
     private Joystick armJoystick;
@@ -28,7 +28,8 @@ public class TSBAdapter extends ButtonHandler{
         this.robot=robot;
         mode=Mode.RobotResponse;
         currentPropertyNo=0;
-        //currentTuningValue=tuningValues[currentPropertyNo];
+        tuningValues=Robot.getRobot().getKeys();
+        currentTuningValue=tuningValues[currentPropertyNo];
         inputCache="";
         elevatorControlMode=ControlMode.Joystick;
         armControlMode=ControlMode.PID;

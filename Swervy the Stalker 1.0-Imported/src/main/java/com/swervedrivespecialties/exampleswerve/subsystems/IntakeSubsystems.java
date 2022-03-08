@@ -16,7 +16,7 @@ public class IntakeSubsystems{
   boolean iTakeOff = false;
 
   public void periodic() {
-
+    
     // variable intake
     double intake = primaryJoystick.getRawAxis(2)*.75;
     // Square the forward stick

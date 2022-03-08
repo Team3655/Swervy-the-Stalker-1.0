@@ -117,14 +117,19 @@ public class ShootSubsystem {
     }
 
     // shoot periodic 
-    double speed = 0;
-    while (secondaryJoystick.getRawButton(5)) {
-      //speed = ((Robot)Robot.getInstance()).getTuningValue("shootSpeed");
+    double speed = Robot.getRobot().getTuningValue("shootSpeed");
+    double setPoint = speed*maxRPM;
+    if (secondaryJoystick.getRawButton(5)) {
+      
+      topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+      btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+    } else{
+      setPoint=0;
+      topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
+      btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
     }
 
-    double setPoint = speed*maxRPM;
-    topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-    btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+    
     SmartDashboard.putNumber("Setpoint", setPoint);
         
     SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
