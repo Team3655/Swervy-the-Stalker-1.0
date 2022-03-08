@@ -119,7 +119,7 @@ public class ShootSubsystem {
     // shoot periodic 
     double speed = 0;
     while (secondaryJoystick.getRawButton(5)) {
-      speed = ((Robot)Robot.getInstance()).getTuningValue("shootSpeed");
+      //speed = ((Robot)Robot.getInstance()).getTuningValue("shootSpeed");
     }
 
     double setPoint = speed*maxRPM;

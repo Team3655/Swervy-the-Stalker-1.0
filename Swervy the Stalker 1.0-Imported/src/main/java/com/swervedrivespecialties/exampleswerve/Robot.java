@@ -12,7 +12,7 @@ import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.buttons.TSBAdapter;
+//import frc.robot.buttons.TSBAdapter;
 import frc.robot.event.EventHandler;
 
 public class Robot extends TimedRobot {
@@ -24,8 +24,8 @@ public class Robot extends TimedRobot {
     private static IntakeSubsystems itake;
     private static ShootSubsystem shoot;
     public static final EventHandler eHandler = new EventHandler(); 
-    private Hashtable<String, Double> tuningValues=new Hashtable<>();        
-    private TSBAdapter tsbAdapter;
+    //private Hashtable<String, Double> tuningValues=new Hashtable<>();        
+    //private TSBAdapter tsbAdapter;
     public static OI getOi() {
         return oi;
     }
@@ -41,9 +41,9 @@ public class Robot extends TimedRobot {
         ArmSubsystem.getInstance().Arm_SwervyInit();
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
         //Tuning Value Defaults
-        tuningValues.put("drive", 1d);
-        tuningValues.put("shootSpeed",-.5);
-        tsbAdapter=new TSBAdapter(new Joystick(2),this);
+        //tuningValues.put("drive", 1d);
+        //tuningValues.put("shootSpeed",-.5);
+        //tsbAdapter=new TSBAdapter(new Joystick(2),this);
     }
         
 
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
         return null;
     }
 
-    public double getTuningValue(final String key) {
+    /*public double getTuningValue(final String key) {
         return tuningValues.get(key);
       }
     
@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
         final String[] keys = new String[tuningValues.keySet().size()];
         tuningValues.keySet().toArray(keys);
         return keys;
-      }
+      }*/
 
       public void stopEverything(){
 
