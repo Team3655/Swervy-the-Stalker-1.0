@@ -28,10 +28,11 @@ public class DrivetrainSubsystem extends Subsystem {
 
         private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(303);
         private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.5);
-        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(202.5);
+        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(205.275);
         private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(13.25);
         private static final PidConstants PID_CONSTANTS=new PidConstants(.625, 0.00001, 0.00001);//Default NEO constants are 0.5, 0.0, 0.0001
-        private static final double REDUCTION=18;
+        private static final double ANGLEREDUCTION=18;
+        private static final double DRIVEREDUCTION=8.31;
         private static final double WHEEL_DIAMETER=3.875;//(inches)
 
 
@@ -43,33 +44,33 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER), FRONT_LEFT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,REDUCTION)
+                        PID_CONSTANTS,ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        REDUCTION,WHEEL_DIAMETER)
+                        DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
         private final SwerveModule frontRightModule = new Mk2SwerveModuleBuilder(
                 new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER), FRONT_RIGHT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,REDUCTION)
+                        PID_CONSTANTS,ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        REDUCTION,WHEEL_DIAMETER)
+                        DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
         private final SwerveModule backLeftModule = new Mk2SwerveModuleBuilder(
                 new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_ENCODER), BACK_LEFT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,REDUCTION)
+                        PID_CONSTANTS,ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        REDUCTION,WHEEL_DIAMETER)
+                        DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
         private final SwerveModule backRightModule = new Mk2SwerveModuleBuilder(
                 new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER), BACK_RIGHT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,REDUCTION)
+                        PID_CONSTANTS,ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        REDUCTION,WHEEL_DIAMETER)
+                        DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
 
         private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(

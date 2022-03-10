@@ -1,6 +1,6 @@
 package org.frcteam2910.common.robot.drivers;
 
-import com.revrobotics.CANEncoder;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
@@ -28,7 +28,7 @@ public class Mk2SwerveModule extends SwerveModule {
     private Spark steeringMotor;
     private AnalogInput angleEncoder;
     private CANSparkMax driveMotor;
-    private CANEncoder driveEncoder;
+    private RelativeEncoder driveEncoder;
 
     private final Object canLock = new Object();
     private double driveDistance = 0.0;
