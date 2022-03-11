@@ -28,11 +28,11 @@ public class DrivetrainSubsystem extends Subsystem {
 
         private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(303);
         private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.5);
-        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(205.275);
+        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(131.1);
         private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(13.25);
         private static final PidConstants PID_CONSTANTS=new PidConstants(.625, 0.00001, 0.00001);//Default NEO constants are 0.5, 0.0, 0.0001
-        private static final double ANGLEREDUCTION=18;
-        private static final double DRIVEREDUCTION=8.31;
+        private static final double ANGLEREDUCTION=18;//(ratio)
+        private static final double DRIVEREDUCTION=8.31;//(ratio)
         private static final double WHEEL_DIAMETER=3.875;//(inches)
 
 

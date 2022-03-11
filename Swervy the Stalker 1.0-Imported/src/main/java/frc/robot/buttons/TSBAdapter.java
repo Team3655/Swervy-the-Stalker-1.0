@@ -2,8 +2,10 @@ package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.event.Event;
 import frc.robot.event.PrintEvent;
 import com.swervedrivespecialties.exampleswerve.Robot;
+import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 
 /**Tractor Simulator Button Adapter for long
  * 
@@ -38,6 +40,12 @@ public class TSBAdapter extends ButtonHandler{
     public void buttonPressed(int no){
         if (mode==Mode.RobotResponse&&robot.isEnabled()){
             switch (no){
+                case 4:
+                    PneumaticSubsystem.getInstance().toggleIntakeSolenoid();
+                break;
+                case 21:
+                    PneumaticSubsystem.getInstance().toggleCompressor();
+                break;
                 case 23:
                         //turn everything off
                         robot.stopEverything();
@@ -130,17 +138,17 @@ public class TSBAdapter extends ButtonHandler{
                     break;
 
 
-                    /*case 19:
-                        Event[] printNos={new PrintEvent(4),new PrintEvent(3),new PrintEvent(2),new PrintEvent(1),new PrintEvent(0),new PrintEvent("Good Job!"),new PrintEvent(-1)};
-                        Robot.eHandler.triggerEvent(new EventSequence(printNos));
-                    break;*/
+                    case 19:
+                        /*Event[] printNos={new PrintEvent(4),new PrintEvent(3),new PrintEvent(2),new PrintEvent(1),new PrintEvent(0),new PrintEvent("Good Job!"),new PrintEvent(-1)};
+                        Robot.eHandler.triggerEvent(new EventSequence(printNos));*/
+                    break;
                     case 20:
                         Robot.eHandler.clear();
                     break;
                                     
 
                     //Button 21 set value to input
-                    /*case 21:
+                    case 21:
                         try {
                             robot.setTuningValue(currentTuningValue, Double.parseDouble(inputCache));
                             Robot.eHandler.triggerEvent(new PrintEvent(currentTuningValue+" set to "+inputCache));
@@ -152,7 +160,7 @@ public class TSBAdapter extends ButtonHandler{
                             //System.err.println(currentTuningValue+" defaulted to 0");
                             inputCache="";
                         }
-                    break;*/
+                    break;
                     case 22:
                         //robot.printSensorPositions();
                         //robot.printMotorTemps();
@@ -161,17 +169,17 @@ public class TSBAdapter extends ButtonHandler{
                         //turn everything off
                         robot.stopEverything();
                     break;
-                    /*case 24:
+                    case 24:
                         //print current tuning value
-                        Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
+                        //Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
                         //setTuningValues
                         //Robot.eHandler.triggerEvent(new PrintEvent("TUNING VALUES SET TO TEST ROBOT"));
-                    break;*/
+                    break;
                     case 25:
-                        //Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
+                        Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
                     break;
                     //button 26 changes what property you are editing (++)
-                    /*case 27:
+                    case 27:
                         currentPropertyNo++;
                         if (currentPropertyNo>=tuningValues.length){
                             currentPropertyNo=0;
@@ -181,9 +189,9 @@ public class TSBAdapter extends ButtonHandler{
                         if (!Robot.eHandler.triggerEvent(new PrintEvent("Now edititing "+currentTuningValue))){
                             System.err.println("Print failed to queue");
                         }
-                    break;*/
+                    break;
                     //button 26 changes what property you are editing (--)
-                    /*case 26:
+                    case 26:
                         currentPropertyNo--;
                         if (currentPropertyNo<0){
                             currentPropertyNo=tuningValues.length-1;
@@ -193,7 +201,7 @@ public class TSBAdapter extends ButtonHandler{
                         if (!Robot.eHandler.triggerEvent(new PrintEvent("Now editing"+currentTuningValue))){
                             System.err.println("Print failed to queue");
                         }
-                    break;*/
+                    break;
                 }
              } else {
                 switch (no){

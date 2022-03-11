@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
         tuningValues.put("drive", 1.0);
         tuningValues.put("shootSpeed",-1.0);
         tsbAdapter=new TSBAdapter(new Joystick(2),this);
+        eHandler.start();
     }
         
 
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
         /*if (PneumaticSubsystem.getItakeStatus()) {
             itake.periodic();
         }*/
+        tsbAdapter.update();
         itake.periodic();
         pneumatic.periodic();
         shoot.periodic();
@@ -97,5 +99,9 @@ public class Robot extends TimedRobot {
 
       public static Robot getRobot(){
           return instance;
+      }
+
+      public TSBAdapter getTSBAdapter(){
+          return tsbAdapter;
       }
 }

@@ -21,7 +21,6 @@ public class PneumaticSubsystem {
   private static PneumaticSubsystem instance;
 
   private Joystick  primaryJoystick = new Joystick(0);
-  private Joystick  secondaryJoystick = new Joystick(1);
   
   private static boolean iTakeStatus = false;
   private static boolean compressorEnabled = false;
@@ -44,29 +43,26 @@ public class PneumaticSubsystem {
       //This method will be called once per scheduler run
       //Solenoid Toggle/
 
-      
-
-      if (secondaryJoystick.getRawButtonPressed(4)){
-        intakeSolenoid.toggle();
-        iTakeStatus = !iTakeStatus; 
-      }
-
-
-      if(secondaryJoystick.getRawButtonPressed(8)){ 
-        compressorEnabled = !compressorEnabled;
-        if(compressorEnabled){
-          compressor.enableDigital();
-        } else {
-          compressor.disable();
-        }
-      }
-
       SmartDashboard.putBoolean("Comp Enabled", compressorEnabled);
 
     }
           
     public static boolean getItakeStatus() {
       return iTakeStatus;
+    }
+
+    public void toggleIntakeSolenoid(){
+        intakeSolenoid.toggle();
+        iTakeStatus = !iTakeStatus; 
+    }
+
+    public void toggleCompressor(){
+      compressorEnabled = !compressorEnabled;
+      if(compressorEnabled){
+        compressor.enableDigital();
+      } else {
+        compressor.disable();
+      }
     }
 
 }

@@ -2,6 +2,7 @@ package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.Joystick;
 import org.frcteam2910.common.robot.Utilities;
@@ -10,8 +11,7 @@ import org.frcteam2910.common.robot.Utilities;
 public class IntakeSubsystems{
 
   private static IntakeSubsystems instance;
-  private Joystick primaryJoystick = new Joystick(0);   
-  private Joystick secondaryJoystick = new Joystick(1);
+  private Joystick primaryJoystick = new Joystick(0);
   private CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE, MotorType.kBrushless); 
   boolean iTakeOff = false;
 
