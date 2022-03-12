@@ -80,7 +80,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Translation2d(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0)
         );
 
-        private final Gyroscope gyroscope = new NavX(SerialPort.Port.kUSB);
+        public static final Gyroscope gyroscope = new NavX(SerialPort.Port.kUSB);
 
         public DrivetrainSubsystem() {
                 gyroscope.calibrate();
@@ -122,6 +122,14 @@ public class DrivetrainSubsystem extends Subsystem {
         }
 
         public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
+                SwerveModuleState[] states = getStates(translation, rotation, fieldOriented);
+                frontLeftModule.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
+                frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
+                backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
+                backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
+        }
+
+        public SwerveModuleState[] getStates(Translation2d translation, double rotation, boolean fieldOriented){
                 rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
                 ChassisSpeeds speeds;
                 if (fieldOriented) {
@@ -131,12 +139,9 @@ public class DrivetrainSubsystem extends Subsystem {
                 speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
                 }
 
-                SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
-                frontLeftModule.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
-                frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
-                backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
-                backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
+                return kinematics.toSwerveModuleStates(speeds);
         }
+
 
         public void resetGyroscope() {
                 gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
@@ -145,5 +150,13 @@ public class DrivetrainSubsystem extends Subsystem {
         @Override
         protected void initDefaultCommand() {
                 setDefaultCommand(new DriveCommand());
+        }
+
+        /**Returns an array of the swerve modules with front left in index 0 and continuing clockwise
+         * 
+         * @return
+         */
+        public SwerveModule[] getSwerveModules(){
+                return new SwerveModule[] {frontLeftModule,frontRightModule,backRightModule,backLeftModule};
         }
 }

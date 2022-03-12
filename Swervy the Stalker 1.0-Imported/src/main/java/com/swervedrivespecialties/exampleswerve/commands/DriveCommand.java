@@ -19,9 +19,9 @@ public class DriveCommand extends Command {
     protected void execute() {
         double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*1.00;
         if (Robot.getOi().getPrimaryJoystick().getPOV() == 0) {
-            forward = .5;
+            forward = .4;
         } else if (Robot.getOi().getPrimaryJoystick().getPOV() == 180) {
-            forward = -.5;
+            forward = -.4;
         }
         forward = Utilities.deadband(forward);
         // Square the forward stick

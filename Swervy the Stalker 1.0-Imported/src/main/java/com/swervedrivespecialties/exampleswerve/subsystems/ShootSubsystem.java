@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.event.PrintEvent;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
@@ -121,6 +122,8 @@ public class ShootSubsystem {
       
       topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
       btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+      //
+      Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
     } else{
       setPoint=0;
       topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);

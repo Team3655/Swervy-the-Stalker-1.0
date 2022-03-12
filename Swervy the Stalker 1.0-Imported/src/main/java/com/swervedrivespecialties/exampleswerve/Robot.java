@@ -9,11 +9,14 @@ import java.util.Hashtable;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 
+import frc.robot.event.Event;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.buttons.TSBAdapter;
+import frc.robot.buttons.TSBAdapter.Mode;
 import frc.robot.event.EventHandler;
+import frc.robot.event.eventSequences.Auton;
 
 public class Robot extends TimedRobot {
     private static OI oi;
@@ -45,11 +48,17 @@ public class Robot extends TimedRobot {
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
         //Tuning Value Defaults
         tuningValues.put("drive", 1.0);
-        tuningValues.put("shootSpeed",-1.0);
+        tuningValues.put("shootSpeed",-.9);
         tsbAdapter=new TSBAdapter(new Joystick(2),this);
         eHandler.start();
     }
         
+
+    @Override
+    public void autonomousInit() {
+        super.autonomousInit();
+        eHandler.triggerEvent(new Auton());
+    }
 
     @Override
     public void robotPeriodic() {
@@ -62,6 +71,12 @@ public class Robot extends TimedRobot {
         pneumatic.periodic();
         shoot.periodic();
         arm.periodic();
+    }
+
+    @Override
+    public void disabledInit(){
+        tsbAdapter.setMode(Mode.Tune);
+        eHandler.clear();
     }
 
     public static void intake() {

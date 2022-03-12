@@ -101,15 +101,16 @@ public class TSBAdapter extends ButtonHandler{
                             Robot.eHandler.triggerEvent(new PrintEvent("Input Cache: "+inputCache));
                         }
                     break;
-                    /*case 15:
-                        if (getButtonDown(28)){
+                    case 15:
+                        nextTuningValue();
+                        /*if (getButtonDown(28)){
                             //robot.setTuningValue("aHat", robot.armPos());
                             if (robot.isEnabled()){
                                 mode=Mode.RobotResponse;
                                 Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
                             }
-                        }
-                    break;*/
+                        }*/
+                    break;
                     /*case 13:
                         if (getButtonDown(28)){
                             //robot.setTuningValue("eHat", robot.elevatorPos());
@@ -118,16 +119,17 @@ public class TSBAdapter extends ButtonHandler{
                                 Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
                             }
                         }
-                    break;
+                    break;*/
                     case 16:
-                    if (getButtonDown(28)){
+                        lastTuningValue();
+                    /*if (getButtonDown(28)){
                         //robot.setTuningValue("aBal", robot.elevatorPos());
                         if (robot.isEnabled()){
                             mode=Mode.RobotResponse;
                             Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
                         }
-                    }
-                    break;*/
+                    }*/
+                    break;
                     case 17:
                         if (!inputCache.contains("-")){
                             inputCache="-"+inputCache;
@@ -180,27 +182,11 @@ public class TSBAdapter extends ButtonHandler{
                     break;
                     //button 26 changes what property you are editing (++)
                     case 27:
-                        currentPropertyNo++;
-                        if (currentPropertyNo>=tuningValues.length){
-                            currentPropertyNo=0;
-                        }
-                        currentTuningValue=tuningValues[currentPropertyNo];
-                        //System.out.println("Now edititing "+currentTuningValue);
-                        if (!Robot.eHandler.triggerEvent(new PrintEvent("Now edititing "+currentTuningValue))){
-                            System.err.println("Print failed to queue");
-                        }
+                        
                     break;
                     //button 26 changes what property you are editing (--)
                     case 26:
-                        currentPropertyNo--;
-                        if (currentPropertyNo<0){
-                            currentPropertyNo=tuningValues.length-1;
-                        }
-                        currentTuningValue=tuningValues[currentPropertyNo];
-                        //System.out.println("Now edititing "+currentTuningValue);
-                        if (!Robot.eHandler.triggerEvent(new PrintEvent("Now editing"+currentTuningValue))){
-                            System.err.println("Print failed to queue");
-                        }
+                        
                     break;
                 }
              } else {
@@ -243,6 +229,30 @@ public class TSBAdapter extends ButtonHandler{
     public void update() {
         super.update();
         
+    }
+
+    public void nextTuningValue(){
+        currentPropertyNo++;
+        if (currentPropertyNo>=tuningValues.length){
+            currentPropertyNo=0;
+        }
+        currentTuningValue=tuningValues[currentPropertyNo];
+        //System.out.println("Now edititing "+currentTuningValue);
+        if (!Robot.eHandler.triggerEvent(new PrintEvent("Now edititing "+currentTuningValue))){
+            System.err.println("Print failed to queue");
+        }
+    }
+
+    public void lastTuningValue(){
+        currentPropertyNo--;
+        if (currentPropertyNo<0){
+            currentPropertyNo=tuningValues.length-1;
+        }
+        currentTuningValue=tuningValues[currentPropertyNo];
+        //System.out.println("Now edititing "+currentTuningValue);
+        if (!Robot.eHandler.triggerEvent(new PrintEvent("Now editing"+currentTuningValue))){
+            System.err.println("Print failed to queue");
+        }
     }
 
     public void setMode(Mode mode){
