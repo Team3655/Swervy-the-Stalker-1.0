@@ -10,6 +10,8 @@ import java.util.Hashtable;
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 
 import frc.robot.event.Event;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,6 +32,7 @@ public class Robot extends TimedRobot {
     public static final EventHandler eHandler = new EventHandler(); 
     private Hashtable<String, Double> tuningValues=new Hashtable<>();        
     private TSBAdapter tsbAdapter;
+    public static final UsbCamera front = CameraServer.startAutomaticCapture();
 
     public static OI getOi() {
         return oi;
