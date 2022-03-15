@@ -17,17 +17,22 @@ public class DriveCommand extends Command {
 
     @Override
     protected void execute() {
-        double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*0.80;
+        double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*1.00;
+        if (Robot.getOi().getPrimaryJoystick().getPOV() == 0) {
+            forward = .4;
+        } else if (Robot.getOi().getPrimaryJoystick().getPOV() == 180) {
+            forward = -.4;
+        }
         forward = Utilities.deadband(forward);
         // Square the forward stick
         forward = Math.copySign(Math.pow(forward, 2.0), forward);
 
-        double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*0.80;
+        double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*1.00;
         strafe = Utilities.deadband(strafe);
         // Square the strafe stick
         strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);
 
-        double rotation = -(Robot.getOi().getPrimaryJoystick().getRawAxis(4))*0.8;
+        double rotation = -(Robot.getOi().getPrimaryJoystick().getRawAxis(4))*0.80;
         rotation = Utilities.deadband(rotation);
         // Square the rotation stick
         rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);

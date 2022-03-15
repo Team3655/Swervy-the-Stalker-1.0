@@ -1,13 +1,17 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import com.revrobotics.CANSparkMax;
+
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.event.PrintEvent;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
@@ -66,6 +70,8 @@ public class ShootSubsystem {
     btmPidController.setIZone(kIz);
     btmPidController.setFF(kFF);
     btmPidController.setOutputRange(kMinOutput, kMaxOutput);
+
+    
   }
   
   
@@ -80,51 +86,51 @@ public class ShootSubsystem {
     sLifte.getPosition();
     sLiftPos = sLifte.getPosition();
 
-    sLift.set(0);
     SmartDashboard.putNumber("Elevator Position", sLifte.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", sLifte.getVelocity());
   
-    //Makes ELevator move w/ limits. [KEEP EVERYTHING!!!]
-    if((secondaryJoystick.getRawButton(1))){
-       sLift.set(0.3);
-       sLiftPos = sLifte.getPosition();
-      }else{
-        sLiftPos = sLifte.getPosition();
-      }
-      
-    if((secondaryJoystick.getRawButton(2))){
-         sLift.set(-0.3);
-         sLiftPos = sLifte.getPosition();
-       }else{
-        sLiftPos = sLifte.getPosition();
-       } 
     
-      if((secondaryJoystick.getRawButton(2) && sLiftPos <= -28)){
-       sLift.set(0);
-      }
-      
-      if((secondaryJoystick.getRawButton(1) && sLiftPos >= 20)){
-        sLift.set(0);
-     }
+
+    //Makes ELevator move w/ limits.
+
+    if (secondaryJoystick.getRawButton(1)) {
+      sLift.getPIDController().setP(.05);
+      //sLift.getPIDController().setI(.000001);
+      //sLift.getPIDController().setD(.001);
+      sLift.getPIDController().setReference(62.5, ControlType.kPosition);
+    } 
+    
+    if (secondaryJoystick.getRawButton(2)) {
+      sLift.getPIDController().setP(.06);
+      //sLift.getPIDController().setI(.000004);
+      sLift.getPIDController().setReference(2, ControlType.kPosition);
+    }
 
 
     // index periodic 
     if (secondaryJoystick.getRawButton(6)) {
       indexOn();
-      itake.iTakeFWD(.1);
+      itake.iTakeFWD(.2);
     } else {
       indexOff();
     }
 
     // shoot periodic 
-    double speed = 0;
-    while (secondaryJoystick.getRawButton(5)) {
-      //speed = ((Robot)Robot.getInstance()).getTuningValue("shootSpeed");
+    double speed = Robot.getRobot().getTuningValue("shootSpeed");
+    double setPoint = speed*maxRPM;
+    if (secondaryJoystick.getRawButton(5)) {
+      
+      topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+      btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+      //
+      Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
+    } else{
+      setPoint=0;
+      topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
+      btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
     }
 
-    double setPoint = speed*maxRPM;
-    topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-    btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+    
     SmartDashboard.putNumber("Setpoint", setPoint);
         
     SmartDashboard.putNumber("Top V", topEncoder.getVelocity());

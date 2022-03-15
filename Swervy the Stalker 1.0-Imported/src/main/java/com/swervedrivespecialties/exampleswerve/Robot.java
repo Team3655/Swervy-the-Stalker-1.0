@@ -9,11 +9,14 @@ import java.util.Hashtable;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 
+import frc.robot.event.Event;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-//import frc.robot.buttons.TSBAdapter;
+import frc.robot.buttons.TSBAdapter;
+import frc.robot.buttons.TSBAdapter.Mode;
 import frc.robot.event.EventHandler;
+import frc.robot.event.eventSequences.Auton;
 
 public class Robot extends TimedRobot {
     private static OI oi;
@@ -23,15 +26,18 @@ public class Robot extends TimedRobot {
     private static ArmSubsystem arm;
     private static IntakeSubsystems itake;
     private static ShootSubsystem shoot;
+    private static Robot instance;
     public static final EventHandler eHandler = new EventHandler(); 
-    //private Hashtable<String, Double> tuningValues=new Hashtable<>();        
-    //private TSBAdapter tsbAdapter;
+    private Hashtable<String, Double> tuningValues=new Hashtable<>();        
+    private TSBAdapter tsbAdapter;
+
     public static OI getOi() {
         return oi;
     }
 
     @Override
     public void robotInit() {
+        instance=this;
         oi = new OI();
         drivetrain = DrivetrainSubsystem.getInstance();
         pneumatic = PneumaticSubsystem.getInstance();
@@ -41,11 +47,18 @@ public class Robot extends TimedRobot {
         ArmSubsystem.getInstance().Arm_SwervyInit();
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
         //Tuning Value Defaults
-        //tuningValues.put("drive", 1d);
-        //tuningValues.put("shootSpeed",-.5);
-        //tsbAdapter=new TSBAdapter(new Joystick(2),this);
+        tuningValues.put("drive", 1.0);
+        tuningValues.put("shootSpeed",-.9);
+        tsbAdapter=new TSBAdapter(new Joystick(2),this);
+        eHandler.start();
     }
         
+
+    @Override
+    public void autonomousInit() {
+        super.autonomousInit();
+        eHandler.triggerEvent(new Auton());
+    }
 
     @Override
     public void robotPeriodic() {
@@ -53,10 +66,17 @@ public class Robot extends TimedRobot {
         /*if (PneumaticSubsystem.getItakeStatus()) {
             itake.periodic();
         }*/
+        tsbAdapter.update();
         itake.periodic();
         pneumatic.periodic();
         shoot.periodic();
         arm.periodic();
+    }
+
+    @Override
+    public void disabledInit(){
+        tsbAdapter.setMode(Mode.Tune);
+        eHandler.clear();
     }
 
     public static void intake() {
@@ -70,7 +90,7 @@ public class Robot extends TimedRobot {
         return null;
     }
 
-    /*public double getTuningValue(final String key) {
+    public double getTuningValue(final String key) {
         return tuningValues.get(key);
       }
     
@@ -83,12 +103,20 @@ public class Robot extends TimedRobot {
       }
 
     public String[] getKeys() {
-        final String[] keys = new String[tuningValues.keySet().size()];
+        String[] keys = new String[tuningValues.keySet().size()];
         tuningValues.keySet().toArray(keys);
         return keys;
-      }*/
+      }
 
       public void stopEverything(){
 
+      }
+
+      public static Robot getRobot(){
+          return instance;
+      }
+
+      public TSBAdapter getTSBAdapter(){
+          return tsbAdapter;
       }
 }
