@@ -40,7 +40,7 @@ public class DrivetrainSubsystem extends Subsystem {
                     Mk2SwerveModuleBuilder.MotorType.NEO)
             .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                     Mk2SwerveModuleBuilder.MotorType.NEO)
-            .build();
+        .build();
     private final SwerveModule frontRightModule = new Mk2SwerveModuleBuilder(
             new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
             .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER), FRONT_RIGHT_ANGLE_OFFSET)
@@ -94,8 +94,8 @@ public class DrivetrainSubsystem extends Subsystem {
         return instance;
     }
 
-    @Override
-    public void periodic() {
+@Override
+public void periodic() {
         frontLeftModule.updateSensors();
         frontRightModule.updateSensors();
         backLeftModule.updateSensors();
@@ -112,16 +112,16 @@ public class DrivetrainSubsystem extends Subsystem {
         frontRightModule.updateState(TimedRobot.kDefaultPeriod);
         backLeftModule.updateState(TimedRobot.kDefaultPeriod);
         backRightModule.updateState(TimedRobot.kDefaultPeriod);
-    }
+}
 
-    public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
+public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
         rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
         ChassisSpeeds speeds;
         if (fieldOriented) {
-            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
-                    Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees()));
+        speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
+                Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees()));
         } else {
-            speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+        speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
         }
 
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
@@ -129,14 +129,14 @@ public class DrivetrainSubsystem extends Subsystem {
         frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
         backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
         backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
-    }
+}
 
-    public void resetGyroscope() {
+public void resetGyroscope() {
         gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
-    }
+}
 
-    @Override
-    protected void initDefaultCommand() {
+@Override
+protected void initDefaultCommand() {
         setDefaultCommand(new DriveCommand());
-    }
+}
 }

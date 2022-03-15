@@ -28,10 +28,10 @@ public class ArmSubsystem extends Subsystem {
     private static ArmSubsystem instance;
     
     private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
-    /*public final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
+    public final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
     public final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
     public final DoubleSolenoid grip3Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
-    public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);*/
+    public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);
 
 
     private CANSparkMax leftArm = new CANSparkMax(RobotMap.ARM_LEFT_MOTOR, MotorType.kBrushless);;
@@ -49,10 +49,10 @@ public class ArmSubsystem extends Subsystem {
 
     public void Arm_SwervyInit() {
 
-    //grip1Solenoid.set(Value.kReverse);
-    //grip2Solenoid.set(Value.kReverse);
-    //grip3Solenoid.set(Value.kReverse);
-    //grip4Solenoid.set(Value.kReverse);
+    grip1Solenoid.set(Value.kReverse);
+    grip2Solenoid.set(Value.kReverse);
+    grip3Solenoid.set(Value.kReverse);
+    grip4Solenoid.set(Value.kReverse);
 
     leftArm.restoreFactoryDefaults();
     rightArm.restoreFactoryDefaults();
@@ -91,56 +91,56 @@ public class ArmSubsystem extends Subsystem {
         double setPoint = (Robot.getOi().getSecondaryJoystick().getRawAxis(2)-Robot.getOi().getSecondaryJoystick().getRawAxis(3))*maxRPM;
         leftEncoderPos = leftEncoder.getPosition();
         rightEncoderPos = rightEncoder.getPosition();
-        /*boolean Grip1Open = grip1Solenoid.get() == Value.kReverse;
+        boolean Grip1Open = grip1Solenoid.get() == Value.kReverse;
         boolean Grip2Open = grip2Solenoid.get() == Value.kReverse;
         boolean Grip3Open = grip3Solenoid.get() == Value.kReverse;
-        boolean Grip4Open = grip4Solenoid.get() == Value.kReverse;*/
+        boolean Grip4Open = grip4Solenoid.get() == Value.kReverse;
 
-        /*SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
+        SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
         SmartDashboard.putBoolean("Grip2Solenoid State", Grip2Open);
         SmartDashboard.putBoolean("Grip3Solenoid State", Grip3Open);
-        SmartDashboard.putBoolean("Grip4Solenoid State", Grip4Open);*/
+        SmartDashboard.putBoolean("Grip4Solenoid State", Grip4Open);
 
-   /*     if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 34 && leftEncoderPos <= 66) || (rightEncoderPos <= -34 && rightEncoderPos >= -66))){
+        if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 34 && leftEncoderPos <= 66) || (rightEncoderPos <= -34 && rightEncoderPos >= -66))){
             setPoint = 0;
 
         } else if (secondaryJoystick.getRawButtonPressed(1)) {
             grip1Solenoid.toggle();
              grip3Solenoid.toggle();
-             // System.out.println(grip1Solenoid.get());
+             //System.out.println(grip1Solenoid.get());
         }
-*/
-        /*if((Grip1Open == false || Grip3Open == false) && ((leftEncoderPos >= 134 && leftEncoderPos <= 166) || (rightEncoderPos <= -134 && rightEncoderPos >= -166))){
+
+        if((Grip1Open == false || Grip3Open == false) && ((leftEncoderPos >= 134 && leftEncoderPos <= 166) || (rightEncoderPos <= -134 && rightEncoderPos >= -166))){
             setPoint = 0;
 
-        }*/
+        }
         
 
- /*       if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 234 && leftEncoderPos <= 266) || (rightEncoderPos <= -234 && rightEncoderPos >= -266))){
+        if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 234 && leftEncoderPos <= 266) || (rightEncoderPos <= -234 && rightEncoderPos >= -266))){
             setPoint = 0;
         } 
         
-*/
-        /*if((setPoint > 0) && ((leftEncoderPos >= 235) || (rightEncoderPos <= -235))){
-            setPoint = 0;
-        } */
 
-        /*if((setPoint < 0) && ((leftEncoderPos <= 0) || (rightEncoderPos >= 0))){
+        if((setPoint > 0) && ((leftEncoderPos >= 235) || (rightEncoderPos <= -235))){
             setPoint = 0;
-        }*/
+        } 
+
+        if((setPoint < 0) && ((leftEncoderPos <= 0) || (rightEncoderPos >= 0))){
+            setPoint = 0;
+        }
 
 
         
 
-        /*if (secondaryJoystick.getRawButtonPressed(2)) {
+        if (secondaryJoystick.getRawButtonPressed(2)) {
             grip2Solenoid.toggle();
-            //grip4Solenoid.toggle();
+            grip4Solenoid.toggle();
             //System.out.println(grip2Solenoid.get());
-        }*/
+        }
         
    
        leftPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-       rightPidController.setReference(-leftEncoder.getVelocity(), CANSparkMax.ControlType.kVelocity);
+       rightPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
        SmartDashboard.putNumber("Setpoint", setPoint);
         
        SmartDashboard.putNumber("Left P", leftEncoder.getPosition());
