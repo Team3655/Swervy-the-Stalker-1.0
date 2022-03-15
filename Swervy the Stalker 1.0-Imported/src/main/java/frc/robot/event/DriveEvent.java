@@ -75,7 +75,7 @@ public class DriveEvent extends Event{
                 } else if (speed<-maxSpeed){
                     speed=-maxSpeed;
                 }
-                DrivetrainSubsystem.getInstance().drive(new Translation2d(speed*Math.sin(angle), speed*Math.cos(angle)), 0, true);
+                DrivetrainSubsystem.getInstance().drive(new Translation2d(speed*Math.cos(angle), speed*Math.sin(angle)), 0, true);
                 if (swerveModules[0].getCurrentDistance()>=target[0]){
                     state++;
                 }
