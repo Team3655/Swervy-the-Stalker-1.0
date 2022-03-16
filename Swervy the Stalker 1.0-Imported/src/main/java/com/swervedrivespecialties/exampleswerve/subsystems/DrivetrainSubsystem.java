@@ -24,7 +24,7 @@ import org.frcteam2910.common.robot.drivers.NavX;
 
 public class DrivetrainSubsystem extends Subsystem {
 
-    private final Gyroscope gyroscope = new NavX(SerialPort.Port.kUSB);
+    private final Gyroscope gyroscope = new NavX(SerialPort.Port.kMXP);
 
     
         private static final double TRACKWIDTH = 22;

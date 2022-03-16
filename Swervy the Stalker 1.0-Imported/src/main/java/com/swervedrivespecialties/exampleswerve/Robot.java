@@ -75,7 +75,6 @@ public class Robot extends TimedRobot {
         pneumatic.periodic();
         shoot.periodic();
         arm.periodic();
-        SmartDashboard.putNumber("Top V", 1);
     }
 
     @Override
