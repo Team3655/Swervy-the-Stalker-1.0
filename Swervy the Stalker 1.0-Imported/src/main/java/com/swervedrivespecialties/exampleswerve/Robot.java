@@ -19,6 +19,7 @@ import frc.robot.buttons.TSBAdapter;
 import frc.robot.buttons.TSBAdapter.Mode;
 import frc.robot.event.EventHandler;
 import frc.robot.event.eventSequences.Auton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
     private static OI oi;
@@ -29,8 +30,8 @@ public class Robot extends TimedRobot {
     private static IntakeSubsystems itake;
     private static ShootSubsystem shoot;
     private static Robot instance;
-    public static final EventHandler eHandler = new EventHandler(); 
-    private Hashtable<String, Double> tuningValues=new Hashtable<>();        
+    public static final EventHandler eHandler = new EventHandler();
+    private Hashtable<String, Double> tuningValues=new Hashtable<>();   
     private TSBAdapter tsbAdapter;
     public static final UsbCamera front = CameraServer.startAutomaticCapture();
 
@@ -74,6 +75,12 @@ public class Robot extends TimedRobot {
         pneumatic.periodic();
         shoot.periodic();
         arm.periodic();
+        SmartDashboard.putNumber("Top V", 1);
+    }
+
+    @Override
+    public void teleopInit(){
+        tsbAdapter.setMode(Mode.RobotResponse);
     }
 
     @Override

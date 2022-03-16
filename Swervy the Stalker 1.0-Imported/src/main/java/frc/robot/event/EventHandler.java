@@ -83,6 +83,12 @@ public class EventHandler extends Thread{
      * 
      */
     public void clear(){
+        for (Event e:queuedEvents){
+            e.terminate();
+        }
+        for (EventSequence e:activeSequences){
+            e.terminate();
+        }
         queuedEvents.clear();
         activeSequences.clear();
     }

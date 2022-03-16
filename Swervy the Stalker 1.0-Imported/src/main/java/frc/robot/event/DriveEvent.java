@@ -11,11 +11,15 @@ import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.Rotation2;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class DriveEvent extends Event{
     int state=0;
     double[] target;
+    short[] inverted;
     double angle;
     double maxSpeed=1;
     SwerveModule[] swerveModules;
@@ -48,11 +52,14 @@ public class DriveEvent extends Event{
             dist=-dist;
             this.angle=angle+Math.PI;
         }
-        this.angle=angle%(2*(Math.PI));
-        target=new double[4];
-        swerveModules=DrivetrainSubsystem.getInstance().getSwerveModules();
+        SwerveModuleState[] states = DrivetrainSubsystem.getInstance().getStates(new Translation2d(Math.cos(angle), Math.sin(angle)), 0, true);
+        this.angle = angle%(2*(Math.PI));
+        target = new double[4];
+        inverted=new short[4];
+        swerveModules = DrivetrainSubsystem.getInstance().getSwerveModules();
         for (int i=0;i<4;i++){
-            target[i]=swerveModules[i].getCurrentDistance()+dist;
+            inverted[i]=(short)Math.copySign(1d,states[i].speedMetersPerSecond);
+            target[i] = swerveModules[i].getCurrentDistance()+dist/*inverted[i]*/;
         }
     }
 
@@ -62,21 +69,24 @@ public class DriveEvent extends Event{
             //Move motors
             case 0:
                 double error=0;
+                double individualErrors[]=new double[4];
                 for (int i=0;i<4;i++){
-                    error+=Math.abs(target[i]-swerveModules[i].getCurrentDistance());
+                    /*error +=*/individualErrors[i]= target[i]-swerveModules[i].getCurrentDistance()/*((double)(inverted[i])))*/;
+                    error+=individualErrors[i];
+                    SmartDashboard.putNumber("error "+i, individualErrors[i]);    
+                    //Robot.eHandler.triggerEvent(new PrintEvent("Error["+i+"]:"+error));
                 }
+                
                 error/=4;
-                Robot.eHandler.triggerEvent(new PrintEvent("Error:"+error));
                 double speed=P*error;
-                Robot.eHandler.triggerEvent(new PrintEvent("Speed:"+speed));
-                Robot.eHandler.triggerEvent(new PrintEvent("Current Distance: "+swerveModules[0].getCurrentDistance()+"; Target: "+target[0]));
+                //Robot.eHandler.triggerEvent(new PrintEvent("Error:"+error+" Speed:"+speed+" Current Distance: "+swerveModules[0].getCurrentDistance()+" Target: "+target[0]));
                 if (speed>maxSpeed){
                     speed=maxSpeed;
                 } else if (speed<-maxSpeed){
                     speed=-maxSpeed;
                 }
                 DrivetrainSubsystem.getInstance().drive(new Translation2d(speed*Math.cos(angle), speed*Math.sin(angle)), 0, true);
-                if (swerveModules[0].getCurrentDistance()>=target[0]){
+                if (swerveModules[0].getCurrentDistance()>=target[0]-.2&&swerveModules[0].getCurrentDistance()<=target[0]+.2){
                     state++;
                 }
             break;

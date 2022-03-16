@@ -10,7 +10,7 @@ public class Auton extends EventSequence{
 
     public Auton() {
         super(new Event[] {
-            new DriveEvent(10d, 0, .5),
+            new DriveEvent(20d, 0, .2),
         });
     }
     
