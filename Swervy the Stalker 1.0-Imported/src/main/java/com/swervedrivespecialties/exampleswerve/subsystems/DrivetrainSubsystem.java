@@ -21,10 +21,11 @@ import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.drivers.Mk2SwerveModuleBuilder;
 import org.frcteam2910.common.robot.drivers.NavX;
+import edu.wpi.first.wpilibj.I2C;
 
 public class DrivetrainSubsystem extends Subsystem {
 
-    private final Gyroscope gyroscope = new NavX(SerialPort.Port.kMXP);
+    private final Gyroscope gyroscope = new NavX(I2C.Port.kOnboard);
 
     
         private static final double TRACKWIDTH = 22;
@@ -34,7 +35,13 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.5);
         private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(131.1);
         private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(13.25);
-        private static final PidConstants PID_CONSTANTS=new PidConstants(.625, 0.00001, 0.00001);//Default NEO constants are 0.5, 0.0, 0.0001
+        //array of the pid constants for swerve modules with the constants for front left at index 0 and continuing clockwise
+        private static final PidConstants[] PID_CONSTANTS=new PidConstants[] {
+                //Default NEO constants are 0.5, 0.0, 0.0001
+                new PidConstants(.625, 0.00001, 0.00001),
+                new PidConstants(.625, 0.00001, 0.00001),
+                new PidConstants(.625, 0.00001, 0.00001),
+                new PidConstants(.625, 0.00001, 0.00001)};
         private static final double ANGLEREDUCTION=18;//(ratio)
         private static final double DRIVEREDUCTION=8.31;//(ratio)
         private static final double WHEEL_DIAMETER=3.875;//(inches)
@@ -48,7 +55,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER), FRONT_LEFT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,ANGLEREDUCTION)
+                        PID_CONSTANTS[0],ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                         DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
@@ -56,7 +63,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER), FRONT_RIGHT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,ANGLEREDUCTION)
+                        PID_CONSTANTS[1],ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                         DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
@@ -64,7 +71,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_ENCODER), BACK_LEFT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,ANGLEREDUCTION)
+                        PID_CONSTANTS[3],ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                         DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
@@ -72,7 +79,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                 .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER), BACK_RIGHT_ANGLE_OFFSET)
                 .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        PID_CONSTANTS,ANGLEREDUCTION)
+                        PID_CONSTANTS[2],ANGLEREDUCTION)
                 .driveMotor(new CANSparkMax(RobotMap.DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                         DRIVEREDUCTION,WHEEL_DIAMETER)
                 .build();
@@ -92,6 +99,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 frontRightModule.setName("Front Right");
                 backLeftModule.setName("Back Left");
                 backRightModule.setName("Back Right");
+                
         }
 
         public static DrivetrainSubsystem getInstance() {

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 
 import org.frcteam2910.common.drivers.Gyroscope;
 import org.frcteam2910.common.math.Rotation2;
+import edu.wpi.first.wpilibj.I2C;
 
 public final class NavX extends Gyroscope {
     private final AHRS navX;
@@ -14,11 +15,19 @@ public final class NavX extends Gyroscope {
         this(port, (byte) 200);
     }
 
+    public NavX(I2C.Port port) {
+        this(port, (byte) 200);
+    }
+
     public NavX(SerialPort.Port port) {
         navX = new AHRS(port);
     }
 
     public NavX(SPI.Port port, byte updateRate) {
+        navX = new AHRS(port, updateRate);
+    }
+
+    public NavX(I2C.Port port, byte updateRate) {
         navX = new AHRS(port, updateRate);
     }
 

@@ -59,7 +59,7 @@ public class DriveEvent extends Event{
         swerveModules = DrivetrainSubsystem.getInstance().getSwerveModules();
         for (int i=0;i<4;i++){
             inverted[i]=(short)Math.copySign(1d,states[i].speedMetersPerSecond);
-            target[i] = swerveModules[i].getCurrentDistance()+dist/*inverted[i]*/;
+            target[i] = swerveModules[i].getCurrentDistance()+dist*inverted[i];
         }
     }
 
@@ -71,9 +71,9 @@ public class DriveEvent extends Event{
                 double error=0;
                 double individualErrors[]=new double[4];
                 for (int i=0;i<4;i++){
-                    /*error +=*/individualErrors[i]= target[i]-swerveModules[i].getCurrentDistance()/*((double)(inverted[i])))*/;
+                    /*error +=*/individualErrors[i]= (target[i]-swerveModules[i].getCurrentDistance())*((double)(inverted[i]));
                     error+=individualErrors[i];
-                    SmartDashboard.putNumber("error "+i, individualErrors[i]);    
+                    SmartDashboard.putNumber("error "+i, individualErrors[i]);   
                     //Robot.eHandler.triggerEvent(new PrintEvent("Error["+i+"]:"+error));
                 }
                 
@@ -86,7 +86,7 @@ public class DriveEvent extends Event{
                     speed=-maxSpeed;
                 }
                 DrivetrainSubsystem.getInstance().drive(new Translation2d(speed*Math.cos(angle), speed*Math.sin(angle)), 0, true);
-                if (swerveModules[0].getCurrentDistance()>=target[0]-.2&&swerveModules[0].getCurrentDistance()<=target[0]+.2){
+                if (error>=-.2&&error<=.2){
                     state++;
                 }
             break;
