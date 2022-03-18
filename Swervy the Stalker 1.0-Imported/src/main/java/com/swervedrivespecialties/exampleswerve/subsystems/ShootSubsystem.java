@@ -19,7 +19,7 @@ import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
 public class ShootSubsystem {
 
   private static ShootSubsystem instance;
-  private Joystick  secondaryJoystick = new Joystick(1);
+  private Joystick  secondaryJoystick = new Joystick(2);
   private static IntakeSubsystems itake;
 
   private CANSparkMax sLift = new CANSparkMax(RobotMap.ELEVATION, MotorType.kBrushless);
@@ -93,14 +93,14 @@ public class ShootSubsystem {
 
     //Makes ELevator move w/ limits.
 
-    if (secondaryJoystick.getRawButton(1)) {
+    if (secondaryJoystick.getRawButton(19)) {
       sLift.getPIDController().setP(.05);
       //sLift.getPIDController().setI(.000001);
       //sLift.getPIDController().setD(.001);
       sLift.getPIDController().setReference(62.5, ControlType.kPosition);
     } 
     
-    if (secondaryJoystick.getRawButton(2)) {
+    if (secondaryJoystick.getRawButton(20)) {
       sLift.getPIDController().setP(.06);
       //sLift.getPIDController().setI(.000004);
       sLift.getPIDController().setReference(2, ControlType.kPosition);
@@ -108,7 +108,7 @@ public class ShootSubsystem {
 
 
     // index periodic 
-    if (secondaryJoystick.getRawButton(6)) {
+    if (secondaryJoystick.getRawButton(9)) {
       indexOn();
       itake.iTakeFWD(.2);
     } else {

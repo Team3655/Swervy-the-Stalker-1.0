@@ -33,16 +33,13 @@ public class DriveCommand extends Command {
         // Square the strafe stick
         strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);
 
-        double rotation = -(Robot.getOi().getPrimaryJoystick().getRawAxis(4))*.8;
+        double rotation = -(Robot.getOi().getPrimaryJoystick().getRawAxis(4))*.6;
         rotation = Utilities.deadband(rotation);
         // Square the rotation stick
         rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
 
         DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, true);
-        
-        if (enabled != true){
-            System.out.println("BUTTON 8 WORKS");
-        } 
+         
     }
 
     public void toggleEnabled() {
