@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PneumaticSubsystem {
   private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
 
-  private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
+  //private final Solenoid intakeSolenoid = pcm.makeSolenoid(RobotMap.ID_EXTENDINTAKE);
   private static Compressor compressor=new Compressor(RobotMap.ID_PCM, PneumaticsModuleType.CTREPCM);
 
   private static PneumaticSubsystem instance;
@@ -47,7 +47,7 @@ public class PneumaticSubsystem {
       
     
       if (secondaryJoystick.getRawButtonPressed(4)){
-        intakeSolenoid.toggle();
+        //intakeSolenoid.toggle();
         iTakeStatus = !iTakeStatus; 
       }
 
@@ -70,7 +70,7 @@ public class PneumaticSubsystem {
     }
 
     public void toggleIntakeSolenoid(){
-      intakeSolenoid.set(!intakeSolenoid.get());
+      //intakeSolenoid.set(!intakeSolenoid.get());
     }
 
     public void toggleCompressor(){

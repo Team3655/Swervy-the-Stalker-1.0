@@ -27,12 +27,12 @@ public class ArmSubsystem extends Subsystem {
 
     private static ArmSubsystem instance;
     
-    /*private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
+    private final PneumaticsControlModule pcm = new PneumaticsControlModule(RobotMap.ID_PCM);
     public final DoubleSolenoid grip1Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
     public final DoubleSolenoid grip2Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
     public final DoubleSolenoid grip3Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
     public final DoubleSolenoid grip4Solenoid = pcm.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);
-    */
+    
 
     private CANSparkMax leftArm = new CANSparkMax(RobotMap.ARM_LEFT_MOTOR, MotorType.kBrushless);;
     private CANSparkMax rightArm = new CANSparkMax(RobotMap.ARM_RIGHT_MOTOR, MotorType.kBrushless);
@@ -48,7 +48,7 @@ public class ArmSubsystem extends Subsystem {
 
 
     public void Arm_SwervyInit() {
-/*
+
     grip1Solenoid.set(Value.kReverse);
     grip2Solenoid.set(Value.kReverse);
     grip3Solenoid.set(Value.kReverse);
@@ -90,12 +90,12 @@ public class ArmSubsystem extends Subsystem {
         //ARM PERIODIC
         double setPoint = (Robot.getOi().getSecondaryJoystick().getRawAxis(2)-Robot.getOi().getSecondaryJoystick().getRawAxis(3))*maxRPM;
         leftEncoderPos = leftEncoder.getPosition();
-        rightEncoderPos = rightEncoder.getPosition();/*
+        rightEncoderPos = rightEncoder.getPosition();
         boolean Grip1Open = grip1Solenoid.get() == Value.kReverse;
         boolean Grip2Open = grip2Solenoid.get() == Value.kReverse;
         boolean Grip3Open = grip3Solenoid.get() == Value.kReverse;
-        boolean Grip4Open = grip4Solenoid.get() == Value.kReverse;*/
-        /*
+        boolean Grip4Open = grip4Solenoid.get() == Value.kReverse;
+        
         SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
         SmartDashboard.putBoolean("Grip2Solenoid State", Grip2Open);
         SmartDashboard.putBoolean("Grip3Solenoid State", Grip3Open);
@@ -152,7 +152,7 @@ public class ArmSubsystem extends Subsystem {
            avgDiff = (avgDiff + diff)/2;
         }
         SmartDashboard.putNumber("avgDiff", avgDiff);
-       */
+       
     }
 
     public static ArmSubsystem getInstance() {
