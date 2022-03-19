@@ -34,7 +34,7 @@ public class RobotMap {
     public static final int ID_CLOSEGRIP4SOL = 7;//7 (turn back to 7 to use for arm testing)
 
     //public static final int ID_EXTENDINTAKE = 7;
-    public static final int ID_PCM = 10;
+    public static final int ID_PCM = 0;
 
     //INTAKE_&_INDEXER
     public static int INTAKE = 13;

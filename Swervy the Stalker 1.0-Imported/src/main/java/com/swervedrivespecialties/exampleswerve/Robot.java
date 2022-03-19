@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     public static final EventHandler eHandler = new EventHandler();
     private Hashtable<String, Double> tuningValues=new Hashtable<>();   
     private TSBAdapter tsbAdapter;
-    public static final UsbCamera front = CameraServer.startAutomaticCapture();
+    //public static final UsbCamera front = CameraServer.startAutomaticCapture();
 
     public static OI getOi() {
         return oi;
@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
         tsbAdapter.update();
         itake.periodic();
         pneumatic.periodic();
-        shoot.periodic();
+        //shoot.periodic();
         arm.periodic();
     }
 
