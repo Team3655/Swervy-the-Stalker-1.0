@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         instance=this;
         oi = new OI();
-        drivetrain = DrivetrainSubsystem.getInstance();
+        //drivetrain = DrivetrainSubsystem.getInstance();
         pneumatic = PneumaticSubsystem.getInstance();
         itake = IntakeSubsystems.getInstance();
         shoot = ShootSubsystem.getInstance();

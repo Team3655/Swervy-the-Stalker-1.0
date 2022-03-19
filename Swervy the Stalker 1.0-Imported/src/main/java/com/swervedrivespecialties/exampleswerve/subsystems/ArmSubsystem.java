@@ -52,7 +52,7 @@ public class ArmSubsystem extends Subsystem {
     grip1Solenoid.set(Value.kReverse);
     grip2Solenoid.set(Value.kReverse);
     grip3Solenoid.set(Value.kReverse);
-    grip4Solenoid.set(Value.kReverse);*/
+    grip4Solenoid.set(Value.kReverse);
 
     //leftArm.restoreFactoryDefaults();
     //rightArm.restoreFactoryDefaults();

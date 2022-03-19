@@ -21,7 +21,7 @@ public class ShootSubsystem {
   private static ShootSubsystem instance;
   private Joystick  secondaryJoystick = new Joystick(2);
   private static IntakeSubsystems itake;
-
+/*
   private CANSparkMax sLift = new CANSparkMax(RobotMap.ELEVATION, MotorType.kBrushless);
   private RelativeEncoder sLifte = sLift.getEncoder();
   private double sLiftPos = sLifte.getPosition();
@@ -32,7 +32,7 @@ public class ShootSubsystem {
   private SparkMaxPIDController topPidController = shootTopMotor.getPIDController();
   private SparkMaxPIDController btmPidController = shootBtmMotor.getPIDController();
   private RelativeEncoder topEncoder = shootTopMotor.getEncoder();
-  private RelativeEncoder btmEncoder = shootBtmMotor.getEncoder();
+  private RelativeEncoder btmEncoder = shootBtmMotor.getEncoder();*/
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
 
   public ShootSubsystem() {
@@ -40,13 +40,13 @@ public class ShootSubsystem {
     itake = IntakeSubsystems.getInstance();
 
     // sLift init
-    sLift.restoreFactoryDefaults();
+    //sLift.restoreFactoryDefaults();
 
     // shoot init
-    shootTopMotor.restoreFactoryDefaults();
+    /*shootTopMotor.restoreFactoryDefaults();
     shootBtmMotor.restoreFactoryDefaults();
     topEncoder = sLift.getEncoder();
-    btmEncoder = sLift.getEncoder();
+    btmEncoder = sLift.getEncoder();*/
 
     kP = 0.0000015; 
     kI = 0;
@@ -57,6 +57,7 @@ public class ShootSubsystem {
     kMinOutput = -1;
     maxRPM = 5200;
 
+    /*
     topPidController.setP(kP);
     topPidController.setI(kI);
     topPidController.setD(kD);
@@ -70,7 +71,7 @@ public class ShootSubsystem {
     btmPidController.setIZone(kIz);
     btmPidController.setFF(kFF);
     btmPidController.setOutputRange(kMinOutput, kMaxOutput);
-
+    */
     
   }
   
@@ -82,28 +83,29 @@ public class ShootSubsystem {
   public void periodic() {
 
     // sLift periodic
+    /*
     sLift.getEncoder(); 
     sLifte.getPosition();
     sLiftPos = sLifte.getPosition();
 
     SmartDashboard.putNumber("Elevator Position", sLifte.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", sLifte.getVelocity());
-  
+  */
     
 
     //Makes ELevator move w/ limits.
 
     if (secondaryJoystick.getRawButton(19)) {
-      sLift.getPIDController().setP(.05);
+      //sLift.getPIDController().setP(.05);
       //sLift.getPIDController().setI(.000001);
       //sLift.getPIDController().setD(.001);
-      sLift.getPIDController().setReference(62.5, ControlType.kPosition);
+      //sLift.getPIDController().setReference(62.5, ControlType.kPosition);
     } 
     
     if (secondaryJoystick.getRawButton(20)) {
-      sLift.getPIDController().setP(.06);
+      //sLift.getPIDController().setP(.06);
       //sLift.getPIDController().setI(.000004);
-      sLift.getPIDController().setReference(2, ControlType.kPosition);
+      //sLift.getPIDController().setReference(2, ControlType.kPosition);
     }
 
 
@@ -119,41 +121,41 @@ public class ShootSubsystem {
     double speed = Robot.getRobot().getTuningValue("shootSpeed");
     double setPoint = speed*maxRPM;
     if (secondaryJoystick.getRawButton(5)) {
-      
+      /*
       topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
       btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
       //
-      Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
+      Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));*/
     } else{
       setPoint=0;
-      topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
-      btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
+      /*topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
+      btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);*/
     }
 
     
     SmartDashboard.putNumber("Setpoint", setPoint);
-        
+    /*
     SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
-    SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
+    SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());*/
 
   }
 
     public void indexOn(){
-        indexMotor.set(0.6);
+        //indexMotor.set(0.6);
     }
 
     public void indexOff(){
-        indexMotor.set(0.0);
+        //indexMotor.set(0.0);
     }
     //Shooting
     public void shootOn(){
-      shootTopMotor.set(-1);
-      shootBtmMotor.set(1);
+      //shootTopMotor.set(-1);
+      //shootBtmMotor.set(1);
         
     }
     public void shootOff(){
-      shootBtmMotor.set(0);
-      shootTopMotor.set(0);
+      //shootBtmMotor.set(0);
+      //shootTopMotor.set(0);
     }
 
     public static ShootSubsystem getInstance() {
