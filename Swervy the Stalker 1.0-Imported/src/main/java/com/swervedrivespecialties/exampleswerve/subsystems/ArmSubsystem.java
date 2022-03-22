@@ -101,7 +101,7 @@ public class ArmSubsystem extends Subsystem {
         SmartDashboard.putBoolean("Grip3Solenoid State", Grip3Open);
         SmartDashboard.putBoolean("Grip4Solenoid State", Grip4Open);
 
-        if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 34 && leftEncoderPos <= 66) || (rightEncoderPos <= -34 && rightEncoderPos >= -66))){
+        if(/*(Grip2Open == false || Grip4Open == false) &&*/ ((leftEncoderPos >= 34 && leftEncoderPos <= 66) || (rightEncoderPos <= -34 && rightEncoderPos >= -66))){
             setPoint = 0;
 
         } else if (secondaryJoystick.getRawButtonPressed(1)) {
@@ -110,13 +110,13 @@ public class ArmSubsystem extends Subsystem {
              //System.out.println(grip1Solenoid.get());
         }
 
-        if((Grip1Open == false || Grip3Open == false) && ((leftEncoderPos >= 134 && leftEncoderPos <= 166) || (rightEncoderPos <= -134 && rightEncoderPos >= -166))){
+        if(/*(Grip1Open == false || Grip3Open == false) &&*/ ((leftEncoderPos >= 134 && leftEncoderPos <= 166) || (rightEncoderPos <= -134 && rightEncoderPos >= -166))){
             setPoint = 0;
 
         }
         
 
-        if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 234 && leftEncoderPos <= 266) || (rightEncoderPos <= -234 && rightEncoderPos >= -266))){
+        if(/*(Grip2Open == false || Grip4Open == false) &&*/ ((leftEncoderPos >= 234 && leftEncoderPos <= 266) || (rightEncoderPos <= -234 && rightEncoderPos >= -266))){
             setPoint = 0;
         } 
         
