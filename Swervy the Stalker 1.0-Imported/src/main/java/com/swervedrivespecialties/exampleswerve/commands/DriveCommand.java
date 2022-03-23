@@ -19,7 +19,7 @@ public class DriveCommand extends Command {
     @Override
     protected void execute() {
         //if (Robot.getRobot().isTeleopEnabled()){
-            double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*.8;
+            double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*.6;
             if (Robot.getOi().getPrimaryJoystick().getPOV() == 0) {
                 forward = .4;
             } else if (Robot.getOi().getPrimaryJoystick().getPOV() == 180) {
@@ -29,7 +29,7 @@ public class DriveCommand extends Command {
             // Square the forward stick
             forward = Math.copySign(Math.pow(forward, 2.0), forward);
 
-            double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*.8;
+            double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*.6;
             strafe = Utilities.deadband(strafe);
             // Square the strafe stick
             strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);

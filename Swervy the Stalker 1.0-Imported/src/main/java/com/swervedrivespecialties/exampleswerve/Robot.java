@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
     private Hashtable<String, Double> tuningValues=new Hashtable<>();   
     private TSBAdapter tsbAdapter;
     public static final UsbCamera front = CameraServer.startAutomaticCapture();
+    public static final UsbCamera back = CameraServer.startAutomaticCapture();
 
     public static OI getOi() {
         return oi;
