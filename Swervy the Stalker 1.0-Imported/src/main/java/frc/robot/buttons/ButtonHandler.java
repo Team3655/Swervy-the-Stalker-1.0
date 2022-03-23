@@ -39,7 +39,7 @@ public abstract class ButtonHandler /*extends Thread*/{
             update();
         }
     }*/
-    /**Call during a periodic function in order to regocnize button events
+    /**Call during a periodic function in order to regognize button events
      * 
     */
     public void update(){

@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.event.Event;
 import frc.robot.event.PrintEvent;
 import com.swervedrivespecialties.exampleswerve.Robot;
+import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 
 /**Tractor Simulator Button Adapter for long
  * 
@@ -43,9 +45,20 @@ public class TSBAdapter extends ButtonHandler{
                 case 4:
                     PneumaticSubsystem.getInstance().toggleIntakeSolenoid();
                 break;
+
+                case 19: 
+                    ShootSubsystem.getInstance().drop();
+                break;
+
+                case 20: 
+                    ShootSubsystem.getInstance().lift();
+                break;
+
                 case 21:
                     PneumaticSubsystem.getInstance().toggleCompressor();
                 break;
+
+                
                 case 23:
                         //turn everything off
                         robot.stopEverything();
@@ -228,7 +241,9 @@ public class TSBAdapter extends ButtonHandler{
     @Override
     public void update() {
         super.update();
-        
+        if (robot.isEnabled()){
+            ArmSubsystem.getInstance().setSetPoint(getY());
+        }
     }
 
     public void nextTuningValue(){

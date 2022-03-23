@@ -93,18 +93,9 @@ public class ShootSubsystem {
 
     //Makes ELevator move w/ limits.
 
-    if (secondaryJoystick.getRawButton(19)) {
-      sLift.getPIDController().setP(.05);
-      //sLift.getPIDController().setI(.000001);
-      //sLift.getPIDController().setD(.001);
-      sLift.getPIDController().setReference(62.5, ControlType.kPosition);
-    } 
     
-    if (secondaryJoystick.getRawButton(20)) {
-      sLift.getPIDController().setP(.06);
-      //sLift.getPIDController().setI(.000004);
-      sLift.getPIDController().setReference(2, ControlType.kPosition);
-    }
+    
+    
 
 
     // index periodic 
@@ -136,6 +127,16 @@ public class ShootSubsystem {
     SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
     SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
 
+  }
+
+  public void lift() {
+    sLift.getPIDController().setP(.05);
+    sLift.getPIDController().setReference(135, ControlType.kPosition);
+  } 
+
+  public void drop() {
+    sLift.getPIDController().setP(.06);
+    sLift.getPIDController().setReference(2, ControlType.kPosition);
   }
 
     public void indexOn(){

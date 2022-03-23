@@ -63,6 +63,10 @@ public class Robot extends TimedRobot {
         super.autonomousInit();
         eHandler.triggerEvent(new Auton());
     }
+    @Override
+    public void autonomousPeriodic(){
+        DrivetrainSubsystem.getInstance().periodic();
+    }
 
     @Override
     public void robotPeriodic() {
@@ -110,7 +114,7 @@ public class Robot extends TimedRobot {
       public void setTuningValue(final String key, final double value) {
         tuningValues.replace(key, value);
       }
-
+      
     public String[] getKeys() {
         String[] keys = new String[tuningValues.keySet().size()];
         tuningValues.keySet().toArray(keys);
