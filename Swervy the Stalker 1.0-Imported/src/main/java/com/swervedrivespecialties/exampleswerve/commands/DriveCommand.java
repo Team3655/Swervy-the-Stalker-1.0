@@ -2,6 +2,8 @@ package com.swervedrivespecialties.exampleswerve.commands;
 
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -19,7 +21,8 @@ public class DriveCommand extends Command {
 
     @Override
     protected void execute() {
-            double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*.6;
+        if (DriverStation.isTeleopEnabled()) {
+            double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*.75;
             if (Robot.getOi().getPrimaryJoystick().getPOV() == 0) {
                 forward = .4;
             } else if (Robot.getOi().getPrimaryJoystick().getPOV() == 180) {
@@ -29,17 +32,18 @@ public class DriveCommand extends Command {
             // Square the forward stick
             forward = Math.copySign(Math.pow(forward, 2.0), forward);
 
-            double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*.6;
+            double strafe = -(Robot.getOi().getPrimaryJoystick().getRawAxis(0))*.75;
             strafe = Utilities.deadband(strafe);
             // Square the strafe stick
             strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);
 
-            double rotation = -(Robot.getOi().getPrimaryJoystick().getRawAxis(4))*.6;
+            double rotation = -(Robot.getOi().getPrimaryJoystick().getRawAxis(4))*.75;
             rotation = Utilities.deadband(rotation);
             // Square the rotation stick
             rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
             
             DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, true);
+        }
     }
 
     public void toggleEnabled() {

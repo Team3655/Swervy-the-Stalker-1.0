@@ -27,7 +27,7 @@ public class IntakeSubsystems{
     // Square the forward stick
     outtake = Math.copySign(Math.pow(outtake, 2.0), outtake);
 
-    intakeMotor.set((outtake - intake)/1.25);
+    intakeMotor.set((outtake - intake));
   }   
 
     public void iTakeFWD(double s){

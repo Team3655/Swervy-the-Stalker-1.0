@@ -7,12 +7,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.swervedrivespecialties.exampleswerve.Robot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 
@@ -114,7 +111,7 @@ public class ArmSubsystem extends Subsystem {
 
         if((Grip2Open == false || Grip4Open == false) && ((leftEncoderPos >= 234 && leftEncoderPos <= 266) || (rightEncoderPos <= -234 && rightEncoderPos >= -266))){
             setPoint = 0;
-        } 
+        } */
         
 
         if((setPoint > 0) && ((leftEncoderPos >= 235) || (rightEncoderPos <= -235))){
@@ -123,7 +120,7 @@ public class ArmSubsystem extends Subsystem {
 
         if((setPoint < 0) && ((leftEncoderPos <= 0) || (rightEncoderPos >= 0))){
             setPoint = 0;
-        }*/
+        }
         
    
         leftPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);

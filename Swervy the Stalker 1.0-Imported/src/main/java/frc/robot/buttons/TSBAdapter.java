@@ -42,6 +42,15 @@ public class TSBAdapter extends ButtonHandler{
     public void buttonPressed(int no){
         if (mode==Mode.RobotResponse&&robot.isEnabled()){
             switch (no){
+
+                case 1:
+                    ArmSubsystem.getInstance().toggleGreen();
+                break;
+
+                case 2:
+                    ArmSubsystem.getInstance().toggleYellow();
+                break;  
+
                 case 4:
                     PneumaticSubsystem.getInstance().toggleIntakeSolenoid();
                 break;

@@ -124,8 +124,8 @@ public class ShootSubsystem {
     
     SmartDashboard.putNumber("Setpoint", setPoint);
         
-    SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
-    SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
+    //SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
+    //SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
 
   }
 
@@ -133,6 +133,10 @@ public class ShootSubsystem {
     sLift.getPIDController().setP(.05);
     sLift.getPIDController().setReference(135, ControlType.kPosition);
   } 
+
+  public double getSSpeed () {
+    return (topEncoder.getVelocity() + btmEncoder.getVelocity())/2;
+  }
 
   public void drop() {
     sLift.getPIDController().setP(.06);

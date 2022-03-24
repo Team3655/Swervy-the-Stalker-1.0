@@ -27,10 +27,12 @@ public class Auton extends EventSequence{
     public Auton(AUTON_ALIAS alias) {
         super(
             new Event[] {
-            
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, true)),
+
+                new DriveEvent(60d, Math.PI, -.2),
+
+                //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(3, 1), 0, true)),
                 
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),5000),
+                //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),5000),
 
                 new Event(          ShootSubsystem.getInstance()::shootOn),
                 new Event(          ShootSubsystem.getInstance()::indexOn),
@@ -38,12 +40,13 @@ public class Auton extends EventSequence{
                 new Event(          ShootSubsystem.getInstance()::indexOff),
                 
                                     //Turn Right PI/2 Radians
-                new                 TurnEvent(-Math.PI/2),
-                
+                /*new                 TurnEvent(-Math.PI/2),
+                new                 TurnEvent(0, 2000),
                                     //Activate Intake, Drive Forward
                 new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(-1)),
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, true)),
-                                    //Deactivate Intake, Stop
+                                   
+                //Deactivate Intake, Stop
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),1000),
                 new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(-0)),
 
@@ -54,7 +57,7 @@ public class Auton extends EventSequence{
                 new Event(          ShootSubsystem.getInstance()::shootOn),
                 new Event(          ShootSubsystem.getInstance()::indexOn),
                 new Event(          ShootSubsystem.getInstance()::shootOff,1666l),
-                new Event(          ShootSubsystem.getInstance()::indexOff),
+                new Event(          ShootSubsystem.getInstance()::indexOff),*/
         });
     }
     

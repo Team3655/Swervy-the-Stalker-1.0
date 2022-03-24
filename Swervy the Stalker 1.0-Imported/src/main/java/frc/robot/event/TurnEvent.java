@@ -23,32 +23,32 @@ public class TurnEvent extends Event{
     double angle;
     double maxSpeed=1;
     SwerveModule[] swerveModules;
-    static double P=.5;
+    static double P=-.5;
 
     public TurnEvent(double angle){
         init(angle);
     }
     
-    private TurnEvent(double angle, long delay){
+    public TurnEvent(double angle, long delay){
         super(delay);
         init(angle);
     }
 
-    private TurnEvent(double angle,  double maxSpeed, long delay){
+    public TurnEvent(double angle,  double maxSpeed, long delay){
         super(delay);
         init(angle, maxSpeed);
         
     }
 
-    private TurnEvent(double angle, double maxSpeed){
+    public TurnEvent(double angle, double maxSpeed){
         init(angle, maxSpeed);
     }
 
-    private void init(double angle){
+    public void init(double angle){
         this.angle = (DrivetrainSubsystem.getInstance().getGyroscope().getAngle().toRadians()+angle)%(2 * Math.PI);
     } 
 
-    private void init(double angle,double maxSpeed){
+    public void init(double angle,double maxSpeed){
         init(angle);
         this.maxSpeed = maxSpeed;
     }

@@ -71,9 +71,9 @@ public class PneumaticSubsystem {
 
     public void toggleCompressor(){
         if(compressor.enabled()){
-          compressor.enableDigital();
-        } else {
           compressor.disable();
+        } else {
+          compressor.enableDigital();
         }
     }
 
