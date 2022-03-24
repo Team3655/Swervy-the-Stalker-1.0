@@ -24,13 +24,12 @@ public class PneumaticSubsystem {
   private Joystick  secondaryJoystick = new Joystick(2);
   
   private static boolean iTakeStatus = false;
-  private static boolean compressorEnabled = false;
 
 
 
   public void PneumaticSubsystem() {
-    //compressor.enableDigital();
-    compressor.disable();
+    compressor.enableDigital();
+    //compressor.disable();
     intakeSolenoid.set(Value.kReverse);
   }
    
@@ -55,15 +54,10 @@ public class PneumaticSubsystem {
 
 
       if(secondaryJoystick.getRawButtonPressed(21)){ 
-        compressorEnabled = !compressorEnabled;
-        if(compressorEnabled){
-          compressor.enableDigital();
-        } else {
-          compressor.disable();
-        } 
+        toggleCompressor();
       }
 
-      SmartDashboard.putBoolean("Comp Enabled", compressorEnabled);
+      SmartDashboard.putBoolean("Comp Enabled", compressor.enabled());
 
     }
           
@@ -76,8 +70,7 @@ public class PneumaticSubsystem {
     }
 
     public void toggleCompressor(){
-      compressorEnabled = !compressorEnabled;
-        if(compressorEnabled){
+        if(compressor.enabled()){
           compressor.enableDigital();
         } else {
           compressor.disable();

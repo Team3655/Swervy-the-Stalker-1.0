@@ -94,7 +94,7 @@ public class DriveEvent extends Event{
                 for (SwerveModule s:swerveModules){
                     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true);
                 }
-                Robot.eHandler.triggerEvent(new PrintEvent("Drive event complete!"));
+               // Robot.eHandler.triggerEvent(new PrintEvent("Drive event complete!"));
                 state++;
             break;
         }

@@ -3,6 +3,7 @@ package com.swervedrivespecialties.exampleswerve.commands;
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.math.geometry.Translation2d;
 import org.frcteam2910.common.robot.Utilities;
 
@@ -18,7 +19,6 @@ public class DriveCommand extends Command {
 
     @Override
     protected void execute() {
-        //if (Robot.getRobot().isTeleopEnabled()){
             double forward = -(Robot.getOi().getPrimaryJoystick().getRawAxis(1))*.6;
             if (Robot.getOi().getPrimaryJoystick().getPOV() == 0) {
                 forward = .4;
@@ -38,9 +38,8 @@ public class DriveCommand extends Command {
             rotation = Utilities.deadband(rotation);
             // Square the rotation stick
             rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
-
+            
             DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, true);
-        //}
     }
 
     public void toggleEnabled() {

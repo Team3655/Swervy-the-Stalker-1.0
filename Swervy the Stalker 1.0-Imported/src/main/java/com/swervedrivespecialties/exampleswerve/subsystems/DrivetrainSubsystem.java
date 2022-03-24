@@ -166,6 +166,10 @@ public class DrivetrainSubsystem extends Subsystem {
                 gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
         }
 
+        public Gyroscope getGyroscope() {
+                return gyroscope;
+        }
+
         @Override
         protected void initDefaultCommand() {
                 setDefaultCommand(new DriveCommand());

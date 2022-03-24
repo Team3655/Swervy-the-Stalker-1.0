@@ -34,10 +34,6 @@ public class IntakeSubsystems{
         intakeMotor.set(-s);
     }
 
-    public void iTakeBWD(double s){
-        intakeMotor.set(s);
-    }
-
     public void iTakeOff(){
         intakeMotor.set(0);
     }

@@ -114,7 +114,7 @@ public class ShootSubsystem {
       topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
       btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
       //
-      Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
+      //Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
     } else{
       setPoint=0;
       topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
@@ -148,9 +148,10 @@ public class ShootSubsystem {
     }
     //Shooting
     public void shootOn(){
-      shootTopMotor.set(-1);
-      shootBtmMotor.set(1);
-        
+      double speed = Robot.getRobot().getTuningValue("shootSpeed");
+      double setPoint = speed*maxRPM;
+      topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+      btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
     }
     public void shootOff(){
       shootBtmMotor.set(0);

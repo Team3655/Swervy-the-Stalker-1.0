@@ -52,8 +52,9 @@ public class Robot extends TimedRobot {
         ArmSubsystem.getInstance().Arm_SwervyInit();
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
         //Tuning Value Defaults
-        tuningValues.put("drive", 1.0);
+        tuningValues.put("drive", 1d);
         tuningValues.put("shootSpeed",-.9);
+        tuningValues.put("autonAlias",0d);
         tsbAdapter=new TSBAdapter(new Joystick(2),this);
         eHandler.start();
     }
