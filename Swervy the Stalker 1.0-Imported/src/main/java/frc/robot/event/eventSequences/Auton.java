@@ -34,17 +34,15 @@ public class Auton extends EventSequence{
                 
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),1750),
 
-               /* new Event(() ->     {
-                                        ShootSubsystem.getInstance().drop();
-                                        System.out.println("Dropped lift");
-                                    }), */
-               // new Event(          PneumaticSubsystem.getInstance()::toggleIntakeSolenoid),
+                new Event(          ShootSubsystem.getInstance()::lower),
+                
+                new Event(          PneumaticSubsystem.getInstance()::toggleIntakeSolenoid),
 
 
-                //new Event(          ShootSubsystem.getInstance()::shootOn),
-                //new Event(          ShootSubsystem.getInstance()::indexOn),
-                //new Event(          ShootSubsystem.getInstance()::shootOff,1666l),
-                //new Event(          ShootSubsystem.getInstance()::indexOff),
+                new Event(          ShootSubsystem.getInstance()::shootOn,500),
+                new Event(          ShootSubsystem.getInstance()::indexOn,1500),
+                new Event(          ShootSubsystem.getInstance()::shootOff,4000),
+                new Event(          ShootSubsystem.getInstance()::indexOff),
                 
                                     //Turn Right PI/2 Radians
                 /*new                 TurnEvent(-Math.PI/2),

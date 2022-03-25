@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
     private TSBAdapter tsbAdapter;
     public static final UsbCamera front = CameraServer.startAutomaticCapture();
     public static final UsbCamera back = CameraServer.startAutomaticCapture();
-    private static int autoState=0;
 
     public static OI getOi() {
         return oi;
@@ -44,7 +43,13 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         instance=this;
+        //Tuning Value Defaults
+        tuningValues.put("drive", 1d);
+    
+        tuningValues.put("autonAlias",0d);
+
         oi = new OI();
+
         drivetrain = DrivetrainSubsystem.getInstance();
         pneumatic = PneumaticSubsystem.getInstance();
         itake = IntakeSubsystems.getInstance();
@@ -53,10 +58,7 @@ public class Robot extends TimedRobot {
         ArmSubsystem.getInstance().Arm_SwervyInit();
 
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
-        //Tuning Value Defaults
-        tuningValues.put("drive", 1d);
-        tuningValues.put("shootSpeed",-.775);
-        tuningValues.put("autonAlias",0d);
+        
         tsbAdapter=new TSBAdapter(new Joystick(2),this);
         eHandler.start();
     }
@@ -65,19 +67,18 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         super.autonomousInit();
-        
+        eHandler.triggerEvent(new Auton());
+        tuningValues.put("shootSpeedTop",.75);
+        tuningValues.put("shootSpeedBot",.65);
     }
     @Override
     public void autonomousPeriodic(){
         DrivetrainSubsystem.getInstance().periodic();
-        if (autoState==0){
-            eHandler.triggerEvent(new Auton());
-            autoState++;
-        }
     }
 
+
     @Override
-    public void robotPeriodic() {
+    public void teleopPeriodic() {
         Scheduler.getInstance().run();
         /*if (PneumaticSubsystem.getItakeStatus()) {
             itake.periodic();
@@ -87,12 +88,15 @@ public class Robot extends TimedRobot {
         pneumatic.periodic();
         shoot.periodic();
         arm.periodic();
-        SmartDashboard.putNumber("Shoot V", shoot.getSSpeed());
+        SmartDashboard.putNumber("bottom speed", tuningValues.get("shootSpeedTop"));
+        SmartDashboard.putNumber("bottom speed", tuningValues.get("shootSpeedBot"));
     }
 
     @Override
     public void teleopInit(){
         tsbAdapter.setMode(Mode.RobotResponse);
+        tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775
+        tuningValues.put("shootSpeedBot",.775);
     }
 
     @Override

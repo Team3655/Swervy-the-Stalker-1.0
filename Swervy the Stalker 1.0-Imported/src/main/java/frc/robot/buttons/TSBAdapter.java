@@ -56,11 +56,11 @@ public class TSBAdapter extends ButtonHandler{
                 break;
 
                 case 19: 
-                    ShootSubsystem.getInstance().drop();
+                    ShootSubsystem.getInstance().raise();
                 break;
 
                 case 20: 
-                    ShootSubsystem.getInstance().lift();
+                    ShootSubsystem.getInstance().lower();
                 break;
 
                 case 21:

@@ -1,5 +1,7 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
+import javax.xml.namespace.QName;
+
 import com.revrobotics.CANSparkMax;
 
 
@@ -107,38 +109,36 @@ public class ShootSubsystem {
     }
 
     // shoot periodic 
-    double speed = Robot.getRobot().getTuningValue("shootSpeed");
-    double setPoint = speed*maxRPM;
     if (secondaryJoystick.getRawButton(5)) {
       
-      topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-      btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+      topPidController.setReference(-Robot.getRobot().getTuningValue("shootSpeedTop")*maxRPM, CANSparkMax.ControlType.kVelocity);
+      btmPidController.setReference(Robot.getRobot().getTuningValue("shootSpeedBot")*maxRPM, CANSparkMax.ControlType.kVelocity);
+
       //
       //Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
-    } else{
-      setPoint=0;
+    } else if (Robot.getRobot().isTeleopEnabled()){
       topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
       btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
     }
 
     
-    SmartDashboard.putNumber("Setpoint", setPoint);
+    //SmartDashboard.putNumber("Setpoint", setPoint);
         
     //SmartDashboard.putNumber("Top V", topEncoder.getVelocity());
     //SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
 
   }
 
-  public void lift() {
+  public void lower() {
     sLift.getPIDController().setP(.05);
-    sLift.getPIDController().setReference(135, ControlType.kPosition);
+    sLift.getPIDController().setReference(134, ControlType.kPosition);
   } 
 
   public double getSSpeed () {
     return (topEncoder.getVelocity() + btmEncoder.getVelocity())/2;
   }
 
-  public void drop() {
+  public void raise() {
     sLift.getPIDController().setP(.06);
     sLift.getPIDController().setReference(2, ControlType.kPosition);
   }
@@ -152,10 +152,9 @@ public class ShootSubsystem {
     }
     //Shooting
     public void shootOn(){
-      double speed = Robot.getRobot().getTuningValue("shootSpeed");
-      double setPoint = speed*maxRPM;
-      topPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-      btmPidController.setReference(-setPoint, CANSparkMax.ControlType.kVelocity);
+      
+      topPidController.setReference(-Robot.getRobot().getTuningValue("shootSpeedTop")*maxRPM, CANSparkMax.ControlType.kVelocity);
+      btmPidController.setReference(Robot.getRobot().getTuningValue("shootSpeedBot")*maxRPM, CANSparkMax.ControlType.kVelocity);
     }
     public void shootOff(){
       shootBtmMotor.set(0);
