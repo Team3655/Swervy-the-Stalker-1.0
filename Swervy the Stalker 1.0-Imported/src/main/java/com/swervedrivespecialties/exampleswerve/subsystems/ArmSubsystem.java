@@ -46,10 +46,10 @@ public class ArmSubsystem extends Subsystem {
 
     public void Arm_SwervyInit() {
 
-    grip1Solenoid.set(Value.kReverse);
-    grip2Solenoid.set(Value.kReverse);
-    grip3Solenoid.set(Value.kReverse);
-    grip4Solenoid.set(Value.kReverse);
+    grip1Solenoid.set(Value.kForward);
+    grip2Solenoid.set(Value.kForward);
+    grip3Solenoid.set(Value.kForward);
+    grip4Solenoid.set(Value.kForward);
 
     //leftArm.restoreFactoryDefaults();
     //rightArm.restoreFactoryDefaults();
@@ -59,13 +59,13 @@ public class ArmSubsystem extends Subsystem {
 
 
     //Arm PID
-    kP = 0.000006; 
-    kI = 0;
+    kP = 0.000012; 
+    kI = 0.0000;
     kD = 0; 
     kIz = 0; 
     kFF = 0.000165; 
-    kMaxOutput = 0.8; 
-    kMinOutput = -0.8;
+    kMaxOutput = 1;
+    kMinOutput = -1;
     maxRPM = 4000;
 
     leftPidController.setP(kP);
@@ -114,13 +114,13 @@ public class ArmSubsystem extends Subsystem {
         } */
         
 
-        if((setPoint > 0) && ((leftEncoderPos >= 235) || (rightEncoderPos <= -235))){
+        /*if((setPoint > 0) && ((leftEncoderPos >= 235) || (rightEncoderPos <= -235))){
             setPoint = 0;
         } 
 
         if((setPoint < 0) && ((leftEncoderPos <= 0) || (rightEncoderPos >= 0))){
             setPoint = 0;
-        }
+        }*/
         
    
         leftPidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
@@ -149,6 +149,7 @@ public class ArmSubsystem extends Subsystem {
     }
 
     public void setSetPoint(double d){
+        d = Math.copySign(Math.pow(d, 2.0), d);
         setPoint=d*maxRPM;
     }
 

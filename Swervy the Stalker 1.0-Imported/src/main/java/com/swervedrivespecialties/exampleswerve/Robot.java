@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
     private TSBAdapter tsbAdapter;
     public static final UsbCamera front = CameraServer.startAutomaticCapture();
     public static final UsbCamera back = CameraServer.startAutomaticCapture();
+    private static int autoState=0;
 
     public static OI getOi() {
         return oi;
@@ -50,6 +51,7 @@ public class Robot extends TimedRobot {
         shoot = ShootSubsystem.getInstance();
         arm = ArmSubsystem.getInstance();
         ArmSubsystem.getInstance().Arm_SwervyInit();
+
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
         //Tuning Value Defaults
         tuningValues.put("drive", 1d);
@@ -63,12 +65,15 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         super.autonomousInit();
-        eHandler.triggerEvent(new Auton());
+        
     }
     @Override
     public void autonomousPeriodic(){
         DrivetrainSubsystem.getInstance().periodic();
-        
+        if (autoState==0){
+            eHandler.triggerEvent(new Auton());
+            autoState++;
+        }
     }
 
     @Override

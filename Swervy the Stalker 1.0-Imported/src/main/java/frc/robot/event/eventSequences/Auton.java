@@ -4,6 +4,7 @@ package frc.robot.event.eventSequences;
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.IntakeSubsystems;
+import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 
 import java.util.function.DoubleConsumer;
@@ -28,16 +29,22 @@ public class Auton extends EventSequence{
         super(
             new Event[] {
 
-                new DriveEvent(60d, Math.PI, -.2),
 
-                //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(3, 1), 0, true)),
+                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, true)),
                 
-                //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),5000),
+                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),1750),
 
-                new Event(          ShootSubsystem.getInstance()::shootOn),
-                new Event(          ShootSubsystem.getInstance()::indexOn),
-                new Event(          ShootSubsystem.getInstance()::shootOff,1666l),
-                new Event(          ShootSubsystem.getInstance()::indexOff),
+               /* new Event(() ->     {
+                                        ShootSubsystem.getInstance().drop();
+                                        System.out.println("Dropped lift");
+                                    }), */
+               // new Event(          PneumaticSubsystem.getInstance()::toggleIntakeSolenoid),
+
+
+                //new Event(          ShootSubsystem.getInstance()::shootOn),
+                //new Event(          ShootSubsystem.getInstance()::indexOn),
+                //new Event(          ShootSubsystem.getInstance()::shootOff,1666l),
+                //new Event(          ShootSubsystem.getInstance()::indexOff),
                 
                                     //Turn Right PI/2 Radians
                 /*new                 TurnEvent(-Math.PI/2),
