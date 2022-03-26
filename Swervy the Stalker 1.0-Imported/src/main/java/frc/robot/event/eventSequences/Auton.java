@@ -29,41 +29,31 @@ public class Auton extends EventSequence{
         super(
             new Event[] {
 
-
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, true)),
-                
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),1750),
+                new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
 
                 new Event(          ShootSubsystem.getInstance()::lower),
-                
-                new Event(          PneumaticSubsystem.getInstance()::toggleIntakeSolenoid),
+                new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+
+                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, true)),
+                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true), 2000),
 
 
-                new Event(          ShootSubsystem.getInstance()::shootOn,500),
-                new Event(          ShootSubsystem.getInstance()::indexOn,1500),
-                new Event(          ShootSubsystem.getInstance()::shootOff,4000),
-                new Event(          ShootSubsystem.getInstance()::indexOff),
-                
-                                    //Turn Right PI/2 Radians
-                /*new                 TurnEvent(-Math.PI/2),
-                new                 TurnEvent(0, 2000),
-                                    //Activate Intake, Drive Forward
-                new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(-1)),
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, true)),
-                                   
-                //Deactivate Intake, Stop
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true),1000),
-                new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(-0)),
-
-                                    //Turn Left
-                new                 TurnEvent(Math.PI/2),
-
-                                    //Shooting
                 new Event(          ShootSubsystem.getInstance()::shootOn),
-                new Event(          ShootSubsystem.getInstance()::indexOn),
-                new Event(          ShootSubsystem.getInstance()::shootOff,1666l),
-                new Event(          ShootSubsystem.getInstance()::indexOff),*/
+                new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+
+                new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4), 3250),
+                
+                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, true)),
+                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, true), 750),
+
+
+                new Event(          ShootSubsystem.getInstance()::shootOff, 5250),
+                new Event(          ShootSubsystem.getInstance()::indexOff),
+                new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
+                
+
+
         });
     }
     
-}
+} 

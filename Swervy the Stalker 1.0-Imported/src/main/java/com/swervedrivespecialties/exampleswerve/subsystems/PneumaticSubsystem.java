@@ -69,6 +69,10 @@ public class PneumaticSubsystem {
       intakeSolenoid.toggle();
     }
 
+    public void iTSFwd() {
+      intakeSolenoid.set(Value.kForward);
+    }
+
     public void toggleCompressor(){
         if(compressor.enabled()){
           compressor.disable();

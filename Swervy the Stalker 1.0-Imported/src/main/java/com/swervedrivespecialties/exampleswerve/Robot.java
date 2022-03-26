@@ -47,7 +47,8 @@ public class Robot extends TimedRobot {
         tuningValues.put("drive", 1d);
     
         tuningValues.put("autonAlias",0d);
-
+        back.setExposureManual(12);    
+        front.setExposureManual(12); 
         oi = new OI();
 
         drivetrain = DrivetrainSubsystem.getInstance();
@@ -68,14 +69,21 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         super.autonomousInit();
         eHandler.triggerEvent(new Auton());
-        tuningValues.put("shootSpeedTop",.75);
-        tuningValues.put("shootSpeedBot",.65);
+        tuningValues.put("shootSpeedTop", .7775);
+        tuningValues.put("shootSpeedBot", .6775);
     }
     @Override
     public void autonomousPeriodic(){
         DrivetrainSubsystem.getInstance().periodic();
     }
 
+    public void robotPeriodic(){
+        DrivetrainSubsystem.getInstance().postModuleAnglesToDashboard();
+    }
+
+    public void disabledPeriodic(){
+        DrivetrainSubsystem.getInstance().postModuleAnglesToDashboard();
+    }
 
     @Override
     public void teleopPeriodic() {
@@ -95,7 +103,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit(){
         tsbAdapter.setMode(Mode.RobotResponse);
-        tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775
+        tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775//maybe turn up?
         tuningValues.put("shootSpeedBot",.775);
     }
 

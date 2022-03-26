@@ -31,10 +31,10 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double TRACKWIDTH = 22;
         private static final double WHEELBASE = 22;
 
-        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(13.4);
-        private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(335.8);
-        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(194.1);
-        private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(92.5);
+        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(11.9);
+        private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.4);
+        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(194.4);
+        private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(93.8);
         //array of the pid constants for swerve modules with the constants for front left at index 0 and continuing clockwise
         private static final PidConstants[] PID_CONSTANTS=new PidConstants[] {
                 //Default NEO constants are 0.5, 0.0, 0.0001
@@ -116,12 +116,7 @@ public class DrivetrainSubsystem extends Subsystem {
                 frontLeftModule.updateSensors();
                 frontRightModule.updateSensors();
                 backLeftModule.updateSensors();
-                backRightModule.updateSensors();
-
-                SmartDashboard.putNumber("Front Left Module Angle", Math.toDegrees(frontLeftModule.getCurrentAngle()));
-                SmartDashboard.putNumber("Front Right Module Angle", Math.toDegrees(frontRightModule.getCurrentAngle()));
-                SmartDashboard.putNumber("Back Left Module Angle", Math.toDegrees(backLeftModule.getCurrentAngle()));
-                SmartDashboard.putNumber("Back Right Module Angle", Math.toDegrees(backRightModule.getCurrentAngle()));
+                backRightModule.updateSensors(); 
 
                 SmartDashboard.putNumber("Gyroscope Angle", gyroscope.getAngle().toDegrees());
 
@@ -129,6 +124,17 @@ public class DrivetrainSubsystem extends Subsystem {
                 frontRightModule.updateState(TimedRobot.kDefaultPeriod);
                 backLeftModule.updateState(TimedRobot.kDefaultPeriod);
                 backRightModule.updateState(TimedRobot.kDefaultPeriod);
+        }
+
+        public void postModuleAnglesToDashboard(){
+                frontLeftModule.updateSensors();
+                frontRightModule.updateSensors();
+                backLeftModule.updateSensors();
+                backRightModule.updateSensors();
+                SmartDashboard.putNumber("Front Left Angle", Math.toDegrees(frontLeftModule.getCurrentAngle()));
+                SmartDashboard.putNumber("Front Right Angle", Math.toDegrees(frontRightModule.getCurrentAngle()));
+                SmartDashboard.putNumber("Back Left Angle", Math.toDegrees(backLeftModule.getCurrentAngle()));
+                SmartDashboard.putNumber("Back Right Angle", Math.toDegrees(backRightModule.getCurrentAngle()));
         }
 
         public void drive(Translation2d translation, double rotation, boolean fieldOriented) {

@@ -50,7 +50,7 @@ public class ShootSubsystem {
     topEncoder = sLift.getEncoder();
     btmEncoder = sLift.getEncoder();
 
-    kP = 0.0000015; 
+    kP = 0.000002; 
     kI = 0;
     kD = 0; 
     kIz = 0; 
