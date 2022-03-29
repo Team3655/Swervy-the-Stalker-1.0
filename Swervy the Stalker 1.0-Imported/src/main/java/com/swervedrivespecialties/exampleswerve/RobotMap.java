@@ -24,18 +24,18 @@ public class RobotMap {
     //ARMS
     public static final int ARM_LEFT_MOTOR = 11; // CAN
     public static final int ARM_RIGHT_MOTOR = 12; // CAN
-    public static final int ID_OPENGRIP1SOL = 0;
-    public static final int ID_CLOSEGRIP1SOL = 1;
-    public static final int ID_OPENGRIP2SOL = 2;
-    public static final int ID_CLOSEGRIP2SOL = 3;
+    //public static final int ID_OPENGRIP1SOL = 0;
+    //public static final int ID_CLOSEGRIP1SOL = 1;
+    //public static final int ID_OPENGRIP2SOL = 2;
+    //public static final int ID_CLOSEGRIP2SOL = 3;
     public static final int ID_OPENGRIP3SOL = 4;
     public static final int ID_CLOSEGRIP3SOL = 5;
     public static final int ID_OPENGRIP4SOL = 6;
-    public static final int ID_CLOSEGRIP4SOL = 7;//7 (turn back to 7 to use for arm testing)
+    public static final int ID_CLOSEGRIP4SOL = 7;
     public static final int ID_EXTENDINTAKE = 0;
     public static final int ID_RETURNINTAKE = 1;
     public static final int ID_PCM = 9;
-    public static final int ID_PCM2 = 10;
+    //public static final int ID_PCM2 = 10;
 
     //INTAKE_&_INDEXER
     public static int INTAKE = 13;

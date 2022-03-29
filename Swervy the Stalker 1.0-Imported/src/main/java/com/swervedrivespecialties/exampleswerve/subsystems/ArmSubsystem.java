@@ -24,9 +24,9 @@ public class ArmSubsystem extends Subsystem {
 
     private static ArmSubsystem instance;
     
-    private final PneumaticsControlModule pcm2 = new PneumaticsControlModule(RobotMap.ID_PCM2);
-    public final DoubleSolenoid grip1Solenoid = pcm2.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
-    public final DoubleSolenoid grip2Solenoid = pcm2.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
+    private final PneumaticsControlModule pcm2 = new PneumaticsControlModule(RobotMap.ID_PCM);
+    //public final DoubleSolenoid grip1Solenoid = pcm2.makeDoubleSolenoid(RobotMap.ID_OPENGRIP1SOL, RobotMap.ID_CLOSEGRIP1SOL);
+    //public final DoubleSolenoid grip2Solenoid = pcm2.makeDoubleSolenoid(RobotMap.ID_OPENGRIP2SOL, RobotMap.ID_CLOSEGRIP2SOL);
     public final DoubleSolenoid grip3Solenoid = pcm2.makeDoubleSolenoid(RobotMap.ID_OPENGRIP3SOL, RobotMap.ID_CLOSEGRIP3SOL);
     public final DoubleSolenoid grip4Solenoid = pcm2.makeDoubleSolenoid(RobotMap.ID_OPENGRIP4SOL, RobotMap.ID_CLOSEGRIP4SOL);
     
@@ -46,8 +46,8 @@ public class ArmSubsystem extends Subsystem {
 
     public void Arm_SwervyInit() {
 
-    grip1Solenoid.set(Value.kForward);
-    grip2Solenoid.set(Value.kForward);
+    //grip1Solenoid.set(Value.kForward);
+    //grip2Solenoid.set(Value.kForward);
     grip3Solenoid.set(Value.kForward);
     grip4Solenoid.set(Value.kForward);
 
@@ -87,13 +87,13 @@ public class ArmSubsystem extends Subsystem {
         //ARM PERIODIC
         leftEncoderPos = leftEncoder.getPosition();
         rightEncoderPos = rightEncoder.getPosition();
-        boolean Grip1Open = grip1Solenoid.get() == Value.kReverse;
-        boolean Grip2Open = grip2Solenoid.get() == Value.kReverse;
+        //boolean Grip1Open = grip1Solenoid.get() == Value.kReverse;
+        //boolean Grip2Open = grip2Solenoid.get() == Value.kReverse;
         boolean Grip3Open = grip3Solenoid.get() == Value.kReverse;
         boolean Grip4Open = grip4Solenoid.get() == Value.kReverse;
         
-        SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
-        SmartDashboard.putBoolean("Grip2Solenoid State", Grip2Open);
+        //SmartDashboard.putBoolean("Grip1Solenoid State", Grip1Open);
+        //SmartDashboard.putBoolean("Grip2Solenoid State", Grip2Open);
         SmartDashboard.putBoolean("Grip3Solenoid State", Grip3Open);
         SmartDashboard.putBoolean("Grip4Solenoid State", Grip4Open);
 
@@ -139,12 +139,12 @@ public class ArmSubsystem extends Subsystem {
     }
 
     public void toggleGreen() {
-        grip1Solenoid.toggle();
+        //grip1Solenoid.toggle();
         grip3Solenoid.toggle();
     }
 
     public void toggleYellow() {
-        grip2Solenoid.toggle();
+        //grip2Solenoid.toggle();
         grip4Solenoid.toggle();
     }
 
