@@ -1,7 +1,6 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import com.swervedrivespecialties.exampleswerve.OI;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;

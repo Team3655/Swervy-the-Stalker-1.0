@@ -15,6 +15,8 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.Limelight;
+import frc.robot.buttons.JSBAdapter;
 import frc.robot.buttons.TSBAdapter;
 import frc.robot.buttons.TSBAdapter.Mode;
 import frc.robot.event.EventHandler;
@@ -22,7 +24,6 @@ import frc.robot.event.eventSequences.Auton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
-    private static OI oi;
 
     private static DrivetrainSubsystem drivetrain;
     private static PneumaticSubsystem pneumatic;
@@ -33,12 +34,11 @@ public class Robot extends TimedRobot {
     public static final EventHandler eHandler = new EventHandler();
     private Hashtable<String, Double> tuningValues=new Hashtable<>();   
     private TSBAdapter tsbAdapter;
+    private JSBAdapter jsbAdapter;
     public static final UsbCamera front = CameraServer.startAutomaticCapture();
     public static final UsbCamera back = CameraServer.startAutomaticCapture();
+    public static final Limelight limelight=new Limelight();
 
-    public static OI getOi() {
-        return oi;
-    }
 
     @Override
     public void robotInit() {
@@ -49,7 +49,6 @@ public class Robot extends TimedRobot {
         tuningValues.put("autonAlias",0d);
         back.setExposureManual(12);    
         front.setExposureManual(12); 
-        oi = new OI();
 
         drivetrain = DrivetrainSubsystem.getInstance();
         pneumatic = PneumaticSubsystem.getInstance();
@@ -61,6 +60,7 @@ public class Robot extends TimedRobot {
         PneumaticSubsystem.getInstance().PneumaticSubsystem();
         
         tsbAdapter=new TSBAdapter(new Joystick(2),this);
+        jsbAdapter=new JSBAdapter();
         eHandler.start();
     }
         
@@ -92,6 +92,7 @@ public class Robot extends TimedRobot {
             itake.periodic();
         }*/
         tsbAdapter.update();
+        jsbAdapter.update();
         itake.periodic();
         pneumatic.periodic();
         shoot.periodic();
@@ -105,6 +106,7 @@ public class Robot extends TimedRobot {
         tsbAdapter.setMode(Mode.RobotResponse);
         tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775//maybe turn up?
         tuningValues.put("shootSpeedBot",.775);
+        limelight.reOpen();
     }
 
     @Override
@@ -153,4 +155,9 @@ public class Robot extends TimedRobot {
       public TSBAdapter getTSBAdapter(){
           return tsbAdapter;
       }
+
+      public JSBAdapter getJSBAdapter(){
+          return jsbAdapter;
+      }
+
 }

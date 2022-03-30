@@ -103,13 +103,23 @@ public class Event{
     public boolean eventCompleteCondition(){
         return true;
     }
-    /**Terminates task immediately and executes terminateTask
+    /**Terminates task 'immediately' and executes terminateTask
      * 
      */
     public final void terminate(){
-        taskDone=true;
-        endTask();
+        if (!taskDone){
+            taskDone=true;
+            endTask();
+        }
     }
+
+    /**Terminates task 'immediately' and does not run end task function
+     * 
+     */
+    public final void kill(){
+        taskDone=true;
+    }
+    
     /**What to do when task is terminated or task is done for last time
      * 
      */
