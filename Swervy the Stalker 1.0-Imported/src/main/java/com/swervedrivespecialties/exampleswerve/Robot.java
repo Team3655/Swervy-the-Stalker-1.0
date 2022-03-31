@@ -45,7 +45,9 @@ public class Robot extends TimedRobot {
         instance=this;
         //Tuning Value Defaults
         tuningValues.put("drive", 1d);
-    
+        tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775//maybe turn up?
+        tuningValues.put("shootSpeedBot",.775);
+        tuningValues.put("shootAngleConst",.01);
         tuningValues.put("autonAlias",0d);
         back.setExposureManual(12);    
         front.setExposureManual(12); 
@@ -82,6 +84,7 @@ public class Robot extends TimedRobot {
     }
 
     public void disabledPeriodic(){
+        tsbAdapter.update();
         DrivetrainSubsystem.getInstance().postModuleAnglesToDashboard();
     }
 
@@ -114,6 +117,7 @@ public class Robot extends TimedRobot {
         tsbAdapter.setMode(Mode.Tune);
         eHandler.clear();
     }
+
 
     public static void intake() {
     }
