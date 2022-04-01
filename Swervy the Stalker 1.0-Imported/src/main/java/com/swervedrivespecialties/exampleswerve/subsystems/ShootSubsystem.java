@@ -2,6 +2,7 @@ package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import javax.xml.namespace.QName;
 
+import com.ctre.phoenix.motorcontrol.IFollower;
 import com.revrobotics.CANSparkMax;
 
 
@@ -128,7 +129,8 @@ public class ShootSubsystem {
     //SmartDashboard.putNumber("Btm V", btmEncoder.getVelocity());
 
   }
-
+  
+  //Raise and Lower Elevator
   public void lower() {
     sLift.getPIDController().setP(.05);
     sLift.getPIDController().setReference(134, ControlType.kPosition);
@@ -143,6 +145,31 @@ public class ShootSubsystem {
     sLift.getPIDController().setReference(2, ControlType.kPosition);
   }
 
+  //Elevator Up and Down when Button Held Down
+  
+  public void elevatorUp(){
+    sLift.set(-0.3);
+  if(sLiftPos >= 131){
+    sLift.set(0);
+  }else{
+    sLift.set(-.3);
+    }
+  }
+
+  public void elevatorDown(){
+    sLift.set(0.3);
+    if(sLiftPos <= 2){
+      sLift.set(0);
+    }else{
+      sLift.set(.3);
+    }
+  }
+
+  public void elevatorStop(){
+    sLift.set(0);
+  }
+
+    //Index On/Off
     public void indexOn(){
         indexMotor.set(0.6);
     }

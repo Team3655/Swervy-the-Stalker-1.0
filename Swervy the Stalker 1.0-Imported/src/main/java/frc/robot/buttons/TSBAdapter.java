@@ -198,6 +198,7 @@ public class TSBAdapter extends ButtonHandler{
                         //Robot.eHandler.triggerEvent(new PrintEvent("TUNING VALUES SET TO TEST ROBOT"));
                     break;
                     case 25:
+                        SmartDashboard.putBoolean("Submit", false);
                         //Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
                         SmartDashboard.putString("Current Value", ""+robot.getTuningValue(currentTuningValue));
                     break;
@@ -246,7 +247,14 @@ public class TSBAdapter extends ButtonHandler{
     }
     public void buttonReleased(int no){
         switch (no){
-            
+              //Move Elevator Up & Down When Button is held
+              case 3:
+              ShootSubsystem.getInstance().elevatorStop();   
+          break;
+  
+          case 8:
+              ShootSubsystem.getInstance().elevatorStop(); 
+          break;
         }
     }
 
@@ -296,9 +304,18 @@ public class TSBAdapter extends ButtonHandler{
         this.mode=mode;
     }
 
-    @Override
+    
     void buttonDown(int no) {
+        switch(no){
+        //Move Elevator Up & Down When Button is held
+        case 3:
+            ShootSubsystem.getInstance().elevatorUp();   
+        break;
 
+        case 8:
+            ShootSubsystem.getInstance().elevatorDown(); 
+        break;
+        }
     }
 
     public void submitTune(){

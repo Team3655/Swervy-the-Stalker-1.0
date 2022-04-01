@@ -1,6 +1,7 @@
 package frc.robot.buttons;
 
 import com.swervedrivespecialties.exampleswerve.Robot;
+import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -22,7 +23,15 @@ public class JSBAdapter extends ButtonHandler{
             //Hold to Enable Limelight
             case 6:
                 Robot.limelight.enable();
-
+            break;
+            //Hold To Boost (GO FAST!!!)
+            case 1:
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setRotationMultiplier(1);
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setTranslationMultiplier(1);
+            break;
+            //Hold To Disable FieldCentric
+            case 5:
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setFieldCentric(false);
             break;
         }
 
@@ -35,6 +44,14 @@ public class JSBAdapter extends ButtonHandler{
             //Release to Disable Limelight
             case 6:
                 Robot.limelight.disable();
+            break;
+            case 1:
+            //Release to Stop Boost (GO SLOW!!!)
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setRotationMultiplier(.75);
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setTranslationMultiplier(.7);
+            break;
+            case 5:
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setFieldCentric(true);
             break;
         }
         

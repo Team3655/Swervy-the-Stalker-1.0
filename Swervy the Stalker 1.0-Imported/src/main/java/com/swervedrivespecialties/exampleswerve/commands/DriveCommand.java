@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.WPILibVersion;
+import frc.robot.buttons.JSBAdapter;
 import edu.wpi.first.math.geometry.Translation2d;
 import org.frcteam2910.common.robot.Utilities;
 
@@ -19,38 +20,58 @@ public class DriveCommand extends Command {
 
     double lastRotation=0;
     boolean enabled = true;
+    boolean fieldCentric = true;
+    double translationMultiplier = .7;
+    double rotationMultiplier = .75;
+
 
     @Override
     protected void execute() {
         if (DriverStation.isTeleopEnabled()) {
-            double forward = -(Robot.getRobot().getJSBAdapter().getY())*.7;
+            double forward = -(Robot.getRobot().getJSBAdapter().getY())*translationMultiplier;
             if (Robot.getRobot().getJSBAdapter().getPOV() == 0) {
                 forward = .4;
             } else if (Robot.getRobot().getJSBAdapter().getPOV() == 180) {
                 forward = -.4;
             }
+
             forward = Utilities.deadband(forward);
             // Square the forward stick
             forward = Math.copySign(Math.pow(forward, 2.0), forward);
 
-            double strafe = -(Robot.getRobot().getJSBAdapter().getX())*.7;
+            double strafe = -(Robot.getRobot().getJSBAdapter().getX())*translationMultiplier;
             strafe = Utilities.deadband(strafe);
             // Square the strafe stick
             strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);
+            
             double rotation;
-            rotation = -(Robot.getRobot().getJSBAdapter().getV())*.75;
+            rotation = -(Robot.getRobot().getJSBAdapter().getV())*rotationMultiplier;
             rotation = Utilities.deadband(rotation);
             SmartDashboard.putNumber("rotation from joystick", rotation);
             // Square the rotation stick
             rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
+            
             if (Robot.limelight.isEnabled()&&rotation==0){
                 rotation=Robot.limelight.getTurnOutput();
                 SmartDashboard.putNumber("rotation from limelight", rotation);
             }
             
-            
-            DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, true);
+
+
+            DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, fieldCentric);
         }
+    }
+
+    public void setRotationMultiplier(double d){
+        rotationMultiplier=d;
+    }
+
+    public void setTranslationMultiplier(double d){
+        translationMultiplier=d;
+    }
+
+    public void setFieldCentric(boolean b){
+        fieldCentric=b;
     }
 
     public void toggleEnabled() {
