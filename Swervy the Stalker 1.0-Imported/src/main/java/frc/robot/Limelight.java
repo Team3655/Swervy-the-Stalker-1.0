@@ -1,6 +1,10 @@
 package frc.robot;
 
 import com.swervedrivespecialties.exampleswerve.Robot;
+import com.swervedrivespecialties.exampleswerve.RobotMap;
+import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
+
+import org.frcteam2910.common.robot.drivers.Limelight.LedMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -8,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.event.LimelightEvent;
 import frc.robot.event.PrintEvent;
+import gameutil.math.geom.Point;
 
 
 public class Limelight {
@@ -39,11 +44,17 @@ public class Limelight {
     }
 
     public void enable(){
+        
         loop.enable();
+        limelight.getEntry("ledMode").setNumber(3);
     }
 
     public void disable(){
         loop.disable();
+        ShootSubsystem.getInstance().setTopSpeed(Robot.getRobot().getTuningValue("shootSpeedTop"));
+        ShootSubsystem.getInstance().setBotSpeed(Robot.getRobot().getTuningValue("shootSpeedBot"));
+        limelight.getEntry("ledMode").setNumber(1);
+        
     }
 
     public void setEnabled(boolean enabled){

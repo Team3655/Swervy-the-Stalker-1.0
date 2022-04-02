@@ -45,8 +45,12 @@ public class Robot extends TimedRobot {
         instance=this;
         //Tuning Value Defaults
         tuningValues.put("drive", 1d);
-        tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775//maybe turn up?
+        tuningValues.put("shootSpeedTop",.75);//old shoot speed .775//maybe turn up?
         tuningValues.put("shootSpeedBot",.775);
+
+        tuningValues.put("shootSpeedTopAuto",.75);//old shoot speed .775//maybe turn up?
+        tuningValues.put("shootSpeedBotAuto",.6775);
+
         tuningValues.put("shootAngleConst",.01);
         tuningValues.put("autonAlias",0d);
         back.setExposureManual(12);    
@@ -64,6 +68,8 @@ public class Robot extends TimedRobot {
         tsbAdapter=new TSBAdapter(new Joystick(2),this);
         jsbAdapter=new JSBAdapter();
         eHandler.start();
+
+        limelight.disable();
     }
         
 
@@ -71,8 +77,8 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         super.autonomousInit();
         eHandler.triggerEvent(new Auton());
-        tuningValues.put("shootSpeedTop", .7775);
-        tuningValues.put("shootSpeedBot", .6775);
+        shoot.setTopSpeed(tuningValues.get("shootSpeedTopAuto"));
+        shoot.setBotSpeed(tuningValues.get("shootSpeedBotAuto"));
     }
     @Override
     public void autonomousPeriodic(){
@@ -107,8 +113,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit(){
         tsbAdapter.setMode(Mode.RobotResponse);
-        tuningValues.put("shootSpeedTop",.775);//old shoot speed -.775//maybe turn up?
-        tuningValues.put("shootSpeedBot",.775);
+        shoot.setTopSpeed(tuningValues.get("shootSpeedTop"));
+        shoot.setBotSpeed(tuningValues.get("shootSpeedBot"));
         limelight.reOpen();
     }
 

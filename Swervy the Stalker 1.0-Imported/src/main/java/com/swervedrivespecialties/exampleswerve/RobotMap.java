@@ -1,5 +1,8 @@
 package com.swervedrivespecialties.exampleswerve;
 
+import gameutil.math.geom.Point;
+import gameutil.math.geom.Tuple;
+
 public class RobotMap {
     //FRONT_LEFT
     public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 2; // CAN
@@ -47,5 +50,22 @@ public class RobotMap {
     //SHOOTER
     public static final int SHOOTER_BOTTOM = 16;
     public static final int SHOOTER_TOP = 17;
+
+    public static final Point[] shootData=new Point[] {
+        //                              { top speed, bot speed, angle to target relative to limelight (theta) }
+        new Point(new Tuple(new double[]{ 1, 1, -8.6 })),
+        new Point(new Tuple(new double[]{ .9, 1, -8.5 })),
+        new Point(new Tuple(new double[]{ .9, 1, -8 })),
+        new Point(new Tuple(new double[]{ .75, .85, -5.3 })),
+        new Point(new Tuple(new double[]{ .75, .775, -4.7 })),
+        new Point(new Tuple(new double[]{ .75, .8, -4 })),
+        new Point(new Tuple(new double[]{ .55, .65, 4.9 })),
+        new Point(new Tuple(new double[]{ .5, .64, 7 })),
+        new Point(new Tuple(new double[]{ .5, .62, 10 })),
+        new Point(new Tuple(new double[]{ .5, .62, 11 })),
+        new Point(new Tuple(new double[]{ .55, .65, 12 })),
+        new Point(new Tuple(new double[]{ .45, .62, 18 })),
+
+    };
     
 }

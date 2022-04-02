@@ -315,6 +315,11 @@ public class TSBAdapter extends ButtonHandler{
         case 8:
             ShootSubsystem.getInstance().elevatorDown(); 
         break;
+
+        //Lock Wheels for Shooting
+        case 10:
+
+        break;
         }
     }
 
