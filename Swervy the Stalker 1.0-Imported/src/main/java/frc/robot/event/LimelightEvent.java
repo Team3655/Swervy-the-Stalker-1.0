@@ -16,7 +16,8 @@ public class LimelightEvent extends Event {
     private boolean enabled=false;
     private boolean terminated;
     private double max=.2;
-    private double dBand = 1.5;
+    private double dBand = 2;
+    private double dBand2 = 5;
     private double turnOutput=0;
     public LimelightEvent(){
         super();
@@ -26,71 +27,76 @@ public class LimelightEvent extends Event {
     public void task(){
         if (enabled&&Robot.limelight.hasTarget()){
              //do limelight yams
-             Point pL = null;
-             double phi=Robot.limelight.getY();
-             for(Point j: RobotMap.shootData){
-                 if(j.tuple.i(2) >= phi){
-                     if(pL != null){
-                         if(Math.abs(j.tuple.i(2)-phi)<Math.abs(pL.tuple.i(2)-phi)){
-                             pL = j;
-                         }
-                     } else {
-                         pL = j;
-                     }
-                 }
-             }
- 
-             Point pS = null;
-             for(Point j: RobotMap.shootData){
-                 if(j.tuple.i(2) <= phi){
-                     if(pS != null){
-                         if(Math.abs(j.tuple.i(2)-phi)<Math.abs(pS.tuple.i(2)-phi)){
-                             pS = j;
-                         }
-                     } else {
-                         pS = j;
-                     }
-                 }
-             }
-             Point speed;
-             if(pL==null){
-                 speed = pS;
-             }else if (pS==null){
-                 speed = pL;
-             }else{
-                 if(pS .equals(pL)){
-                     speed = pS;
-                 }else{
-                     try {
-                         double t = (phi - pL.tuple.i(2))/(pS.tuple.i(2)-pL.tuple.i(2));
-                         speed = pS.lerp(pL, t);
-                         SmartDashboard.putNumber("t val", t);
-                     } catch (Exception e){
-                         e.printStackTrace();
-                         speed = pS.lerp(pL, .5);
-                     }
-                 }
-             }
-             SmartDashboard.putNumber("Limespeed Top", speed.tuple.i(0));
-             SmartDashboard.putNumber("Limespeed Bot", speed.tuple.i(1));
-             try {
-                 SmartDashboard.putNumber("pL angle", pL.tuple.i(2));
-                 SmartDashboard.putNumber("pS angle", pS.tuple.i(2));
-             } catch (NullPointerException e){
- 
-             }
-             ShootSubsystem.getInstance().setSpeed(speed);
-
-                //((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
+             
+             if (targetLocked()){
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(true);    
+             } else {
+                
                 
                 double error=Robot.limelight.getX();
                 SmartDashboard.putNumber("limelightError", error);
                 //error will equal the angle of x the limelight returns
-                if (Math.abs(error) > dBand){
+                if (Math.abs(error) > dBand2) {
+                    Point pL = null;
+                    double phi=Robot.limelight.getY();
+                    for(Point j: RobotMap.shootData){
+                        if(j.tuple.i(2) >= phi){
+                            if(pL != null){
+                                if(Math.abs(j.tuple.i(2)-phi)<Math.abs(pL.tuple.i(2)-phi)){
+                                    pL = j;
+                                }
+                            } else {
+                                pL = j;
+                            }
+                        }
+                    }
+        
+                    Point pS = null;
+                    for(Point j: RobotMap.shootData){
+                        if(j.tuple.i(2) <= phi){
+                            if(pS != null){
+                                if(Math.abs(j.tuple.i(2)-phi)<Math.abs(pS.tuple.i(2)-phi)){
+                                    pS = j;
+                                }
+                            } else {
+                                pS = j;
+                            }
+                        }
+                    }
+                    Point speed;
+                    if(pL==null){
+                        speed = pS;
+                    }else if (pS==null){
+                        speed = pL;
+                    }else{
+                        if(pS .equals(pL)){
+                            speed = pS;
+                        }else{
+                            try {
+                                double t = (phi - pL.tuple.i(2))/(pS.tuple.i(2)-pL.tuple.i(2));
+                                speed = pS.lerp(pL, t);
+                                SmartDashboard.putNumber("t val", t);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                                speed = pS.lerp(pL, .5);
+                            }
+                        }
+                    }
+                    SmartDashboard.putNumber("Limespeed Top", speed.tuple.i(0));
+                    SmartDashboard.putNumber("Limespeed Bot", speed.tuple.i(1));
+                    try {
+                        SmartDashboard.putNumber("pL angle", pL.tuple.i(2));
+                        SmartDashboard.putNumber("pS angle", pS.tuple.i(2));
+                    } catch (NullPointerException e){
+        
+                    }
+                    ShootSubsystem.getInstance().setSpeed(speed);
+                    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
                     turnOutput=error*Ppos;
                 } else {
                     turnOutput=0;
                 }
+            }
             
 
         } else {
@@ -111,7 +117,7 @@ public class LimelightEvent extends Event {
 
     public void disable(){
         enabled=false;
-        //((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
+        ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
     }
 
     public void setEnabled(boolean enabled){
