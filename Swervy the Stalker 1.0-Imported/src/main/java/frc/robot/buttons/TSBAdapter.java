@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.event.Event;
 import frc.robot.event.PrintEvent;
 import com.swervedrivespecialties.exampleswerve.Robot;
+import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.PneumaticSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 
@@ -57,6 +59,10 @@ public class TSBAdapter extends ButtonHandler{
                     PneumaticSubsystem.getInstance().toggleIntakeSolenoid();
                 break;
 
+                case 10:
+                    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(true);
+                break;
+
                 case 19: 
                     ShootSubsystem.getInstance().raise();
                 break;
@@ -73,7 +79,8 @@ public class TSBAdapter extends ButtonHandler{
                 case 23:
                         //turn everything off
                         robot.stopEverything();
-                    break;
+                break;
+            
                 case 28:
                     mode=Mode.Tune;
                     Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'Tune'"));//need make log before getting rid of this
@@ -82,83 +89,39 @@ public class TSBAdapter extends ButtonHandler{
             }
         } else if (mode==Mode.Tune) {
             if (no<10){
-                //if (!this.getButtonDown(27)){
                     inputCache=inputCache+no;
                     SmartDashboard.putString("Input", inputCache);
-                    //Robot.eHandler.triggerEvent(new PrintEvent("Input Cache: "+inputCache));
-                //} else {
-                    /*if (no==1){
-                        //robot.setTuningValue("eTop", robot.elevatorPos());
-                        if (robot.isEnabled()){
-                            mode=Mode.RobotResponse;
-                            Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                        }
-                    } else if (no==2){
-                        //robot.setTuningValue("eMid", robot.elevatorPos());
-                        if (robot.isEnabled()){
-                            mode=Mode.RobotResponse;
-                            Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                        }
-                    } else if (no==3){
-                        //robot.setTuningValue("eHat", robot.elevatorPos());
-                        if (robot.isEnabled()){
-                            mode=Mode.RobotResponse;
-                            Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                        }
-                    }*/
-                //}
                 
             } else if (no<28) {
                 switch (no){
                     case 10:
                         inputCache=inputCache+0;
-                        //Robot.eHandler.triggerEvent(new PrintEvent("Input Cache: "+inputCache));
                         SmartDashboard.putString("Input", inputCache);
                     break;
+
                     case 11:
                         try {
                             inputCache=inputCache.substring(0, inputCache.length()-1);
                         } catch (Exception e){
                         }
-                        //Robot.eHandler.triggerEvent(new PrintEvent("Input Cache: "+inputCache));
                         SmartDashboard.putString("Input", inputCache);
                     break;
+
                     case 12:
                         if (!inputCache.contains(".")){
                             inputCache=inputCache+".";
-                            //Robot.eHandler.triggerEvent(new PrintEvent("Input Cache: "+inputCache));
                             SmartDashboard.putString("Input", inputCache);
                         }
                     break;
+
                     case 15:
                         nextTuningValue();
-                        /*if (getButtonDown(28)){
-                            //robot.setTuningValue("aHat", robot.armPos());
-                            if (robot.isEnabled()){
-                                mode=Mode.RobotResponse;
-                                Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                            }
-                        }*/
                     break;
-                    /*case 13:
-                        if (getButtonDown(28)){
-                            //robot.setTuningValue("eHat", robot.elevatorPos());
-                            if (robot.isEnabled()){
-                                mode=Mode.RobotResponse;
-                                Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                            }
-                        }
-                    break;*/
+   
                     case 16:
                         lastTuningValue();
-                    /*if (getButtonDown(28)){
-                        //robot.setTuningValue("aBal", robot.elevatorPos());
-                        if (robot.isEnabled()){
-                            mode=Mode.RobotResponse;
-                            Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                        }
-                    }*/
                     break;
+
                     case 17:
                         if (!inputCache.contains("-")){
                             inputCache="-"+inputCache;
@@ -169,11 +132,6 @@ public class TSBAdapter extends ButtonHandler{
                         SmartDashboard.putString("Input", inputCache);
                     break;
 
-
-                    case 19:
-                        /*Event[] printNos={new PrintEvent(4),new PrintEvent(3),new PrintEvent(2),new PrintEvent(1),new PrintEvent(0),new PrintEvent("Good Job!"),new PrintEvent(-1)};
-                        Robot.eHandler.triggerEvent(new EventSequence(printNos));*/
-                    break;
                     case 20:
                         Robot.eHandler.clear();
                     break;
@@ -183,43 +141,22 @@ public class TSBAdapter extends ButtonHandler{
                     case 21:
                         submitTune();
                     break;
-                    case 22:
-                        //robot.printSensorPositions();
-                        //robot.printMotorTemps();
-                    break;
+                    
                     case 23:
                         //turn everything off
                         robot.stopEverything();
                     break;
-                    case 24:
-                        //print current tuning value
-                        //Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
-                        //setTuningValues
-                        //Robot.eHandler.triggerEvent(new PrintEvent("TUNING VALUES SET TO TEST ROBOT"));
-                    break;
+
                     case 25:
                         SmartDashboard.putBoolean("Submit", false);
                         //Robot.eHandler.triggerEvent(new PrintEvent("Current value of "+currentTuningValue+": "+robot.getTuningValue(currentTuningValue)));
                         SmartDashboard.putString("Current Value", ""+robot.getTuningValue(currentTuningValue));
                     break;
-                    //button 26 changes what property you are editing (++)
-                    case 27:
-                        
-                    break;
-                    //button 26 changes what property you are editing (--)
-                    case 26:
-                        
-                    break;
+
                 }
              } else {
                 switch (no){
                     case 28:
-                        /*if (robot.isEnabled()){
-                            mode=Mode.RobotResponse;
-                            Robot.eHandler.triggerEvent(new PrintEvent("Mode set to 'RobotResponse'"));
-                        } else {
-                            Robot.eHandler.triggerEvent(new PrintEvent("RobotResponse mode not available while robot is disabled",true));
-                        }*/
                         if (robot.isEnabled()){
                             if (robot.isTeleop()){
                                 mode=Mode.RobotResponse;
@@ -245,16 +182,21 @@ public class TSBAdapter extends ButtonHandler{
             Robot.eHandler.triggerEvent(new PrintEvent("RobotResponse mode not available while robot is disabled. Mode set to 'Tune'",true));
         }
     }
+
     public void buttonReleased(int no){
         switch (no){
-              //Move Elevator Up & Down When Button is held
-              case 3:
-              ShootSubsystem.getInstance().elevatorStop();   
-          break;
+            //Move Elevator Up & Down When Button is held
+            case 3:
+                ShootSubsystem.getInstance().elevatorStop();   
+            break;
   
-          case 8:
-              ShootSubsystem.getInstance().elevatorStop(); 
-          break;
+            case 8:
+                ShootSubsystem.getInstance().elevatorStop(); 
+            break;
+
+            case 10:
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
+            break;
         }
     }
 
@@ -326,14 +268,10 @@ public class TSBAdapter extends ButtonHandler{
     public void submitTune(){
         try {
             robot.setTuningValue(currentTuningValue, Double.parseDouble(inputCache));
-            //Robot.eHandler.triggerEvent(new PrintEvent(currentTuningValue+" set to "+inputCache));
             SmartDashboard.putString("Out", currentTuningValue+" set to "+inputCache);
             inputCache="";
-            //robot.elevatorPID(robot.getTuningValue("eP"), robot.getTuningValue("eI"), robot.getTuningValue("eD"),robot.getTuningValue("eFF"));
+
         } catch (NumberFormatException e){
-            //robot.setProp(currentTuningValue, 0);
-            //Robot.eHandler.triggerEvent(new PrintEvent("User did not enter a number"));
-            //System.err.println(currentTuningValue+" defaulted to 0");
             inputCache="";
             SmartDashboard.putString("Out", "User did not enter a number");
         }

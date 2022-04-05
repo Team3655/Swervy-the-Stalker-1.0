@@ -51,7 +51,6 @@ public class Robot extends TimedRobot {
         tuningValues.put("shootSpeedTopAuto",.75);//old shoot speed .775//maybe turn up?
         tuningValues.put("shootSpeedBotAuto",.6775);
 
-        tuningValues.put("shootAngleConst",.01);
         tuningValues.put("autonAlias",0d);
         back.setExposureManual(12);    
         front.setExposureManual(12); 

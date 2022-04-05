@@ -154,6 +154,15 @@ public class DrivetrainSubsystem extends Subsystem {
                 backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
         }
 
+        public void wheelLock() {
+                SmartDashboard.putBoolean("Locked", true);
+                SwerveModuleState[] states = getStates(new Translation2d(), 1 , false);
+                frontLeftModule.setTargetVelocity(0, states[0].angle.getRadians() + Math.PI/2);
+                frontRightModule.setTargetVelocity(0, states[1].angle.getRadians() + Math.PI/2);
+                backLeftModule.setTargetVelocity(0, states[2].angle.getRadians() + Math.PI/2);
+                backRightModule.setTargetVelocity(0, states[3].angle.getRadians() + Math.PI/2);
+        }
+
         public SwerveModuleState[] getStates(Translation2d translation, double rotation, boolean fieldOriented){
                 rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
                 ChassisSpeeds speeds;
