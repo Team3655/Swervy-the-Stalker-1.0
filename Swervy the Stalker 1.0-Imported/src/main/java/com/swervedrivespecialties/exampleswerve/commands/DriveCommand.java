@@ -46,16 +46,19 @@ public class DriveCommand extends Command {
                 // Square the strafe stick
                 strafe = Math.copySign(Math.pow(strafe, 2.0), strafe);
                 
-                double rotation;
-                rotation = -(Robot.getRobot().getJSBAdapter().getV())*rotationMultiplier;
-                rotation = Utilities.deadband(rotation);
-                SmartDashboard.putNumber("rotation from joystick", rotation);
-                // Square the rotation stick
-                rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
+                double rotation = 0;
+                
                 
                 if (Robot.limelight.isEnabled() && rotation == 0){
                     rotation=Robot.limelight.getTurnOutput();
                     SmartDashboard.putNumber("rotation from limelight", rotation);
+                } else {
+                    rotation = -(Robot.getRobot().getJSBAdapter().getV())*rotationMultiplier;
+                    rotation = Utilities.deadband(rotation);
+                    SmartDashboard.putNumber("rotation from joystick", rotation);
+                    // Square the rotation stick
+                    rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
+
                 }
                 
 

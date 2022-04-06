@@ -65,7 +65,7 @@ public class RobotMap {
         new Point(new Tuple(new double[]{ .5, .62, 11 })),
         new Point(new Tuple(new double[]{ .55, .65, 12 })),
         new Point(new Tuple(new double[]{ .45, .62, 18 })),
-
+        new Point(new Tuple(new double[]{ .66, .73, 3.6 })),
     };
     
 }
