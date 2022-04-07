@@ -49,10 +49,10 @@ public class ShootSubsystem {
     // shoot init
     shootTopMotor.restoreFactoryDefaults();
     shootBtmMotor.restoreFactoryDefaults();
-    topEncoder = sLift.getEncoder();
-    btmEncoder = sLift.getEncoder();
+    topEncoder = shootTopMotor.getEncoder();
+    btmEncoder = shootBtmMotor.getEncoder();
 
-    kP = 0.000002; 
+    kP = 0.000004; 
     kI = 0;
     kD = 0; 
     kIz = 0; 
@@ -75,8 +75,8 @@ public class ShootSubsystem {
     btmPidController.setFF(kFF);
     btmPidController.setOutputRange(kMinOutput, kMaxOutput);
 
-    topSpeed=Robot.getRobot().getTuningValue("shootSpeedTop");
-    botSpeed=Robot.getRobot().getTuningValue("shootSpeedBot");
+    topSpeed = Robot.getRobot().getTuningValue("shootSpeedTop");
+    botSpeed = Robot.getRobot().getTuningValue("shootSpeedBot");
   }
   
   
@@ -107,16 +107,19 @@ public class ShootSubsystem {
     if (secondaryJoystick.getRawButton(9)) {
       indexOn();
       itake.iTakeFWD(.2);
+
     } else {
       indexOff();
     }
 
     // shoot periodic 
+    topEncoder = shootTopMotor.getEncoder();
+    btmEncoder = shootBtmMotor.getEncoder();
+
     if (secondaryJoystick.getRawButton(5)) {
       
       topPidController.setReference(-topSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
       btmPidController.setReference(botSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
-
       //
       //Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
     } else if (Robot.getRobot().isTeleopEnabled()){
@@ -124,6 +127,21 @@ public class ShootSubsystem {
       btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
     }
 
+    
+    
+    double atSpeedT = -topSpeed *maxRPM *.9;
+    double atSpeedB = botSpeed *maxRPM *.9;
+
+    SmartDashboard.putNumber("top Speed", topEncoder.getVelocity());
+    SmartDashboard.putNumber("btm Speed", btmEncoder.getVelocity());
+    SmartDashboard.putNumber("atSpeed target top", atSpeedT);
+    SmartDashboard.putNumber("atSpeed target top", atSpeedB);
+
+    if (Math.abs(atSpeedT - topEncoder.getVelocity()) < Math.abs(atSpeedT *.1) && Math.abs(atSpeedB - btmEncoder.getVelocity()) < Math.abs(atSpeedB *.1)) {
+      SmartDashboard.putBoolean("atSpeed", true);
+    } else {
+      SmartDashboard.putBoolean("atSpeed", false);
+    }
     
     //SmartDashboard.putNumber("Setpoint", setPoint);
         
@@ -209,6 +227,6 @@ public class ShootSubsystem {
           instance = new ShootSubsystem();
           }
           return instance;   
-      }
+    }
   
   }

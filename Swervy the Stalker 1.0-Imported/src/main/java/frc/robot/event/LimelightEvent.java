@@ -17,7 +17,7 @@ public class LimelightEvent extends Event {
     private boolean terminated;
     private double max = .2;
     private double dBand = 1;
-    private double dBand2 = 2;
+    private double dBand2 = 1.5;
     private double turnOutput = 0;
     public LimelightEvent(){
         super();
@@ -40,6 +40,7 @@ public class LimelightEvent extends Event {
                     
                     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
                     turnOutput=error*Ppos;
+
                 } else {
                     turnOutput=0;
                 }
@@ -94,6 +95,7 @@ public class LimelightEvent extends Event {
 
 
     public void updateSpeed(){
+
         Point pL = null;
         double phi=Robot.limelight.getY();
         for(Point j: RobotMap.shootData){
@@ -121,6 +123,7 @@ public class LimelightEvent extends Event {
                 }
             }
         }
+
         Point speed;
         if(pL==null){
             speed = pS;
@@ -150,4 +153,5 @@ public class LimelightEvent extends Event {
         }
         ShootSubsystem.getInstance().setSpeed(speed);
     }
+    
 }

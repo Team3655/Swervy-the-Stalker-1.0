@@ -31,11 +31,6 @@ public class DriveCommand extends Command {
             if (!lock) {
                 SmartDashboard.putBoolean("Locked", false);
                 double forward = -(Robot.getRobot().getJSBAdapter().getY())*translationMultiplier;
-                if (Robot.getRobot().getJSBAdapter().getPOV() == 0) {
-                    forward = .4;
-                } else if (Robot.getRobot().getJSBAdapter().getPOV() == 180) {
-                    forward = -.4;
-                }
 
                 forward = Utilities.deadband(forward);
                 // Square the forward stick
@@ -61,9 +56,15 @@ public class DriveCommand extends Command {
 
                 }
                 
-
-
                 DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, fieldCentric);
+
+                if (Robot.getRobot().getJSBAdapter().getPOV() == 0) {
+                    DrivetrainSubsystem.getInstance().drive(new Translation2d(.4, 0), 0, false);
+                } else if (Robot.getRobot().getJSBAdapter().getPOV() == 180) {
+                    DrivetrainSubsystem.getInstance().drive(new Translation2d(-.4, 0), 0, false);
+                }
+                    
+                
             } else {
                 DrivetrainSubsystem.getInstance().wheelLock();
             }
