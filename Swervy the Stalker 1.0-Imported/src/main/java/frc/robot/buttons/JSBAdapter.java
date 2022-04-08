@@ -31,7 +31,7 @@ public class JSBAdapter extends ButtonHandler{
             break;
             //Hold To Disable FieldCentric
             case 5:
-                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setFieldCentric(false);
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(true);
             break;
         }
 
@@ -51,7 +51,7 @@ public class JSBAdapter extends ButtonHandler{
                 ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setTranslationMultiplier(.7);
             break;
             case 5:
-                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setFieldCentric(true);
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
             break;
         }
         

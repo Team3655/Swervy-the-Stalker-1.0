@@ -7,6 +7,7 @@ import com.swervedrivespecialties.exampleswerve.subsystems.ShootSubsystem;
 
 import java.util.Hashtable;
 
+import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
 
 import frc.robot.event.Event;
@@ -80,10 +81,12 @@ public class Robot extends TimedRobot {
         eHandler.triggerEvent(new Auton());
         shoot.setTopSpeed(tuningValues.get("shootSpeedTopAuto"));
         shoot.setBotSpeed(tuningValues.get("shootSpeedBotAuto"));
+        limelight.reOpen();
     }
     @Override
     public void autonomousPeriodic(){
         DrivetrainSubsystem.getInstance().periodic();
+        ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).execute();
     }
 
     public void robotPeriodic(){

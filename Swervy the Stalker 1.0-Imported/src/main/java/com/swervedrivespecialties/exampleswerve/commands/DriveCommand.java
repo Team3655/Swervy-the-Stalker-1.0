@@ -24,12 +24,18 @@ public class DriveCommand extends Command {
     double translationMultiplier = .7;
     double rotationMultiplier = .75;
     boolean lock = false;
-    boolean enabledAuton=false;
+    boolean enabledAuton=true;
 
     @Override
-    protected void execute() {
+    public void execute() {
+        
+        if (DriverStation.isAutonomousEnabled()){
+            SmartDashboard.putBoolean("running drive command", true);
+        }
         if (DriverStation.isTeleopEnabled()||enabledAuton) {
+            
             if (!lock) {
+                
                 SmartDashboard.putBoolean("Locked", false);
                 double forward = -(Robot.getRobot().getJSBAdapter().getY())*translationMultiplier;
 
@@ -44,8 +50,8 @@ public class DriveCommand extends Command {
                 
                 double rotation = 0;
                 
-                
                 if (Robot.limelight.isEnabled() && rotation == 0){
+                    System.out.println("Limelight enabled");
                     rotation=Robot.limelight.getTurnOutput();
                     SmartDashboard.putNumber("rotation from limelight", rotation);
                 } else {
@@ -72,7 +78,7 @@ public class DriveCommand extends Command {
         }
     }
 
-    public void setEnabled(boolean b){
+    public void setAutoEnabled(boolean b){
         enabledAuton=b;
     }
 

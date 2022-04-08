@@ -72,7 +72,7 @@ public class Limelight {
         loop.terminate();
     }
 
-    /**Terminates limelight event loop
+    /**Terminates limelight event loop and starts a new one
      * 
      */
     public void reOpen(){
@@ -83,6 +83,10 @@ public class Limelight {
 
     public double getTurnOutput(){
         return loop.getTurnOutput();
+    }
+
+    public void forceUpdateSpeed(){
+        loop.updateSpeed();
     }
 
 }

@@ -59,9 +59,6 @@ public class TSBAdapter extends ButtonHandler{
                     PneumaticSubsystem.getInstance().toggleIntakeSolenoid();
                 break;
 
-                case 10:
-                    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(true);
-                break;
 
                 case 19: 
                     ShootSubsystem.getInstance().raise();
@@ -74,7 +71,6 @@ public class TSBAdapter extends ButtonHandler{
                 case 21:
                     PneumaticSubsystem.getInstance().toggleCompressor();
                 break;
-
                 
                 case 23:
                         //turn everything off
@@ -194,9 +190,6 @@ public class TSBAdapter extends ButtonHandler{
                 ShootSubsystem.getInstance().elevatorStop(); 
             break;
 
-            case 10:
-                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
-            break;
         }
     }
 

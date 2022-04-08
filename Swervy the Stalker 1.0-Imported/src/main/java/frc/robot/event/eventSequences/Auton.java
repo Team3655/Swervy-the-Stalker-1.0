@@ -50,33 +50,32 @@ public class Auton extends EventSequence{
 
                 new Event(          ShootSubsystem.getInstance()::lower),
                 new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
-
+                
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
                 
                 new Event(          Robot.limelight::enable),
-                //new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setEnabled(true)),
+                new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
 
                 new Event(          ShootSubsystem.getInstance()::shootOn),
                 new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
-
+                
                 new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4), 3250),
                 
                 new Event(          ShootSubsystem.getInstance()::indexOff),
-                //new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setEnabled(false)),
+                new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
 
                 new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
-                //new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setEnabled(true)),
+                new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
+                new Event(() ->     limelight.forceUpdateSpeed()),
                 new Event(          ShootSubsystem.getInstance()::indexOn, 750),
 
 
                 new Event(          ShootSubsystem.getInstance()::shootOff, 4750),
                 new Event(          ShootSubsystem.getInstance()::indexOff),
                 new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
-                new Event(          Robot.limelight::disable),
-                
-
+                new Event(          Robot.limelight::disable,2000),
 
         });
     }
