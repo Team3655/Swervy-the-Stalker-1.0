@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
         tuningValues.put("shootSpeedBot",.775);
 
         tuningValues.put("shootSpeedTopAuto",.75);//old shoot speed .775//maybe turn up?
-        tuningValues.put("shootSpeedBotAuto",.6775);
+        tuningValues.put("shootSpeedBotAuto",.675);
 
         tuningValues.put("Auto Delay", 0.0); 
 
