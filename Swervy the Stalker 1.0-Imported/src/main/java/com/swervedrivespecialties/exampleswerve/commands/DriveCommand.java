@@ -24,10 +24,11 @@ public class DriveCommand extends Command {
     double translationMultiplier = .7;
     double rotationMultiplier = .75;
     boolean lock = false;
+    boolean enabledAuton=false;
 
     @Override
     protected void execute() {
-        if (DriverStation.isTeleopEnabled()) {
+        if (DriverStation.isTeleopEnabled()||enabledAuton) {
             if (!lock) {
                 SmartDashboard.putBoolean("Locked", false);
                 double forward = -(Robot.getRobot().getJSBAdapter().getY())*translationMultiplier;
@@ -69,6 +70,10 @@ public class DriveCommand extends Command {
                 DrivetrainSubsystem.getInstance().wheelLock();
             }
         }
+    }
+
+    public void setEnabled(boolean b){
+        enabledAuton=b;
     }
 
     public void setLock(boolean it) {
