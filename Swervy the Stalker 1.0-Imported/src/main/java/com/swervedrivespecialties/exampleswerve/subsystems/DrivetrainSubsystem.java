@@ -31,7 +31,7 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double TRACKWIDTH = 22;
         private static final double WHEELBASE = 22;
 
-        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(11.9);
+        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(12.6);
         private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.4);
         private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(194.4);
         private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(93.8);

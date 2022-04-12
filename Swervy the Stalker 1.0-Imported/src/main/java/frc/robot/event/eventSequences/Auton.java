@@ -43,9 +43,13 @@ public class Auton extends EventSequence{
     public Auton(AUTON_ALIAS alias) {
         super(
             new Event[] {
+                new                 TurnEvent(Math.PI/2, .2),
+                //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(0, 0), 0, false)),
 
                 //new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
 
+                /*
+                new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                 new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
 
                 new Event(          ShootSubsystem.getInstance()::lower),
@@ -75,7 +79,9 @@ public class Auton extends EventSequence{
                 new Event(          ShootSubsystem.getInstance()::shootOff, 4750),
                 new Event(          ShootSubsystem.getInstance()::indexOff),
                 new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
-                new Event(          Robot.limelight::disable,2000),
+                new Event(          Robot.limelight::disable),
+                new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                */
 
         });
     }

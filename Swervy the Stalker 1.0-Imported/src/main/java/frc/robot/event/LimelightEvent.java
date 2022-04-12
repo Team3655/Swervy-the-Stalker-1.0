@@ -11,14 +11,17 @@ import gameutil.math.geom.Point;
 import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 
 public class LimelightEvent extends Event {
-    private final double P = .02;
-    private final double Ppos = -.008;
+    private final double I = -.000001;
+    private final double P = -.008;
+    private double integral = 0; 
+    private long lastUpdate = System.currentTimeMillis();
     private boolean enabled = false;
     private boolean terminated;
     private double max = .2;
     private double dBand = 1;
-    private double dBand2 = 1.5;
+    private double dBand2 = 3;
     private double turnOutput = 0;
+    private boolean wasLockedOn=false;
     public LimelightEvent(){
         super();
     }
@@ -34,21 +37,26 @@ public class LimelightEvent extends Event {
                 
                 updateSpeed();
                 double error=Robot.limelight.getX();
+                long currentTime=System.currentTimeMillis();
+                integral += error*(currentTime - lastUpdate);
+                lastUpdate=currentTime;
                 SmartDashboard.putNumber("limelightError", error);
+                SmartDashboard.putNumber("limelightIntegral", integral);
                 //error will equal the angle of x the limelight returns
-                if (Math.abs(error) > dBand2) {
+                //if (Math.abs(error) > dBand2) {
                     
-                    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
-                    turnOutput=error*Ppos;
+                ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(false);
+                turnOutput=error*P+integral*I;
 
-                } else {
-                    turnOutput=0;
-                }
+                //} else {
+                    //turnOutput=0;
+                //}
             }
             
 
         } else {
             turnOutput=0;
+            wasLockedOn=false;
         }
         SmartDashboard.putBoolean("Tracking", enabled);
         SmartDashboard.putBoolean("Target Locked", targetLocked());
@@ -61,7 +69,9 @@ public class LimelightEvent extends Event {
 
     public void enable(){
         updateSpeed();
+        lastUpdate = System.currentTimeMillis();
         enabled=true;
+        integral = 0;
     }
 
     public void disable(){
@@ -90,7 +100,9 @@ public class LimelightEvent extends Event {
      * @return
      */
     public boolean targetLocked(){
-        return (Robot.limelight.hasTarget()&&Math.abs(Robot.limelight.getX()) < dBand /*&&Math.abs(Robot.limelight.getY())<.01*/);
+        boolean lockedOn=(Robot.limelight.hasTarget()&&Math.abs(Robot.limelight.getX()) < dBand /*&&Math.abs(Robot.limelight.getY())<.01*/)||(wasLockedOn&&Math.abs(Robot.limelight.getX()) < dBand2);
+        wasLockedOn=lockedOn;
+        return lockedOn;
     }
 
 

@@ -29,7 +29,7 @@ public class ShootSubsystem {
   private CANSparkMax sLift = new CANSparkMax(RobotMap.ELEVATION, MotorType.kBrushless);
   private RelativeEncoder sLifte = sLift.getEncoder();
   private double sLiftPos = sLifte.getPosition();
-
+  private boolean updateSpeedWithTuningValues=true;
   private CANSparkMax indexMotor = new CANSparkMax(RobotMap.INDEXER, MotorType.kBrushless);
   private CANSparkMax shootBtmMotor = new CANSparkMax(RobotMap.SHOOTER_BOTTOM, MotorType.kBrushless);
   private CANSparkMax shootTopMotor = new CANSparkMax(RobotMap.SHOOTER_TOP, MotorType.kBrushless);
@@ -105,17 +105,19 @@ public class ShootSubsystem {
 
     // index periodic 
     if (secondaryJoystick.getRawButton(9)) {
-      indexOn();
+      indexOn(.6);
       itake.iTakeFWD(.2);
-
     } else {
-      indexOff();
+      indexOn(0);
     }
 
     // shoot periodic 
     topEncoder = shootTopMotor.getEncoder();
     btmEncoder = shootBtmMotor.getEncoder();
 
+    if (updateSpeedWithTuningValues){
+      doTuningValueUpdating();
+    }
     if (secondaryJoystick.getRawButton(5)) {
       
       topPidController.setReference(-topSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
@@ -190,8 +192,8 @@ public class ShootSubsystem {
   }
 
     //Index On/Off
-    public void indexOn(){
-        indexMotor.set(0.6);
+    public void indexOn( double s){
+        indexMotor.set(s);
     }
 
     public void indexOff(){
@@ -202,6 +204,12 @@ public class ShootSubsystem {
       
       topPidController.setReference(-topSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
       btmPidController.setReference(botSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
+    }
+
+    public void shootOn(double s){
+      
+      topPidController.setReference(-s*maxRPM, CANSparkMax.ControlType.kVelocity);
+      btmPidController.setReference(s*maxRPM, CANSparkMax.ControlType.kVelocity);
     }
     
     public void shootOff(){
@@ -227,6 +235,15 @@ public class ShootSubsystem {
           instance = new ShootSubsystem();
           }
           return instance;   
+    }
+
+    public void setEnabledTuningValueUpating(boolean b) {
+      updateSpeedWithTuningValues=b;
+    }
+
+    public void doTuningValueUpdating(){
+      setTopSpeed(Robot.getRobot().getTuningValue("shootSpeedTop"));
+      setBotSpeed(Robot.getRobot().getTuningValue("shootSpeedBot"));
     }
   
   }

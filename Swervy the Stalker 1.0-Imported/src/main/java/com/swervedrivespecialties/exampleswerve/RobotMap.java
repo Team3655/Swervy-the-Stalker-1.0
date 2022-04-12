@@ -59,13 +59,17 @@ public class RobotMap {
         new Point(new Tuple(new double[]{ .75, .85, -5.3 })),
         new Point(new Tuple(new double[]{ .75, .775, -4.7 })),
         new Point(new Tuple(new double[]{ .75, .8, -4 })),
+        new Point(new Tuple(new double[]{ .66, .73, 3.6 })),
         new Point(new Tuple(new double[]{ .55, .65, 4.9 })),
         new Point(new Tuple(new double[]{ .5, .64, 7 })),
         new Point(new Tuple(new double[]{ .5, .62, 10 })),
         new Point(new Tuple(new double[]{ .5, .62, 11 })),
         new Point(new Tuple(new double[]{ .55, .65, 12 })),
         new Point(new Tuple(new double[]{ .45, .62, 18 })),
-        new Point(new Tuple(new double[]{ .66, .73, 3.6 })),
+        new Point(new Tuple(new double[]{ .46, .62, 18.09 })),
+        new Point(new Tuple(new double[]{ .3, .35, 18.1 })),
+        new Point(new Tuple(new double[]{ .3, .35, 24 })),
+       
     };
     
 }

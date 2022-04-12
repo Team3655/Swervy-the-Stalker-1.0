@@ -29,7 +29,7 @@ public class JSBAdapter extends ButtonHandler{
                 ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setRotationMultiplier(1);
                 ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setTranslationMultiplier(1);
             break;
-            //Hold To Disable FieldCentric
+            //Hold To Lock Wheels
             case 5:
                 ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(true);
             break;

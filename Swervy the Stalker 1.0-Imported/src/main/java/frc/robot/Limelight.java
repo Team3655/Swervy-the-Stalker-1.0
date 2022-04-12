@@ -44,15 +44,14 @@ public class Limelight {
     }
 
     public void enable(){
-        
+        ShootSubsystem.getInstance().setEnabledTuningValueUpating(false);
         loop.enable();
         limelight.getEntry("ledMode").setNumber(3);
     }
 
     public void disable(){
         loop.disable();
-        ShootSubsystem.getInstance().setTopSpeed(Robot.getRobot().getTuningValue("shootSpeedTop"));
-        ShootSubsystem.getInstance().setBotSpeed(Robot.getRobot().getTuningValue("shootSpeedBot"));
+        ShootSubsystem.getInstance().setEnabledTuningValueUpating(true);
         limelight.getEntry("ledMode").setNumber(1);
         
     }
