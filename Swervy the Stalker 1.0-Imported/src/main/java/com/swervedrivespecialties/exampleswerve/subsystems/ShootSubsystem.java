@@ -105,7 +105,7 @@ public class ShootSubsystem {
 
     // index periodic 
     if (secondaryJoystick.getRawButton(9)) {
-      indexOn(.6);
+      indexOn();
       itake.iTakeFWD(.2);
     } else {
       indexOn(0);
@@ -194,6 +194,10 @@ public class ShootSubsystem {
     //Index On/Off
     public void indexOn( double s){
         indexMotor.set(s);
+    }
+
+    public void indexOn(){
+      indexOn(.6);
     }
 
     public void indexOff(){

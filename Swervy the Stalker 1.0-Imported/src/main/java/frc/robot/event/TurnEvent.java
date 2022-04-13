@@ -23,7 +23,7 @@ public class TurnEvent extends Event{
     double angle;
     double maxSpeed=1;
     SwerveModule[] swerveModules;
-    static double P=-.01;
+    static double P = .01;
 
     public TurnEvent(double angle){
         init(angle);
@@ -57,17 +57,19 @@ public class TurnEvent extends Event{
     public void task() {
         switch(state){
             case 0:
-                double error = DrivetrainSubsystem.getInstance().getGyroscope().getAngle().toRadians() + angle;
+                double error = DrivetrainSubsystem.getInstance().getGyroscope().getAngle().toRadians() - angle;
                 double power = error * P;
                 SmartDashboard.putNumber("turnError", Math.toDegrees(error));
-                SmartDashboard.putNumber("gyroRad", Math.toDegrees(DrivetrainSubsystem.getInstance().getGyroscope().getAngle().toRadians()));
+                SmartDashboard.putNumber("turnErrorRad", error);
+                SmartDashboard.putNumber("gyroRad", DrivetrainSubsystem.getInstance().getGyroscope().getAngle().toRadians());
                 SmartDashboard.putNumber("targetTurnAngle", Math.toDegrees(angle));
+                SmartDashboard.putNumber("targetTurnAngleRad", angle);
                 if (Math.abs(power) > maxSpeed){
                     power=Math.copySign(maxSpeed, power);
                 }
                 DrivetrainSubsystem.getInstance().drive(new Translation2d(), power, true);
 
-                if(Math.abs(error) < 3){  
+                if(Math.abs(error) < .1){  
                     state++;
                 }
             break;

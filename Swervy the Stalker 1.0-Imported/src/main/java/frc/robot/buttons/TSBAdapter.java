@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.event.Event;
 import frc.robot.event.PrintEvent;
+import frc.robot.event.eventSequences.Auton;
+
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 import com.swervedrivespecialties.exampleswerve.subsystems.ArmSubsystem;
@@ -181,14 +183,6 @@ public class TSBAdapter extends ButtonHandler{
 
     public void buttonReleased(int no){
         switch (no){
-            //Move Elevator Up & Down When Button is held
-            case 3:
-                ShootSubsystem.getInstance().elevatorStop();   
-            break;
-  
-            case 8:
-                ShootSubsystem.getInstance().elevatorStop(); 
-            break;
 
         }
     }
@@ -204,8 +198,14 @@ public class TSBAdapter extends ButtonHandler{
             SmartDashboard.putString("Editing", ""+currentTuningValue);
             inputCache=SmartDashboard.getString("Input", inputCache);
             SmartDashboard.putString("Input", ""+inputCache);
+            try {
+                SmartDashboard.putString("Auton Alias", Auton.AUTON_ALIAS.values()[(int)Robot.getRobot().getTuningValue("autonAlias")].toString());
+            } catch(Exception e){
+                SmartDashboard.putString("Auton Alias","WARNING; INVALID AUTON; ROBOT WILL !DO ANYTHING IN AUTONOMOUS;");
+            }
             if (SmartDashboard.getBoolean("Submit", false)){
                 SmartDashboard.putBoolean("Submit", false);
+                
                 submitTune();
             }
         }
@@ -242,14 +242,6 @@ public class TSBAdapter extends ButtonHandler{
     
     void buttonDown(int no) {
         switch(no){
-        //Move Elevator Up & Down When Button is held
-        case 3:
-            ShootSubsystem.getInstance().elevatorUp();   
-        break;
-
-        case 8:
-            ShootSubsystem.getInstance().elevatorDown(); 
-        break;
 
         }
     }

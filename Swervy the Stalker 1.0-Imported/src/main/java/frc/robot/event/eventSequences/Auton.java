@@ -32,7 +32,7 @@ import frc.robot.event.eventSequences.Auton;
 
 public class Auton extends EventSequence{
 
-    public enum AUTON_ALIAS {shootAndGrab};
+    public enum AUTON_ALIAS {shootAndGrab,shootTwoAtATime, turnEventTest};
     public static final Limelight limelight=new Limelight();
 
     public Auton(){
@@ -41,49 +41,110 @@ public class Auton extends EventSequence{
     }
 
     public Auton(AUTON_ALIAS alias) {
-        super(
-            new Event[] {
-                new                 TurnEvent(Math.PI/2, .2),
-                //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(0, 0), 0, false)),
+        super(Auton.getAuton(alias));
+    }
 
-                //new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
+    private static Event[] getAuton(AUTON_ALIAS alias){
+        switch(alias){
+            case shootAndGrab:
+                return new Event[] {
+                    //new                 TurnEvent(Math.PI/2, .2),
+                    
+    
+                    //new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
+    
+                    
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
+    
+                    new Event(          ShootSubsystem.getInstance()::lower),
+                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+                    
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+                    
+                    new Event(          Robot.limelight::enable),
+                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
+    
+                    new Event(          ShootSubsystem.getInstance()::shootOn),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+                    
+                    new Event(          ShootSubsystem.getInstance()::indexOff,3250),
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
+                    
+                    
+                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
+    
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
+                    new Event(() ->     limelight.forceUpdateSpeed()),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 750),
+    
+    
+                    new Event(          ShootSubsystem.getInstance()::shootOff, 4750),
+                    new Event(          ShootSubsystem.getInstance()::indexOff),
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
+                    new Event(          Robot.limelight::disable),
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    
+    
+            };
 
-                /*
-                new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
+            case shootTwoAtATime:
+                return new Event[] {
+                    //new                 TurnEvent(Math.PI/2, .2),
+                    //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(0, 0), .75, false)),
+                    //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+    
+                    //new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
+    
+                    
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
+    
+                    new Event(          ShootSubsystem.getInstance()::lower),
+                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+                    
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+                    
+                    new Event(          Robot.limelight::enable),
+                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
+    
+                    new Event(          ShootSubsystem.getInstance()::shootOn),
+                    //new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+                    
+                   //new Event(          ShootSubsystem.getInstance()::indexOff),
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4), 3250),
+                    
+                    
+                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
+    
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
+                    new Event(() ->     limelight.forceUpdateSpeed()),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 750),
+    
+    
+                    new Event(          ShootSubsystem.getInstance()::shootOff, 4750),
+                    new Event(          ShootSubsystem.getInstance()::indexOff),
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
+                    new Event(          Robot.limelight::disable),
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    
+    
+            };
+            case turnEventTest:
+                return new Event[]{
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), .45, false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 450),
+                };
 
-                new Event(          ShootSubsystem.getInstance()::lower),
-                new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
-                
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
-                
-                new Event(          Robot.limelight::enable),
-                new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
+        }  
 
-                new Event(          ShootSubsystem.getInstance()::shootOn),
-                new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
-                
-                new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4), 3250),
-                
-                new Event(          ShootSubsystem.getInstance()::indexOff),
-                new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
-
-                new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
-                new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
-                new Event(() ->     limelight.forceUpdateSpeed()),
-                new Event(          ShootSubsystem.getInstance()::indexOn, 750),
-
-
-                new Event(          ShootSubsystem.getInstance()::shootOff, 4750),
-                new Event(          ShootSubsystem.getInstance()::indexOff),
-                new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
-                new Event(          Robot.limelight::disable),
-                new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                */
-
-        });
+        return new Event[0];
     }
     
 } 
