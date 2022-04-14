@@ -34,7 +34,7 @@ import gameutil.math.geom.Tuple;
 
 public class Auton extends EventSequence{
 
-    public enum AUTON_ALIAS {shootAndGrab,shootTwoAtATime,threeBallLeft,threeBallright, turnEventTest};
+    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, shootTest};
     public static final Limelight limelight=new Limelight();
 
     public Auton(){
@@ -50,11 +50,6 @@ public class Auton extends EventSequence{
         switch(alias){
             case shootAndGrab:
                 return new Event[] {
-                    //new                 TurnEvent(Math.PI/2, .2),
-                    
-    
-                    //new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
-    
                     
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                     new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
@@ -68,10 +63,11 @@ public class Auton extends EventSequence{
                     new Event(          Robot.limelight::enable),
                     new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
     
+                    new Event(() ->     limelight.forceUpdateSpeed()),
                     new Event(          ShootSubsystem.getInstance()::shootOn),
                     new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
-                    
                     new Event(          ShootSubsystem.getInstance()::indexOff,3250),
+                    new Event(          Robot.limelight::disable),
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
                     
                     
@@ -80,7 +76,7 @@ public class Auton extends EventSequence{
     
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
-                    new Event(() ->     limelight.forceUpdateSpeed()),
+                    new Event(          Robot.limelight::enable),
                     new Event(          ShootSubsystem.getInstance()::indexOn, 750),
     
     
@@ -95,13 +91,9 @@ public class Auton extends EventSequence{
 
             case shootTwoAtATime:
                 return new Event[] {
-                    //new                 TurnEvent(Math.PI/2, .2),
-                    //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(0, 0), .75, false)),
-                    //new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
-    
-                    //new Event(          DrivetrainSubsystem.getInstance()::resetGyroscope),
     
                     
+
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                     new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
     
@@ -235,6 +227,14 @@ public class Auton extends EventSequence{
                     new Event(          ShootSubsystem.getInstance()::indexOff),
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
                 };
+
+                case shootTest:
+                    return new Event[]{
+                        new Event(() ->     limelight.forceUpdateSpeed()),
+                        new Event(          Robot.limelight::enable),
+                        new Event(          ShootSubsystem.getInstance()::shootOn),
+                        new Event(          ShootSubsystem.getInstance()::shootOff, 7500),
+                    };
         }  
 
         return new Event[0];
