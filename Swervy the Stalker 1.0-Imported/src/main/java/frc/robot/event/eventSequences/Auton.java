@@ -51,36 +51,41 @@ public class Auton extends EventSequence{
             case shootAndGrab:
                 return new Event[] {
                     
+                    //Start Up
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                     new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
                     
                     new Event(          ShootSubsystem.getInstance()::lower),
-                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
                     
+                    //Turn Intake On and drive forwards
+                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
                     
+                    //Turn limelight on and start targeting
                     new Event(          Robot.limelight::enable),
                     new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
     
+                    //Shoot 1st Cargo
                     new Event(() ->     limelight.forceUpdateSpeed()),
                     new Event(          ShootSubsystem.getInstance()::shootOn),
                     new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
                     new Event(          ShootSubsystem.getInstance()::indexOff,3250),
+
+                    //Stop Shooting and move to 2nd Cargo
                     new Event(          Robot.limelight::disable),
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
-                    
-                    
                     new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
     
+                    //Shoot 2nd Cargo
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
                     new Event(          Robot.limelight::enable),
-                    new Event(          ShootSubsystem.getInstance()::indexOn, 750),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 1500),
     
-    
-                    new Event(          ShootSubsystem.getInstance()::shootOff, 4750),
+                    //Clean Up
+                    new Event(          ShootSubsystem.getInstance()::shootOff, 3750),
                     new Event(          ShootSubsystem.getInstance()::indexOff),
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
                     new Event(          Robot.limelight::disable),
