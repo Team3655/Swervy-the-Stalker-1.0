@@ -24,7 +24,7 @@ public class DriveCommand extends Command {
     double translationMultiplier = .7;
     double rotationMultiplier = .75;
     boolean lock = false;
-    boolean enabledAuton=false;
+    boolean enabledAuton = false;
 
     @Override
     public void execute() {

@@ -53,7 +53,7 @@ public class Auton extends EventSequence{
                     
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                     new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
-    
+                    
                     new Event(          ShootSubsystem.getInstance()::lower),
                     new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
                     
@@ -89,10 +89,9 @@ public class Auton extends EventSequence{
     
             };
 
+            
             case shootTwoAtATime:
-                return new Event[] {
-    
-                    
+                return new Event[] {   
 
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
                     new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
@@ -107,9 +106,7 @@ public class Auton extends EventSequence{
                     new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
     
                     new Event(          ShootSubsystem.getInstance()::shootOn),
-                    //new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
-                    
-                   //new Event(          ShootSubsystem.getInstance()::indexOff),
+
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4), 3250),
                     
                     
@@ -130,11 +127,15 @@ public class Auton extends EventSequence{
                     
     
             };
+
+
             case turnEventTest:
                 return new Event[]{
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), .45, false)),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 450),
                 };
+
+
             case threeBallLeft:
                 return new Event[]{
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
@@ -178,6 +179,8 @@ public class Auton extends EventSequence{
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, false)),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 1500),
                 };
+
+
             case threeBallright:
                 return new Event[]{
                     new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
