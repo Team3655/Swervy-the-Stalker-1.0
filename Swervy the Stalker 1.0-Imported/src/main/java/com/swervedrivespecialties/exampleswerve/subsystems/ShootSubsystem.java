@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.event.Event;
 import frc.robot.event.PrintEvent;
 import gameutil.math.geom.Point;
 import edu.wpi.first.math.controller.PIDController;
@@ -37,9 +38,18 @@ public class ShootSubsystem {
   private SparkMaxPIDController btmPidController = shootBtmMotor.getPIDController();
   private RelativeEncoder topEncoder = shootTopMotor.getEncoder();
   private RelativeEncoder btmEncoder = shootBtmMotor.getEncoder();
+  
+  //
+ // Event indexEvent=new Event();
+  //
+
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM, topSpeed,botSpeed;
 
   public ShootSubsystem() {
+    
+    //
+   // indexEvent.terminate();
+    //
 
     itake = IntakeSubsystems.getInstance();
 
@@ -105,6 +115,11 @@ public class ShootSubsystem {
 
     // index periodic 
     if (secondaryJoystick.getRawButton(9)) {
+
+      //
+     // indexEvent.kill();
+      //
+
       indexOn();
       itake.iTakeFWD(.2);
     } else {
@@ -122,11 +137,29 @@ public class ShootSubsystem {
       
       topPidController.setReference(-topSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
       btmPidController.setReference(botSpeed*maxRPM, CANSparkMax.ControlType.kVelocity);
-      //
+
+      /*/
+      if (Robot.limelight.targetLocked()&&atSpeed()){
+       // indexEvent.kill();
+        indexOn();
+      } else if (!secondaryJoystick.getRawButton(9)){
+        if (indexEvent.taskDone()){
+          indexEvent=new Event(this::indexOff,500);
+          Robot.eHandler.triggerEvent(indexEvent);
+        } 
+      }
+      /*/
+
       //Robot.eHandler.triggerEvent(new PrintEvent(topEncoder.getVelocity()));
     } else if (Robot.getRobot().isTeleopEnabled()){
       topPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
       btmPidController.setReference(0, CANSparkMax.ControlType.kDutyCycle);
+
+      /*/
+      if (!secondaryJoystick.getRawButton(9)){
+        indexOff();
+      }
+      /*/
     }
 
     
@@ -157,6 +190,19 @@ public class ShootSubsystem {
     sLift.getPIDController().setP(.05);
     sLift.getPIDController().setReference(134, ControlType.kPosition);
   } 
+
+  /*/
+  public boolean atSpeed(){
+    double atSpeedT = -topSpeed *maxRPM *.9;
+    double atSpeedB = botSpeed *maxRPM *.9;
+
+    if (Math.abs(atSpeedT - topEncoder.getVelocity()) < Math.abs(atSpeedT *.1) && Math.abs(atSpeedB - btmEncoder.getVelocity()) < Math.abs(atSpeedB *.1)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  /*/
 
   public double getSSpeed () {
     return (topEncoder.getVelocity() + btmEncoder.getVelocity())/2;

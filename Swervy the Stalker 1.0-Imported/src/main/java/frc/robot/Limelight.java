@@ -88,4 +88,8 @@ public class Limelight {
         loop.updateSpeed();
     }
 
+    public boolean targetLocked(){
+        return loop.targetLocked();
+    }
+
 }
