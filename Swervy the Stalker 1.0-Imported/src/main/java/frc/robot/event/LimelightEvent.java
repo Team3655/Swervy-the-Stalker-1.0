@@ -33,6 +33,7 @@ public class LimelightEvent extends Event {
              
              if (targetLocked()){
                 ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setLock(true);   
+                updateSpeed();
              } else {
                 
                 updateSpeed();
