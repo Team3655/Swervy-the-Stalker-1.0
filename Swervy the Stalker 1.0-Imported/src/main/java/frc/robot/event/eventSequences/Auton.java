@@ -34,7 +34,7 @@ import gameutil.math.geom.Tuple;
 
 public class Auton extends EventSequence{
 
-    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, shootTest};
+    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, autonFixedSpeed, shootTest};
     public static final Limelight limelight=new Limelight();
 
     public Auton(){
@@ -143,38 +143,36 @@ public class Auton extends EventSequence{
 
             case threeBallright:
                 return new Event[]{
-                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                    new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
-                    
-                    new Event(          ShootSubsystem.getInstance()::lower),
-                    
-                    //Turn Intake On and drive forwards
-                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
-                    
-                    //Turn limelight on and start targeting
-                    new Event(          Robot.limelight::enable),
-                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
-    
-                    //Shoot 1st Cargo
-                    new Event(() ->     limelight.forceUpdateSpeed()),
-                    new Event(          ShootSubsystem.getInstance()::shootOn),
-                    new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
-                    new Event(          ShootSubsystem.getInstance()::indexOff,2250),
-
-                    //Stop Shooting and move to 2nd Cargo
-                    new Event(          Robot.limelight::disable),
-                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
-                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
-    
-                    //Shoot 2nd Cargo
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
-                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
-                    new Event(          Robot.limelight::enable),
-                    new Event(          ShootSubsystem.getInstance()::indexOn, 1500),
-    
+                        //Start Up
+                        new Event(          Robot.limelight::disable),
+                        new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                        new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
+                        
+                        new Event(          ShootSubsystem.getInstance()::lower),
+                        
+                        //Turn Intake On and drive forwards
+                        new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+                        
+        
+                        //Shoot 1st Cargo
+                        new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.52,.64})))),
+                        new Event(          ShootSubsystem.getInstance()::shootOn),
+                        new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+                        new Event(          ShootSubsystem.getInstance()::indexOff,3250),
+                        //start going to speed for next shot
+                        new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.53,.65})))),
+                        //Stop Shooting and move to 2nd Cargo
+                        
+                        new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
+        
+                        //Shoot 2nd Cargo
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
+                        
+                        new Event(          ShootSubsystem.getInstance()::indexOn, 1500),
+        
                     //Clean Up
                     
                     new Event(          Robot.limelight::disable,1500),
@@ -184,12 +182,12 @@ public class Auton extends EventSequence{
                     
                     //rotate counter-clockwise 100 degrees and go forward 60"
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), .45, false)),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, false),450),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, false), 550),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 1750),
                     
                     //Spit out Opposing Ball
                     new Event(          ShootSubsystem.getInstance()::shootOn),
-                    new Event(          ShootSubsystem.getInstance()::indexOn, 500),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 465),
                     new Event(          ShootSubsystem.getInstance()::shootOff, 1750),
                     new Event(          ShootSubsystem.getInstance()::indexOff),
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
@@ -198,38 +196,36 @@ public class Auton extends EventSequence{
 
             case threeBallLeft:
                 return new Event[]{//Start Up
-                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                    new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
-                    
-                    new Event(          ShootSubsystem.getInstance()::lower),
-                    
-                    //Turn Intake On and drive forwards
-                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
-                    
-                    //Turn limelight on and start targeting
-                    new Event(          Robot.limelight::enable),
-                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
-    
-                    //Shoot 1st Cargo
-                    new Event(() ->     limelight.forceUpdateSpeed()),
-                    new Event(          ShootSubsystem.getInstance()::shootOn),
-                    new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
-                    new Event(          ShootSubsystem.getInstance()::indexOff,2250),
-
-                    //Stop Shooting and move to 2nd Cargo
-                    new Event(          Robot.limelight::disable),
-                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
-                    new Event (() ->    ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
-    
-                    //Shoot 2nd Cargo
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
-                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(true)),
-                    new Event(          Robot.limelight::enable),
-                    new Event(          ShootSubsystem.getInstance()::indexOn, 1500),
-    
+                        //Start Up
+                        new Event(          Robot.limelight::disable),
+                        new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                        new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
+                        
+                        new Event(          ShootSubsystem.getInstance()::lower),
+                        
+                        //Turn Intake On and drive forwards
+                        new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+                        
+        
+                        //Shoot 1st Cargo
+                        new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.52,.64})))),
+                        new Event(          ShootSubsystem.getInstance()::shootOn),
+                        new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+                        new Event(          ShootSubsystem.getInstance()::indexOff,3250),
+                        //start going to speed for next shot
+                        new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.53,.65})))),
+                        //Stop Shooting and move to 2nd Cargo
+                        
+                        new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
+        
+                        //Shoot 2nd Cargo
+                        new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
+                        
+                        new Event(          ShootSubsystem.getInstance()::indexOn, 1500),
+        
                     //Clean Up
                     
                     new Event(          Robot.limelight::disable,1500),
@@ -239,7 +235,7 @@ public class Auton extends EventSequence{
                     
                     //rotate clockwise 100 degrees and go forward 60"
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), -.45, false)),
-                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, false),450),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.2, 0), 0, false),465),
                     new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 1750),
                     
                     //Spit out Opposing Ball
@@ -257,9 +253,52 @@ public class Auton extends EventSequence{
                         new Event(          ShootSubsystem.getInstance()::shootOn),
                         new Event(          ShootSubsystem.getInstance()::shootOff, 7500),
                     };
+                case autonFixedSpeed:
+                    return new Event[]{
+                        //Start Up
+                    new Event(          Robot.limelight::disable),
+                    new Event(() ->     ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).setAutoEnabled(false)),
+                    new Event(          ShootSubsystem.getInstance()::lower, (int) (Robot.getRobot().getTuningValue("Auto Delay"))),
+                    
+                    new Event(          ShootSubsystem.getInstance()::lower),
+                    
+                    //Turn Intake On and drive forwards
+                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+                    
+    
+                    //Shoot 1st Cargo
+                    new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.52,.64})))),
+                    new Event(          ShootSubsystem.getInstance()::shootOn),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+                    new Event(          ShootSubsystem.getInstance()::indexOff,3250),
+                    //start going to speed for next shot
+                    new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.53,.65})))),
+                    //Stop Shooting and move to 2nd Cargo
+                    
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.4)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.1, 0), 0, false)),
+    
+                    //Shoot 2nd Cargo
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 850),
+                    
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 1500),
+    
+                    //Clean Up
+                    new Event(          ShootSubsystem.getInstance()::shootOff, 3750),
+                    new Event(          ShootSubsystem.getInstance()::indexOff),
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
+                    
+    
+                    };
         }  
 
         return new Event[0];
+    
+    
+
     }
+    
     
 } 

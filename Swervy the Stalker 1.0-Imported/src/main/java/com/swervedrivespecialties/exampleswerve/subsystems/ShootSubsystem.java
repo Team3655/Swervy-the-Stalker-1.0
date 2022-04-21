@@ -167,10 +167,9 @@ public class ShootSubsystem {
     double atSpeedT = -topSpeed *maxRPM *.9;
     double atSpeedB = botSpeed *maxRPM *.9;
 
-    SmartDashboard.putNumber("top Speed", topEncoder.getVelocity());
-    SmartDashboard.putNumber("btm Speed", btmEncoder.getVelocity());
     SmartDashboard.putNumber("atSpeed target top", atSpeedT);
     SmartDashboard.putNumber("atSpeed target top", atSpeedB);
+    putDataToDashboard();
 
     if (Math.abs(atSpeedT - topEncoder.getVelocity()) < Math.abs(atSpeedT *.1) && Math.abs(atSpeedB - btmEncoder.getVelocity()) < Math.abs(atSpeedB *.1)) {
       SmartDashboard.putBoolean("atSpeed", true);
@@ -191,7 +190,7 @@ public class ShootSubsystem {
     sLift.getPIDController().setReference(134, ControlType.kPosition);
   } 
 
-  /*/
+  
   public boolean atSpeed(){
     double atSpeedT = -topSpeed *maxRPM *.9;
     double atSpeedB = botSpeed *maxRPM *.9;
@@ -202,7 +201,7 @@ public class ShootSubsystem {
       return false;
     }
   }
-  /*/
+  
 
   public double getSSpeed () {
     return (topEncoder.getVelocity() + btmEncoder.getVelocity())/2;
@@ -294,6 +293,10 @@ public class ShootSubsystem {
     public void doTuningValueUpdating(){
       setTopSpeed(Robot.getRobot().getTuningValue("shootSpeedTop"));
       setBotSpeed(Robot.getRobot().getTuningValue("shootSpeedBot"));
+    }
+    public void putDataToDashboard(){
+      SmartDashboard.putNumber("top Speed", topEncoder.getVelocity()/maxRPM);
+      SmartDashboard.putNumber("btm Speed", btmEncoder.getVelocity()/maxRPM);
     }
   
   }

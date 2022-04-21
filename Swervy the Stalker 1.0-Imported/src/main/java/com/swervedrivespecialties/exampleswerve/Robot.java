@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 
         tuningValues.put("Auto Delay", 0.0); 
 
-        tuningValues.put("autonAlias",0d);
+        tuningValues.put("autonAlias",5d);
         back.setExposureManual(12);    
         front.setExposureManual(12); 
 
@@ -87,6 +87,8 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic(){
         DrivetrainSubsystem.getInstance().periodic();
         ((DriveCommand)DrivetrainSubsystem.getInstance().getDefaultCommand()).execute();
+        SmartDashboard.putBoolean("atSpeed", shoot.atSpeed());
+        shoot.putDataToDashboard();
     }
 
     public void robotPeriodic(){
