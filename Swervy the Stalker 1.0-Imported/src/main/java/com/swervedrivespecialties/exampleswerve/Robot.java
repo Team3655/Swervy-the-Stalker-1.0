@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 
         tuningValues.put("Auto Delay", 0.0); 
 
-        tuningValues.put("autonAlias",5d);
+        tuningValues.put("autonAlias",6d);
         back.setExposureManual(12);    
         front.setExposureManual(12); 
 

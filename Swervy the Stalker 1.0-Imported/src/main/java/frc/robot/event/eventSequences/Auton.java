@@ -34,7 +34,7 @@ import gameutil.math.geom.Tuple;
 
 public class Auton extends EventSequence{
 
-    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, autonFixedSpeed, shootTest};
+    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, autonFixedSpeed, autonBackFar, shootTest};
     public static final Limelight limelight=new Limelight();
 
     public Auton(){
@@ -269,7 +269,7 @@ public class Auton extends EventSequence{
                     
     
                     //Shoot 1st Cargo
-                    new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.52,.64})))),
+                    new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.53,.65})))),
                     new Event(          ShootSubsystem.getInstance()::shootOn),
                     new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
                     new Event(          ShootSubsystem.getInstance()::indexOff,3250),
@@ -288,6 +288,34 @@ public class Auton extends EventSequence{
                     //Clean Up
                     new Event(          ShootSubsystem.getInstance()::shootOff, 3750),
                     new Event(          ShootSubsystem.getInstance()::indexOff),
+                    new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
+                    
+    
+                    };
+                    case autonBackFar:
+                    return new Event[]{
+                    //Start Up
+                    new Event(          Robot.limelight::disable), 
+                    new Event(          ShootSubsystem.getInstance()::lower),
+                    
+                    //drive forwards and pull itake out
+                    new Event(          PneumaticSubsystem.getInstance()::iTSFwd),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.15, 0), 0, false)),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+                    
+    
+                    //Shoot 1st Cargo
+                    new Event(() ->     ShootSubsystem.getInstance().setSpeed(new Point(new Tuple(new double[]{.53,.65})))),
+                    new Event(          ShootSubsystem.getInstance()::shootOn),
+                    new Event(          ShootSubsystem.getInstance()::indexOn, 2000),
+                    new Event(          ShootSubsystem.getInstance()::indexOff,1000),
+                    new Event(          ShootSubsystem.getInstance()::shootOff),
+                    
+                    //Move It
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(.3, 0), 0, false), 500),
+                    new Event(() ->     DrivetrainSubsystem.getInstance().drive(new Translation2d(), 0, false), 2000),
+
+                    //Clean Up
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
                     
     

@@ -32,7 +32,7 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double TRACKWIDTH = 22;
         private static final double WHEELBASE = 22;
 
-        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(332.2);
+        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(193.1);
         private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(54.4);
         private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(194.8);
         private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(93.8);
@@ -149,6 +149,14 @@ public class DrivetrainSubsystem extends Subsystem {
                 }
 
                 SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
+                //if robot is not turning and not driving then keep the wheels in the current position *maybe make a snapback button in the future for testing?
+               /* if (rotation == 0 && translation.getNorm() == 0){
+                        //go through each module and set the state target angles to the current angles of the modules
+                        SwerveModule[] modules=getSwerveModules();
+                        for (int i=0;i<4;i++){
+                                states[i].angle = new Rotation2d(modules[i].getCurrentAngle());
+                        }
+                } */
                 frontLeftModule.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
                 frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
                 backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
