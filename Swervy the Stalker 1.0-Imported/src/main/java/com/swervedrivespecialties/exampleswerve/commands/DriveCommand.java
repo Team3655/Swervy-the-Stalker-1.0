@@ -21,8 +21,8 @@ public class DriveCommand extends Command {
     double lastRotation=0;
     boolean enabled = true;
     boolean fieldCentric = true;
-    double translationMultiplier = .7;
-    double rotationMultiplier = .75;
+    double translationMultiplier = 0.7;
+    double rotationMultiplier = 0.5;
     boolean lock = false;
     boolean enabledAuton = false;
 
