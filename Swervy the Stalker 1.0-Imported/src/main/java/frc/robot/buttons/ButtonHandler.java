@@ -27,21 +27,7 @@ public abstract class ButtonHandler /*extends Thread*/{
         //start();
     }
 
-    /*@Override
-    public void run(){
-        while (enabled){
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            update();
-        }
-    }*/
-    /**Call during a periodic function in order to regognize button events
-     * 
-    */
+
     public void update(){
         for (int i=1; i<=buttonNo; i++){
             if (buttonInterface.getRawButton(i)){

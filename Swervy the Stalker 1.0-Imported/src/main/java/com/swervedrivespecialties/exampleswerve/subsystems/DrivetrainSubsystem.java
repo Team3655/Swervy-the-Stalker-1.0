@@ -47,10 +47,13 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double DRIVEREDUCTION=8.31;//(ratio)
         private static final double WHEEL_DIAMETER=3.875;//(inches)
 
+        
 
         private static final double ROTATION_P=1/(2*Math.PI);
 
         private static DrivetrainSubsystem instance;
+
+        double[] angles = {0, 0, 0, 0};
 
         private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
                 new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
@@ -91,6 +94,8 @@ public class DrivetrainSubsystem extends Subsystem {
                 new Translation2d(-TRACKWIDTH / 2.0, WHEELBASE / 2.0),
                 new Translation2d(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0)
         );
+
+        SwerveModuleState[] states = kinematics.toSwerveModuleStates(new ChassisSpeeds(0, 0, 0));
 
         public DrivetrainSubsystem() {
                 gyroscope.calibrate();
@@ -139,8 +144,12 @@ public class DrivetrainSubsystem extends Subsystem {
         }
 
         public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
+
                 rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
+                
                 ChassisSpeeds speeds;
+                
+                
                 if (fieldOriented) {
                         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
                         Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees()));
@@ -148,19 +157,28 @@ public class DrivetrainSubsystem extends Subsystem {
                         speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
                 }
 
-                SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
+                
                 //if robot is not turning and not driving then keep the wheels in the current position *maybe make a snapback button in the future for testing?
-               /* if (rotation == 0 && translation.getNorm() == 0){
-                        //go through each module and set the state target angles to the current angles of the modules
-                        SwerveModule[] modules=getSwerveModules();
-                        for (int i=0;i<4;i++){
-                                states[i].angle = new Rotation2d(modules[i].getCurrentAngle());
-                        }
-                } */
-                frontLeftModule.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
-                frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
-                backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
-                backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
+
+                states = kinematics.toSwerveModuleStates(speeds);
+
+                
+
+                if (rotation == 0 && translation.getNorm() == 0) {
+                        frontLeftModule.setTargetVelocity(0, angles[0]);
+                        frontRightModule.setTargetVelocity(0, angles[1]);
+                        backLeftModule.setTargetVelocity(0, angles[2]);
+                        backRightModule.setTargetVelocity(0, angles[3]);
+                } else {
+                        frontLeftModule.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
+                        frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
+                        backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
+                        backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
+                        angles = new double[] {states[0].angle.getRadians(), states[1].angle.getRadians(), states[2].angle.getRadians(), states[3].angle.getRadians()};
+                }
+
+
+                
         }
 
         public void wheelLock() {
