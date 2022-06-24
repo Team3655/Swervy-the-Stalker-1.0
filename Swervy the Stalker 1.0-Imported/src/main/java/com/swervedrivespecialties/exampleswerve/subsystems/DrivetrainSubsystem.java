@@ -224,4 +224,8 @@ public class DrivetrainSubsystem extends Subsystem {
         public SwerveModule[] getSwerveModules(){
                 return new SwerveModule[] {frontLeftModule,frontRightModule,backRightModule,backLeftModule};
         }
+
+        public SwerveDriveKinematics getKinematics(){
+                return kinematics;
+        }
 }

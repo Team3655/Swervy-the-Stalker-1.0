@@ -34,7 +34,7 @@ import gameutil.math.geom.Tuple;
 
 public class Auton extends EventSequence{
 
-    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, autonFixedSpeed, autonBackFar, shootTest};
+    public enum AUTON_ALIAS {shootAndGrab, shootTwoAtATime, threeBallLeft, threeBallright, turnEventTest, autonFixedSpeed, autonBackFar, shootTest,path};
     public static final Limelight limelight=new Limelight();
 
     public Auton(){
@@ -317,8 +317,11 @@ public class Auton extends EventSequence{
 
                     //Clean Up
                     new Event(() ->     IntakeSubsystems.getInstance().iTakeFWD(.0), 0),
-                    
     
+                    };
+                case path://for path finder testing
+                    return new Event[] {
+                        
                     };
         }  
 
