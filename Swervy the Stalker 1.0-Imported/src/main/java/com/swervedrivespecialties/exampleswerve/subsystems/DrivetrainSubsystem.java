@@ -32,10 +32,10 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double TRACKWIDTH = 22;
         private static final double WHEELBASE = 22;
 
-        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(193.1);
-        private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(55.4);
-        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(194.8);
-        private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(93.8);
+        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(14.4);
+        private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(229.2);
+        private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(17.2);
+        private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(272.9);
         //array of the pid constants for swerve modules with the constants for front left at index 0 and continuing clockwise
         private static final PidConstants[] PID_CONSTANTS=new PidConstants[] {
                 //Default NEO constants are 0.5, 0.0, 0.0001

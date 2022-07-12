@@ -11,8 +11,8 @@ import gameutil.math.geom.Point;
 import com.swervedrivespecialties.exampleswerve.commands.DriveCommand;
 
 public class LimelightEvent extends Event {
-    private final double I = -.000001;
-    private final double P = -.008;
+    private final double I = .000001;
+    private final double P = .008;
     private double integral = 0; 
     private long lastUpdate = System.currentTimeMillis();
     private boolean enabled = false;
