@@ -32,7 +32,7 @@ public class DrivetrainSubsystem extends Subsystem {
         private static final double TRACKWIDTH = 22;
         private static final double WHEELBASE = 22;
 
-        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(14.4);
+        private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(193.2);
         private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(229.2);
         private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(17.2);
         private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(272.9);
@@ -53,7 +53,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
         private static DrivetrainSubsystem instance;
 
-        double[] angles = {0, 0, 0, 0};
+      //  double[] angles = {0, 0, 0, 0};
 
         private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
                 new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
@@ -164,22 +164,22 @@ public class DrivetrainSubsystem extends Subsystem {
 
                 
 
-                if (rotation == 0 && translation.getNorm() == 0) {
+               /* if (rotation == 0 && translation.getNorm() == 0) {
                         frontLeftModule.setTargetVelocity(0, angles[0]);
                         frontRightModule.setTargetVelocity(0, angles[1]);
                         backLeftModule.setTargetVelocity(0, angles[2]);
                         backRightModule.setTargetVelocity(0, angles[3]);
-                } else {
+                } else { */
                         frontLeftModule.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
                         frontRightModule.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
                         backLeftModule.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
                         backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
-                        angles = new double[] {states[0].angle.getRadians(), states[1].angle.getRadians(), states[2].angle.getRadians(), states[3].angle.getRadians()};
+                        //angles = new double[] {states[0].angle.getRadians(), states[1].angle.getRadians(), states[2].angle.getRadians(), states[3].angle.getRadians()};
                 }
 
 
                 
-        }
+   //}
 
         public void wheelLock() {
                 SmartDashboard.putBoolean("Locked", true);
